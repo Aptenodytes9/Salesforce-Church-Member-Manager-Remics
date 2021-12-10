@@ -6,14 +6,13 @@
                 <lightning-messages></lightning-messages>
                 <div class="slds-grid">
                     <div class="slds-col slds-size_1-of-3">
-                        <lightning-input-field field-name={donorNameField} 
-                                              onchange={onChangeDonorNameField}></lightning-input-field>
+                        <lightning-input-field field-name={donorNameField} variant="label-stacked" onchange={onChangeDonorNameField}></lightning-input-field>
                     </div>
                     <div class="slds-col slds-size_1-of-3">
-                        <lightning-input type="date" name="donationDateFrom" label="献金日（から）" onchange={onChangeDonationDateFromField}></lightning-input>
+                        <lightning-input type="date" name="donationDateFrom" label="献金日（から）" variant="label-stacked" onchange={onChangeDonationDateFromField}></lightning-input>
                     </div>
                     <div class="slds-col slds-size_1-of-3">
-                        <lightning-input type="date" name="donationDateTo" label="献金日（まで）" onchange={onChangeDonationDateToField}></lightning-input>
+                        <lightning-input type="date" name="donationDateTo" label="献金日（まで）" variant="label-stacked" onchange={onChangeDonationDateToField}></lightning-input>
                     </div>
                 </div>
             </lightning-record-edit-form>
@@ -27,19 +26,19 @@
                 <lightning-messages></lightning-messages>
                 <div class="slds-grid">
                     <div class="slds-col slds-size_1-of-4">
-                        <lightning-input-field field-name={donorNameField} value={donorId} disabled></lightning-input-field>
-                        <lightning-input-field field-name={donationStartdateField} class="resetField"></lightning-input-field>
+                        <lightning-input-field field-name={donorNameField} value={donorId} variant="label-stacked" disabled></lightning-input-field>
+                        <lightning-input-field field-name={donationStartdateField} variant="label-stacked" class="resetField"></lightning-input-field>
                     </div>
                     <div class="slds-col slds-size_1-of-4">
-                        <lightning-input-field field-name={donationTypeField}></lightning-input-field>
-                        <lightning-input-field field-name={donationFinishdateField} class="resetField"></lightning-input-field>
+                        <lightning-input-field field-name={donationTypeField} variant="label-stacked" ></lightning-input-field>
+                        <lightning-input-field field-name={donationFinishdateField} variant="label-stacked" class="resetField"></lightning-input-field>
                     </div>
                     <div class="slds-col slds-size_1-of-4">
-                        <lightning-input-field field-name={donationDateField}></lightning-input-field>
-                        <lightning-input-field field-name={donationNoteField} class="resetField"></lightning-input-field>
+                        <lightning-input-field field-name={donationDateField} variant="label-stacked" ></lightning-input-field>
+                        <lightning-input-field field-name={donationNoteField} variant="label-stacked" class="resetField"></lightning-input-field>
                     </div>
                     <div class="slds-col slds-size_1-of-4">
-                        <lightning-input-field field-name={donationAmountField} class="resetField"></lightning-input-field>
+                        <lightning-input-field field-name={donationAmountField} variant="label-stacked" class="resetField"></lightning-input-field>
                     </div>
                  </div>
                 <lightning-button type="submit" variant="brand" label="作成"></lightning-button>
