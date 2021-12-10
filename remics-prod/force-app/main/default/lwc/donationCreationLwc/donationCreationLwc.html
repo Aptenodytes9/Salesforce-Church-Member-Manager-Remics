@@ -1,0 +1,17 @@
+<template>
+    <lightning-card>
+        <lightning-record-edit-form object-api-name="Donation__c">
+            <lightning-input-field field-name={donor_name_field} 
+                                  onchange={onChangeDonorNameField}></lightning-input-field>
+        </lightning-record-edit-form>
+    </lightning-card>
+
+    <lightning-card>
+        <lightning-record-form
+            object-api-name={objectApiName}
+            fields={fields}
+            onsuccess={handleSuccess}
+            columns="4">
+        </lightning-record-form>
+    </lightning-card>
+</template>
