@@ -7,6 +7,6 @@
   ],
   "name": "sfdxproject-remics",
   "namespace": "",
-  "sfdcLoginUrl": "https://login.salesforce.com",
+  "sfdcLoginUrl": "https://test.salesforce.com",
   "sourceApiVersion": "52.0"
 }

@@ -1,0 +1,79 @@
+<template>
+    <!-- 献金者検索フォーム -->
+    <lightning-card title="献金者の検索" class="slds-p-horizontal_small">
+        <div class="slds-m-around_medium">
+            <lightning-record-edit-form object-api-name={DonationObjectName}>
+                <lightning-messages></lightning-messages>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-3">
+                        <lightning-input-field field-name={donorNameField} 
+                                              onchange={onChangeDonorNameField}></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <lightning-input type="date" name="donationDateFrom" label="献金日（から）" onchange={onChangeDonationDateFromField}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <lightning-input type="date" name="donationDateTo" label="献金日（まで）" onchange={onChangeDonationDateToField}></lightning-input>
+                    </div>
+                </div>
+            </lightning-record-edit-form>
+        </div>
+    </lightning-card>
+
+    <!-- 新規献金レコード入力フォーム -->
+    <lightning-card title="新規献金レコードの登録" class="slds-m-horizontal_small">
+        <div class="slds-m-around_medium">
+            <lightning-record-edit-form object-api-name={DonationObjectName} onsuccess={handleInsertSuccess}>
+                <lightning-messages></lightning-messages>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input-field field-name={donorNameField} value={donorId} disabled></lightning-input-field>
+                        <lightning-input-field field-name={donationStartdateField} class="resetField"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input-field field-name={donationTypeField}></lightning-input-field>
+                        <lightning-input-field field-name={donationFinishdateField} class="resetField"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input-field field-name={donationDateField}></lightning-input-field>
+                        <lightning-input-field field-name={donationNoteField} class="resetField"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input-field field-name={donationAmountField} class="resetField"></lightning-input-field>
+                    </div>
+                 </div>
+                <lightning-button type="submit" variant="brand" label="作成"></lightning-button>
+            </lightning-record-edit-form>
+        </div>
+    </lightning-card>
+
+    <!-- 献金一覧表 -->
+    <lightning-card title="献金者の献金一覧表" if:true={tableData.data}>
+        <div class="slds-m-around_medium">
+            <c-custom-data-table
+                key-field="Id"
+                data={tableData.data}
+                columns={tableColumns}
+                oncellchange={handleCellChange}
+                onpicklistchanged={picklistChanged}
+                onsave={handleSave}
+                oncancel={handleCancel}
+                draft-values={draftValues}
+                onrowaction={handleRowAction}
+                show-row-number-column>
+            </c-custom-data-table>
+        </div>
+    </lightning-card>
+
+    <!-- 献金レコード削除確認ダイアログ -->
+    <c-confirmation-dialog title='献金レコードの削除'
+                           message={displayMessage}
+                           message2={displayMessage2}
+                           confirm-label='はい'
+                           cancel-label='いいえ'
+                           visible={isDialogVisible}
+                           original-message={deletingRecordId}
+                           name="confirmModal"
+                           onclick={clickConfirmDialog}>
+    </c-confirmation-dialog>
+</template>
