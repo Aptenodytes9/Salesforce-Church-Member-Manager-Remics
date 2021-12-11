@@ -19,6 +19,7 @@ import DONATIONDATE_FIELD from '@salesforce/schema/Donation__c.DonationDate__c';
 import DONATIONAMOUNT_FIELD from '@salesforce/schema/Donation__c.DonationAmount__c';
 import DONATIONSTARTDATE_FIELD from '@salesforce/schema/Donation__c.DonationStartDate__c';
 import DONATIONFINISHDATE_FIELD from '@salesforce/schema/Donation__c.DonationFinishDate__c';
+import DONATIONMONTHNUM_FIELD from '@salesforce/schema/Donation__c.DonationMonthNum__c';
 import DONATIONNOTE_FIELD from '@salesforce/schema/Donation__c.DonationNote__c';
 import ACCOUNTINGUNIT_FIELD from '@salesforce/schema/Donation__c.AccountingUnit__c';
 import DONATIONMAINORSUB_FIELD from '@salesforce/schema/Donation__c.DonationMainOrSub__c';
@@ -27,6 +28,14 @@ import DONATIONMAINORSUB_FIELD from '@salesforce/schema/Donation__c.DonationMain
 const actions = [
     { label: 'この行を削除', name: 'delete' }
 ];
+
+// 現在日付を文字列[yyyy-mm-dd]にフォーマットする
+var today = new Date();
+var formattedToday = `
+${today.getFullYear()}-
+${(today.getMonth()+1).toString().padStart(2, '0')}-
+${today.getDate().toString().padStart(2, '0')}
+`.replace(/\n|\r/g, '');
 
 // 献金一覧表 項目
 const TABLE_COLUMNS = [
@@ -65,6 +74,7 @@ const TABLE_COLUMNS = [
     { label: '献金額', fieldName: DONATIONAMOUNT_FIELD.fieldApiName, type: 'currency', typeAttributes: { currencyCode: 'JPY', step: '1' },editable: true },
     { label: '開始日', fieldName: DONATIONSTARTDATE_FIELD.fieldApiName, type: 'date-local', editable: true },
     { label: '終了日', fieldName: DONATIONFINISHDATE_FIELD.fieldApiName, type: 'date-local', editable: true },
+    { label: '月数', fieldName: DONATIONMONTHNUM_FIELD.fieldApiName, type: 'text', editable: false },
     { label: '摘要', fieldName: DONATIONNOTE_FIELD.fieldApiName, type: 'text', editable: true },
     { label: '会計単位', fieldName: ACCOUNTINGUNIT_FIELD.fieldApiName, type: 'text', editable: false },
     { label: 'メイン／サブ献金', fieldName: DONATIONMAINORSUB_FIELD.fieldApiName, type: 'text', editable: false },
@@ -74,9 +84,9 @@ const TABLE_COLUMNS = [
 export default class DonationCreationLwc extends LightningElement {
     // 献金者検索フォーム
     @api donorId;
-    @api donationDateFrom;
-    @api donationDateTo;
-    
+    @api donationDateFrom = formattedToday;
+    @api donationDateTo = formattedToday;
+
     DonationObjectName = DONATION_OBJECT;
     donorNameField = DONOR_FIELD;
 
@@ -87,6 +97,7 @@ export default class DonationCreationLwc extends LightningElement {
     // 「献金日（から）」欄を変更したとき
     onChangeDonationDateFromField(event) {
         this.donationDateFrom = event.detail.value;
+        console.log(this.donationDateFrom);
     };
     // 「献金日（まで）」欄を変更したとき
     onChangeDonationDateToField(event) {

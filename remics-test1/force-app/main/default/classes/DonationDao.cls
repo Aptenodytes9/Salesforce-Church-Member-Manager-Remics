@@ -19,6 +19,7 @@ public with sharing class DonationDao {
                 DonationFamilyName__c,
                 DonationStartDate__c,
                 DonationFinishDate__c,
+                DonationMonthNum__c,
                 AccountingMajorClass__c,
                 AccountingMinorClass__c,
                 AccountingUnit__c,
@@ -35,7 +36,7 @@ public with sharing class DonationDao {
                 Donor__c = :donorId
                 AND DonationDate__c >= :donationDateFrom
                 AND DonationDate__c <= :donationDateTo WITH SECURITY_ENFORCED
-            ORDER BY DonationDate__c DESC, Name DESC
+            ORDER BY DonationDate__c ASC, Name ASC
         ];
     }
 
