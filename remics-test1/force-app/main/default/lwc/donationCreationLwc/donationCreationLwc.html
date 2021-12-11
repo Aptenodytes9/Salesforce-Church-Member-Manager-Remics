@@ -9,10 +9,10 @@
                         <lightning-input-field field-name={donorNameField} variant="label-stacked" onchange={onChangeDonorNameField}></lightning-input-field>
                     </div>
                     <div class="slds-col slds-size_1-of-3">
-                        <lightning-input type="date" name="donationDateFrom" label="献金日（から）" variant="label-stacked" onchange={onChangeDonationDateFromField}></lightning-input>
+                        <lightning-input type="date" value={donationDateFrom} name="donationDateFrom" label="献金日（から）" variant="label-stacked" onchange={onChangeDonationDateFromField}></lightning-input>
                     </div>
                     <div class="slds-col slds-size_1-of-3">
-                        <lightning-input type="date" name="donationDateTo" label="献金日（まで）" variant="label-stacked" onchange={onChangeDonationDateToField}></lightning-input>
+                        <lightning-input type="date" value={donationDateTo} name="donationDateTo" label="献金日（まで）" variant="label-stacked" onchange={onChangeDonationDateToField}></lightning-input>
                     </div>
                 </div>
             </lightning-record-edit-form>
