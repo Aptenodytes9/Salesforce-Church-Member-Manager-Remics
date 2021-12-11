@@ -20,6 +20,8 @@ import DONATIONAMOUNT_FIELD from '@salesforce/schema/Donation__c.DonationAmount_
 import DONATIONSTARTDATE_FIELD from '@salesforce/schema/Donation__c.DonationStartDate__c';
 import DONATIONFINISHDATE_FIELD from '@salesforce/schema/Donation__c.DonationFinishDate__c';
 import DONATIONNOTE_FIELD from '@salesforce/schema/Donation__c.DonationNote__c';
+import ACCOUNTINGUNIT_FIELD from '@salesforce/schema/Donation__c.AccountingUnit__c';
+import DONATIONMAINORSUB_FIELD from '@salesforce/schema/Donation__c.DonationMainOrSub__c';
 
 // 行アクション
 const actions = [
@@ -64,6 +66,8 @@ const TABLE_COLUMNS = [
     { label: '開始日', fieldName: DONATIONSTARTDATE_FIELD.fieldApiName, type: 'date-local', editable: true },
     { label: '終了日', fieldName: DONATIONFINISHDATE_FIELD.fieldApiName, type: 'date-local', editable: true },
     { label: '摘要', fieldName: DONATIONNOTE_FIELD.fieldApiName, type: 'text', editable: true },
+    { label: '会計単位', fieldName: ACCOUNTINGUNIT_FIELD.fieldApiName, type: 'text', editable: false },
+    { label: 'メイン／サブ献金', fieldName: DONATIONMAINORSUB_FIELD.fieldApiName, type: 'text', editable: false },
     { type: 'action', typeAttributes: { rowActions: actions } }
 ];
 

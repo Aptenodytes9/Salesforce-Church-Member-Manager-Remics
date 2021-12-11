@@ -1,3 +1,0 @@
-<apex:page sidebar="false" readonly="true"><apex:slds />
-<PowerGrid:PowerGrid gridTemplateId="a0Op000000Di1zkEAB" />
-</apex:page>
