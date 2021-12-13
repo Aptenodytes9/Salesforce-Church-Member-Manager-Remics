@@ -97,7 +97,6 @@ export default class DonationCreationLwc extends LightningElement {
     // 「納入日（から）」欄を変更したとき
     onChangeDonationDateFromField(event) {
         this.donationDateFrom = event.detail.value;
-        console.log(this.donationDateFrom);
     };
     // 「納入に（まで）」欄を変更したとき
     onChangeDonationDateToField(event) {
