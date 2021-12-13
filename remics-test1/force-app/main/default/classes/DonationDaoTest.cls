@@ -17,6 +17,8 @@ public with sharing class DonationDaoTest {
 
         Donation__c d = new Donation__c(
             DonationDate__c = Date.newInstance(2022, 12, 1),
+            DonationStartDate__c = Date.newInstance(2022, 12, 1),
+            DonationFinishDate__c = Date.newInstance(2023, 1, 31),
             Donor__c = p.Id,
             DonationAmount__c = 10000,
             DonationType__c = '月次献金'
