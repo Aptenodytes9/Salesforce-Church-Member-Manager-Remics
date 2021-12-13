@@ -40,7 +40,7 @@ ${today.getDate().toString().padStart(2, '0')}
 // 献金一覧表 項目
 const TABLE_COLUMNS = [
     { label: '献金', fieldName: NAME_FIELD.fieldApiName, type: 'text' },
-    { label: '献金日', fieldName: DONATIONDATE_FIELD.fieldApiName, type: 'date-local', editable: true },
+    { label: '納入日', fieldName: DONATIONDATE_FIELD.fieldApiName, type: 'date-local', editable: true },
     {
         label: '献金種類', fieldName: DONATIONTYPE_FIELD.fieldApiName, type: 'picklist', typeAttributes: {
             placeholder: 'Choose rating', options: [
@@ -94,12 +94,12 @@ export default class DonationCreationLwc extends LightningElement {
     onChangeDonorNameField(event) {
         this.donorId = event.detail.value[0];
     };
-    // 「献金日（から）」欄を変更したとき
+    // 「納入日（から）」欄を変更したとき
     onChangeDonationDateFromField(event) {
         this.donationDateFrom = event.detail.value;
         console.log(this.donationDateFrom);
     };
-    // 「献金日（まで）」欄を変更したとき
+    // 「納入に（まで）」欄を変更したとき
     onChangeDonationDateToField(event) {
         this.donationDateTo = event.detail.value;
     };
