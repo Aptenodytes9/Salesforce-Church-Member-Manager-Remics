@@ -39,6 +39,55 @@ public with sharing class DonationDao {
             ORDER BY DonationDate__c ASC, Name ASC
         ];
     }
+    
+    @AuraEnabled(cacheable=true)
+    public static List<Donation__c> getDonationsByDate(Date donationDateFrom, Date donationDateTo) {
+        return [
+            SELECT
+                Id,
+                Name,
+                DonationDate__c,
+                DonationType__c,
+                DonationAmount__c,
+                DonorName__c,
+                DonationUnitClass__c,
+                DonationSpouseName__c,
+                DonationFamilyName__c,
+                DonationStartDate__c,
+                DonationFinishDate__c,
+                DonationMonthNum__c,
+                DonationMainOrSub__c,
+                DonationNote__c
+            FROM
+                Donation__c
+            WHERE
+                DonationMainOrSub__c <> 'サブ献金'
+                AND Donor__r.PersonType__c IN ('現住陪餐会員','陪餐会員')
+                AND DonationDate__c >= :donationDateFrom
+                AND DonationDate__c <= :donationDateTo WITH SECURITY_ENFORCED
+            ORDER BY DonationType__c ASC, DonorName__c ASC
+        ];
+    }
+
+    public static List<AggregateResult> getDonationsByDateAggregate(Date donationDateFrom, Date donationDateTo) {
+        return [
+            SELECT 
+                DonationType__c,
+                Donor__r.Name DonorName,
+                MAX(DonationSpouseName__c) DonationSpouseName,
+                MAX(DonationFamilyName__c) DonationFamilyName,
+                MAX(DonationNote__c) DonationNote
+                FROM
+                Donation__c
+            WHERE
+                DonationMainOrSub__c <> 'サブ献金'
+                AND Donor__r.PersonType__c IN ('現住陪餐会員','陪餐会員')
+                AND DonationDate__c >= :donationDateFrom
+                AND DonationDate__c <= :donationDateTo WITH  SECURITY_ENFORCED
+            GROUP BY DonationType__c, Donor__r.Name
+            ORDER BY DonationType__c ASC, Donor__r.Name ASC
+        ];
+    }
 
     @AuraEnabled
     public static void updateDonations(Object data) {

@@ -1,0 +1,39 @@
+<template>
+    <!-- 納入期間指定フォーム -->
+    <lightning-card title="納入期間の指定" class="slds-p-horizontal_small">
+        <div class="slds-m-around_medium">
+            <lightning-record-edit-form object-api-name={DonationObjectName}>
+                <lightning-messages></lightning-messages>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input type="date" value={donationDateFrom} name="donationDateFrom" label="納入日（から）" variant="label-stacked" onchange={onChangeDonationDateFromField}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input type="date" value={donationDateTo} name="donationDateTo" label="納入日（まで）" variant="label-stacked" onchange={onChangeDonationDateToField}></lightning-input>
+                    </div>
+                </div>
+            </lightning-record-edit-form>
+        </div>
+    </lightning-card>
+
+    <!-- 週報原稿データ -->
+    <lightning-card title="週報原稿データ" if:true={shuhoData.data}>
+        <div class="slds-m-around_medium">
+            <lightning-input-rich-text
+            value={shuhoData.data} disabled-categories="INSERT_CONTENT"></lightning-input-rich-text>
+        </div>
+    </lightning-card>
+
+    <!-- 献金一覧表 -->
+    <lightning-card title={tableTitle} class="slds-p-horizontal_small" if:true={tableData.data}>
+        <div class="slds-m-around_medium">
+            <lightning-datatable
+                key-field="Id"
+                data={tableData.data}
+                columns={tableColumns}
+                show-row-number-column
+                hide-checkbox-column>
+            </lightning-datatable>
+        </div>
+    </lightning-card>
+</template>
