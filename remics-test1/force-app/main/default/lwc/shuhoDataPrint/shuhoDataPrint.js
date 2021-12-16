@@ -1,4 +1,4 @@
-import { LightningElement, api, wire, track } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 
 // カスタムメソッド
 import getDonationsByDate from '@salesforce/apex/DonationDao.getDonationsByDate';
@@ -54,7 +54,7 @@ export default class ShuhoDataPrint extends LightningElement {
         this.donationDateFrom = event.detail.value;
         this.changeTableTitle();
     };
-    // 「納入に（まで）」欄を変更したとき
+    // 「納入日（まで）」欄を変更したとき
     onChangeDonationDateToField(event) {
         this.donationDateTo = event.detail.value;
         this.changeTableTitle();
