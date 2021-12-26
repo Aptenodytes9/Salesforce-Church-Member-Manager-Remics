@@ -77,7 +77,7 @@ public with sharing class DonationDao {
                 MAX(DonationSpouseName__c) DonationSpouseName,
                 MAX(DonationFamilyName__c) DonationFamilyName,
                 MAX(DonationNote__c) DonationNote
-                FROM
+            FROM
                 Donation__c
             WHERE
                 DonationMainOrSub__c <> 'サブ献金'
