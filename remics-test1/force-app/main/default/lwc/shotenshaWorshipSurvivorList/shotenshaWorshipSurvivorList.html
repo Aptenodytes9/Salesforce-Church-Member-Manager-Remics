@@ -1,0 +1,84 @@
+<template>
+    <!-- 検索日付入力フォーム -->
+    <lightning-card title="検索日付の指定" class="slds-p-horizontal_small">
+        <div class="slds-m-around_medium">
+            <lightning-record-edit-form>
+                <lightning-messages></lightning-messages>
+                <div class="slds-grid slds-gutters slds-wrap">
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input type="number" value={year} name="year" label="処理年度" min="2000" placeholder="半角数字4桁で入力" variant="label-inline" onchange={onChangeYear}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_3-of-4">
+                        <lightning-button label="検索" title="検索" onclick={search} class="slds-m-left_x-small" ></lightning-button>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input type="date" value={thisYearFrom} name="thisYearFrom" label="当年度（から）" variant="label-inline" onchange={onChangeThisYearFrom}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input type="date" value={thisYearTo} name="thisYearTo" label="当年度（まで）" variant="label-inline" onchange={onChangeThisYearTo}></lightning-input>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input type="date" value={lastYearFrom} name="lastYearFrom" label="1年（から）" variant="label-inline" onchange={onChangelastYearFrom}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input type="date" value={lastYearTo} name="lastYearTo" label="1年（まで）" variant="label-inline" onchange={onChangelastYearTo}></lightning-input>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input type="date" value={fiveYearFrom} name="fiveYearFrom" label="5年（から）" disabled variant="label-inline"></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input type="date" value={fiveYearTo} name="fiveYearTo" label="5年（まで）" disabled variant="label-inline"></lightning-input>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input type="date" value={tenYearFrom} name="tenYearFrom" label="10年（から）" disabled variant="label-inline"></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input type="date" value={tenYearTo} name="tenYearTo" label="10年（まで）" disabled variant="label-inline"></lightning-input>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input type="date" value={fifteenYearFrom} name="fifteenYearFrom" label="15年（から）" disabled variant="label-inline"></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input type="date" value={fifteenYearTo} name="fifteenYearTo" label="15年（まで）" disabled variant="label-inline"></lightning-input>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input type="date" value={twentyYearFrom} name="twentyYearFrom" label="20年（から）" disabled variant="label-inline"></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input type="date" value={twentyYearTo} name="twentyYearTo" label="20年（まで）" disabled variant="label-inline"></lightning-input>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input type="date" value={twentyFiveYearFrom} name="twentyFiveYearFrom" label="25年（から）" disabled variant="label-inline"></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input type="date" value={twentyFiveYearTo} name="twentyFiveYearTo" label="25年（まで）" disabled variant="label-inline"></lightning-input>
+                    </div>
+                </div>
+            </lightning-record-edit-form>
+        </div>
+    </lightning-card>
+
+    <!-- 遺族一覧 -->
+    <lightning-card title="遺族一覧" class="slds-p-horizontal_small" if:true={tableData}>
+        <lightning-button label="ダウンロード" title="表のデータをCSVダウンロード" onclick={exportCsv} class="slds-m-left_x-small" ></lightning-button>
+
+        <div class="slds-m-around_medium slds-scrollable">
+            <lightning-datatable
+                key-field="Id"
+                data={tableData}
+                columns={tableColumns}
+                column-widths-mode="auto"
+                show-row-number-column
+                hide-checkbox-column>
+            </lightning-datatable>
+        </div>
+    </lightning-card>
+
+</template>
