@@ -178,10 +178,8 @@ public with sharing class ShotenshaWorshipController {
       return '15年';
     } else if (deceasedDate >= dateList[10] && deceasedDate <= dateList[11] ) {
       return '20年';
-    } else if (deceasedDate >= dateList[12] && deceasedDate <= dateList[13] ) {
-      return '25年';
     } else {
-      return 'それ以上';
+      return '25年';
     }
   }
 }
