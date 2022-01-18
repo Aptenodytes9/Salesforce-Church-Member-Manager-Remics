@@ -5,13 +5,22 @@ public with sharing class ShuhoDataPrintUtilTest {
     static void setup() {
 
         // 世帯レコードの作成
-        Household__c h = new Household__c(
+        List<Household__c> hList = new List<Household__c>();
+        Household__c h1 = new Household__c(
             Name = '佐藤家',
             Prefecture__c = '東京都',
             Municipalities__c = '港区',
             HouseNumber__c = '赤坂1-2-3'
         );
-        insert h;
+        Household__c h2 = new Household__c(
+            Name = '後藤家',
+            Prefecture__c = '東京都',
+            Municipalities__c = '台東区',
+            HouseNumber__c = '浅草1-2-3'
+        );
+        hList.add(h1);
+        hList.add(h2);
+        insert hList;
 
         // 人レコード(教会員)の作成
         List<Person__c> pList = new List<Person__c>();
@@ -24,7 +33,8 @@ public with sharing class ShuhoDataPrintUtilTest {
                 FamilyNameFurigana__c = 'さとう',
                 ForeNameFurigana__c = 'いちろう' + String.valueOf(i),
                 RelationshipFromHouseholder__c = '本人',
-                DonationUnitClass__c = '個人'
+                DonationUnitClass__c = '個人',
+                Household__c = h1.Id
             );
             pList.add(p);
         }
@@ -49,15 +59,15 @@ public with sharing class ShuhoDataPrintUtilTest {
         Person__c pFather = pList[3];
         Person__c pSon = pList[4];
 
-        pFather.Name = '佐藤父3';
+        pFather.Name = '後藤父3';
         pFather.ForeName__c = '父3';
         pFather.DonationUnitClass__c = '家族';
-        pFather.Household__c = h.Id;
+        pFather.Household__c = h2.Id;
 
-        pSon.Name = '佐藤息子4';
+        pSon.Name = '後藤息子4';
         pSon.ForeName__c = '息子4';
         pSon.DonationUnitClass__c = '家族';
-        pSon.Household__c = h.Id;
+        pSon.Household__c = h2.Id;
         pSon.RelationshipFromHouseholder__c = '子';
 
         // 会員区分=「非会員」の人レコードの作成

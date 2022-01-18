@@ -4,6 +4,15 @@ public with sharing class PersonDaoTest {
     @testSetup
     static void setup() {
 
+        // 世帯レコードの作成
+        Household__c h = new Household__c(
+            Name = '佐藤家',
+            Prefecture__c = '東京都',
+            Municipalities__c = '港区',
+            HouseNumber__c = '赤坂1-2-3'
+        );
+        insert h;
+
         // 人レコード(教会員)の作成
         List<Person__c> pList = new List<Person__c>();
         for (Integer i = 0; i < 6; i++) {
@@ -15,7 +24,8 @@ public with sharing class PersonDaoTest {
                 FamilyNameFurigana__c = 'さとう',
                 ForeNameFurigana__c = 'いちろう' + String.valueOf(i),
                 RelationshipFromHouseholder__c = '本人',
-                DonationUnitClass__c = '個人'
+                DonationUnitClass__c = '個人',
+                Household__c = h.Id
             );
             pList.add(p);
         }
