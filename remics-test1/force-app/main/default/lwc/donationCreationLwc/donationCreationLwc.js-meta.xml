@@ -5,4 +5,10 @@
     <targets>
         <target>lightning__AppPage</target>
     </targets>
+    <masterLabel>
+        献金登録画面
+    </masterLabel>
+    <description>
+        献金登録画面
+    </description>
 </LightningComponentBundle>

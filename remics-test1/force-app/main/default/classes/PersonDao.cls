@@ -40,12 +40,13 @@ public with sharing class PersonDao {
                             AND DonationDate__c <= :dateTo)
                 AND PersonType__c IN ('現住陪餐会員', '陪餐会員')
                 AND Deceased__c = FALSE
+                AND Household__r.Prefecture__c IN ('東京都', '神奈川県', '埼玉県', '千葉県')
                 WITH SECURITY_ENFORCED
             ORDER BY Name
         ];
     }
 
-    // 「総会議員資格あり」= True にも関わらず、総会議員資格を満たしていない教会員を取得
+    // 「総会議員資格あり」= True にも関わらず、判定対象期間内の総会議員資格を満たしていない教会員を取得
     @AuraEnabled(cacheable=false)
     public static List<Person__c> getUnqualifiedDonorsByDate(Date dateFrom, Date dateTo) {
 
@@ -99,6 +100,7 @@ public with sharing class PersonDao {
                     Id NOT IN :donorIdSet
                     OR PersonType__c NOT IN ('現住陪餐会員', '陪餐会員')
                     OR Deceased__c = TRUE
+                    OR Household__r.Prefecture__c NOT IN ('東京都', '神奈川県', '埼玉県', '千葉県')
                 )
                 WITH SECURITY_ENFORCED
             ORDER BY Name
