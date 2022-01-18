@@ -65,11 +65,11 @@ export default class ShotenshaWorshipSurvivorList extends LightningElement {
     onChangeYear(event) {
         this.year = event.detail.value;
 
-        this.thisYearFrom = this.year + '-01-01';
-        this.thisYearTo = this.year + '-12-31';
+        this.thisYearFrom = (this.year - 1) + '-11-01';
+        this.thisYearTo = this.year + '-10-31';
 
-        this.lastYearFrom = (this.year - 1) + '-01-01';
-        this.lastYearTo = (this.year - 1 ) + '-12-31';
+        this.lastYearFrom = (this.year - 2) + '-11-01';
+        this.lastYearTo = (this.year - 1) + '-10-31';
 
         this.fiveYearFrom = (this.year - 5) + '-01-01';
         this.fiveYearTo = (this.year - 5) + '-12-31';
