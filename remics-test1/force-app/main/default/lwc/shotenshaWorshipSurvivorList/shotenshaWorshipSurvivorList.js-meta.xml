@@ -5,4 +5,10 @@
     <targets>
         <target>lightning__AppPage</target>
     </targets>
+    <masterLabel>
+        遺族宛案内者抽出画面
+    </masterLabel>
+    <description>
+        遺族宛案内者抽出画面
+    </description>
 </LightningComponentBundle>

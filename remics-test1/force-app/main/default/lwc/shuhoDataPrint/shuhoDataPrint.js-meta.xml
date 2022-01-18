@@ -5,4 +5,10 @@
     <targets>
         <target>lightning__AppPage</target>
     </targets>
+    <masterLabel>
+        週報原稿データ作成画面
+    </masterLabel>
+    <description>
+        週報原稿データ作成画面
+    </description>
 </LightningComponentBundle>
