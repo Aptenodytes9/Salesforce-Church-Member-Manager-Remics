@@ -26,7 +26,7 @@ public with sharing class PersonDao {
                 FROM 
                     DonorRef__r
                 WHERE 
-                    DonationType__c = '月次献金' 
+                    DonationType__c = '1' // 月次献金
                     AND DonationDate__c >= :dateFrom 
                     AND DonationDate__c <= :dateTo)
             FROM Person__c 
@@ -35,7 +35,7 @@ public with sharing class PersonDao {
                         FROM 
                             Donation__c 
                         WHERE 
-                            DonationType__c = '月次献金' 
+                            DonationType__c = '1' // 月次献金
                             AND DonationDate__c >= :dateFrom 
                             AND DonationDate__c <= :dateTo)
                 AND PersonType__c IN ('現住陪餐会員', '陪餐会員')
@@ -57,7 +57,7 @@ public with sharing class PersonDao {
             FROM 
                 Donation__c 
             WHERE 
-                DonationType__c = '月次献金' 
+                DonationType__c = '1' 
                 AND DonationDate__c >= :dateFrom 
                 AND DonationDate__c <= :dateTo
                 WITH SECURITY_ENFORCED
@@ -90,7 +90,7 @@ public with sharing class PersonDao {
                 FROM 
                     DonorRef__r
                 WHERE 
-                    DonationType__c = '月次献金' 
+                    DonationType__c = '1' // 月次献金
                     AND DonationDate__c >= :dateFrom 
                     AND DonationDate__c <= :dateTo)
             FROM Person__c 

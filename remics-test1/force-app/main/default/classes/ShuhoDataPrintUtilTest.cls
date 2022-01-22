@@ -92,20 +92,20 @@ public with sharing class ShuhoDataPrintUtilTest {
                 DonationFinishDate__c = Date.newInstance(2023, 1, 31),
                 Donor__c = p.Id,
                 DonationAmount__c = 10000,
-                DonationType__c = '月次献金'
+                DonationType__c = '1'
             );
             Donation__c dToki = new Donation__c(
                 DonationDate__c = Date.newInstance(2022, 12, 15),
                 Donor__c = p.Id,
                 DonationAmount__c = 20000,
-                DonationType__c = '冬季特別献金',
+                DonationType__c = '3',
                 DonationNote__c = '感謝'
             );
             Donation__c dAsa = new Donation__c(
                 DonationDate__c = Date.newInstance(2022, 12, 31),
                 Donor__c = p.Id,
                 DonationAmount__c = 30000,
-                DonationType__c = '朝礼拝'
+                DonationType__c = '19'
             );
             dList.add(dGetsuji);
             dList.add(dToki);
@@ -119,7 +119,7 @@ public with sharing class ShuhoDataPrintUtilTest {
         Date dateFrom = Date.newInstance(2022, 12, 1);
         Date dateTo = Date.newInstance(2022, 12, 31);
         String actualStr = ShuhoDataPrintUtil.getShuhoData(dateFrom, dateTo);
-        String expectedStr = '◇月次献金　佐藤一郎0、佐藤夫1・妻2、佐藤父3・息子4<br/>◇冬季特別献金　佐藤一郎0（感謝）、佐藤夫1・妻2（感謝）、佐藤父3・息子4（感謝）<br/>◇朝礼拝　佐藤一郎0、佐藤夫1・妻2、佐藤父3・息子4';
+        String expectedStr = '◇月次献金　佐藤一郎0、佐藤夫1・妻2、佐藤父3・息子4<br/>◇冬季特別献金　佐藤一郎0（感謝）、佐藤夫1・妻2（感謝）、佐藤父3・息子4（感謝）<br/>◇夕礼拝　佐藤一郎0、佐藤夫1・妻2、佐藤父3・息子4';
 
         Test.startTest();
         System.assertEquals(expectedStr, actualStr, 'ShuhoDataPrintUtilTest.getDonationsByDateAggregate Error');
