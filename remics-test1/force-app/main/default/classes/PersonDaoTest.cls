@@ -76,20 +76,20 @@ public with sharing class PersonDaoTest {
                 DonationFinishDate__c = Date.newInstance(2023, 1, 31),
                 Donor__c = p.Id,
                 DonationAmount__c = 10000,
-                DonationType__c = '月次献金'
+                DonationType__c = '1'
             );
             Donation__c dToki = new Donation__c(
                 DonationDate__c = Date.newInstance(2022, 12, 15),
                 Donor__c = p.Id,
                 DonationAmount__c = 20000,
-                DonationType__c = '冬季特別献金',
+                DonationType__c = '3',
                 DonationNote__c = '感謝'
             );
             Donation__c dAsa = new Donation__c(
                 DonationDate__c = Date.newInstance(2022, 12, 31),
                 Donor__c = p.Id,
                 DonationAmount__c = 30000,
-                DonationType__c = '朝礼拝'
+                DonationType__c = '18'
             );
 
             if(p.Id == pNoDonationWhileTerm.Id){
