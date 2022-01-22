@@ -1,6 +1,6 @@
 public with sharing class DeceasedSurvivorDao {
 
-    // 召天者記念礼拝の案内を送付する遺族を取得
+    // 指定期間に召天した召天者とその遺族を取得
     @AuraEnabled(cacheable=true)
     public static List<DeceasedSurvivor__c> getDeceasedSurvivorByDate(List<Date> dateList) {
         return [
