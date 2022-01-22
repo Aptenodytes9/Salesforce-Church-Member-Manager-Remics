@@ -25,6 +25,7 @@ public with sharing class PersonDaoTest {
                 ForeNameFurigana__c = 'いちろう' + String.valueOf(i),
                 RelationshipFromHouseholder__c = '本人',
                 DonationUnitClass__c = '個人',
+                PersonNumCurrent__c = 5000 + i,
                 Household__c = h.Id
             );
             pList.add(p);
@@ -145,6 +146,20 @@ public with sharing class PersonDaoTest {
         System.assertEquals(3, newPList.size(), 'PersonDao.updatePersonsTest Size Error');
         System.assertEquals(true, newPList[0].ParliamentaryQualification__c, 'PersonDao.updatePersonsTest ParliamentaryQualification__c Error');
         System.assertEquals(false, newPList[1].ParliamentaryQualification__c, 'PersonDao.updatePersonsTest ParliamentaryQualification__c Error');
+        Test.stopTest();
+    }
+
+    @isTest
+    static void getPersonByPersonNumCurrentTest() {
+        Person__c p1 = PersonDao.getPersonByPersonNumCurrent(5000);
+        Person__c p2 = PersonDao.getPersonById(p1.Id);
+
+        Test.startTest();
+        System.assertEquals('佐藤一郎0', p1.Name, 'PersonDao.getPersonByPersonNumCurrent Error');
+        System.assertEquals(5000, p1.PersonNumCurrent__c, 'PersonDao.getPersonByPersonNumCurrent Error');
+        
+        System.assertEquals('佐藤一郎0', p2.Name, 'PersonDao.getPersonById Error');
+        System.assertEquals(5000, p2.PersonNumCurrent__c, 'PersonDao.getPersonById Error');
         Test.stopTest();
     }
 }

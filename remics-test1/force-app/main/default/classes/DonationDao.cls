@@ -1,6 +1,6 @@
 public with sharing class DonationDao {
     
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled(cacheable=false)
     public static List<Donation__c> getDonationsByDonorId(Id donorId, Date donationDateFrom, Date donationDateTo) {
         if(donorId == null){
             return null;

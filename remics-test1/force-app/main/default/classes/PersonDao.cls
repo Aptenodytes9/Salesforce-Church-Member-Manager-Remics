@@ -116,4 +116,32 @@ public with sharing class PersonDao {
         update personsForUpdate;
         System.debug('DonationDao#updatePersons Done Successfully');
     }
+
+    // 「原籍番号（現在）」から教会員を取得
+    @AuraEnabled
+    public static Person__c getPersonByPersonNumCurrent(Integer personNumCurrent) {
+        return [
+            SELECT 
+                Id,
+                Name,
+                PersonNumCurrent__c
+            FROM Person__c 
+            WHERE PersonNumCurrent__c = :personNumCurrent
+            LIMIT 1
+        ];
+    }
+
+    // レコードIDから人情報を取得
+    @AuraEnabled
+    public static Person__c getPersonById(Id id) {
+        return [
+            SELECT 
+                Id,
+                Name,
+                PersonNumCurrent__c
+            FROM Person__c 
+            WHERE id = :id
+            LIMIT 1
+        ];
+    }
 }
