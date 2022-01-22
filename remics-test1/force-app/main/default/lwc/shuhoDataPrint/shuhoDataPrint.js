@@ -21,6 +21,14 @@ import DONATIONFINISHDATE_FIELD from '@salesforce/schema/Donation__c.DonationFin
 import DONATIONNOTE_FIELD from '@salesforce/schema/Donation__c.DonationNote__c';
 import DONATIONMAINORSUB_FIELD from '@salesforce/schema/Donation__c.DonationMainOrSub__c';
 
+// 現在日付を文字列[yyyy-mm-dd]にフォーマットする
+var today = new Date();
+var formattedToday = `
+${today.getFullYear()}-
+${(today.getMonth()+1).toString().padStart(2, '0')}-
+${today.getDate().toString().padStart(2, '0')}
+`.replace(/\n|\r/g, '');
+
 // 献金一覧表 項目
 const TABLE_COLUMNS = [
     { label: '献金', fieldName: NAME_FIELD.fieldApiName, type: 'text' },
@@ -39,11 +47,16 @@ const TABLE_COLUMNS = [
 
 export default class ShuhoDataPrint extends LightningElement {
     // 献金レコード検索フォーム
-    @api donationDateFrom;
-    @api donationDateTo;
+    @api donationDateFrom = formattedToday;
+    @api donationDateTo = formattedToday;
     @api tableTitle;
 
     DonationObjectName = DONATION_OBJECT;
+
+    // 要素がドキュメントに挿入されるとき
+    connectedCallback(){
+        this.changeTableTitle();
+    }
 
     changeTableTitle(){
         this.tableTitle = this.donationDateFrom + "から" + this.donationDateTo + "に納入された献金の一覧";
