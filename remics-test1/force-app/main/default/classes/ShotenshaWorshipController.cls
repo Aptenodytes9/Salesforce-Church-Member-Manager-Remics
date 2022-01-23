@@ -1,10 +1,10 @@
 public with sharing class ShotenshaWorshipController {
 
-    // 遺族宛案内者抽出CSVデータ
+    // CSVデータ
     public static String csvData { get; set; }
 
-    // CSVデータを作成
-    public static void createCsvData() {
+    // 遺族宛案内 送付先世帯一覧 CSVデータを作成
+    public static void createAtenaCsvData() {
 
       // 最後にユーザーが検索した検索日付をカスタム設定から取得
       ShotenshaWorshipSurvivorList__c sws = ShotenshaWorshipSurvivorList__c.getInstance();
@@ -44,10 +44,92 @@ public with sharing class ShotenshaWorshipController {
       csvData += '\r\n';
     }
 
+    // 召天者-遺族 一覧 CSVデータを作成
+    public static void createDeceasedListCsvData() {
+
+      // 最後にユーザーが検索した検索日付をカスタム設定から取得
+      ShotenshaWorshipSurvivorList__c sws = ShotenshaWorshipSurvivorList__c.getInstance();
+
+      List<Date> dateList = new List<Date>();
+      dateList.add(sws.thisYearFrom__c);
+      dateList.add(sws.thisYearTo__c);
+      dateList.add(sws.lastYearFrom__c);
+      dateList.add(sws.lastYearTo__c);
+      dateList.add(sws.fiveYearFrom__c);
+      dateList.add(sws.fiveYearTo__c);
+      dateList.add(sws.tenYearFrom__c);
+      dateList.add(sws.tenYearTo__c);
+      dateList.add(sws.fifteenYearFrom__c);
+      dateList.add(sws.fifteenYearTo__c);
+      dateList.add(sws.twentyYearFrom__c);
+      dateList.add(sws.twentyYearTo__c);
+      dateList.add(sws.twentyFiveYearFrom__c);
+      dateList.add(sws.twentyFiveYearTo__c);
+
+      // CSVデータのもととなるデータを取得
+      List<Map<String, Object>> deceasedList = getDeceasedList(dateList, false);
+
+      List<String> rowList = new List<String>();
+
+      // ヘッダー行を作成
+      rowList.add('召天年,召天者会員区分,召天者原簿番号,召天者名,召天日,納骨日,御遺影有無,遺族名,遺族原簿番号,遺族続柄,遺族召天案内,郵便番号,住所');
+
+      // データ行を作成
+      for(Map<String, Object> shMap : deceasedList) {
+        rowList.add(String.join(shMap.values(), ','));
+      }
+
+      // １行ごとに改行を付与
+      csvData = String.join(rowList, '\r\n');
+      // 最終行にも改行を付加する
+      csvData += '\r\n';
+    }
+
+    // 遺族-召天者 一覧 CSVデータを作成
+    public static void createSurvivorListCsvData() {
+
+      // 最後にユーザーが検索した検索日付をカスタム設定から取得
+      ShotenshaWorshipSurvivorList__c sws = ShotenshaWorshipSurvivorList__c.getInstance();
+
+      List<Date> dateList = new List<Date>();
+      dateList.add(sws.thisYearFrom__c);
+      dateList.add(sws.thisYearTo__c);
+      dateList.add(sws.lastYearFrom__c);
+      dateList.add(sws.lastYearTo__c);
+      dateList.add(sws.fiveYearFrom__c);
+      dateList.add(sws.fiveYearTo__c);
+      dateList.add(sws.tenYearFrom__c);
+      dateList.add(sws.tenYearTo__c);
+      dateList.add(sws.fifteenYearFrom__c);
+      dateList.add(sws.fifteenYearTo__c);
+      dateList.add(sws.twentyYearFrom__c);
+      dateList.add(sws.twentyYearTo__c);
+      dateList.add(sws.twentyFiveYearFrom__c);
+      dateList.add(sws.twentyFiveYearTo__c);
+
+      // CSVデータのもととなるデータを取得
+      List<Map<String, Object>> survivorList = getSurvivorList(dateList, false);
+
+      List<String> rowList = new List<String>();
+
+      // ヘッダー行を作成
+      rowList.add('遺族原簿番号,遺族名,遺族会員区分,郵便番号,住所,遺族続柄,遺族召天案内,召天年,召天者会員区分,召天者原簿番号,召天者名,召天日,納骨日,御遺影有無');
+
+      // データ行を作成
+      for(Map<String, Object> shMap : survivorList) {
+        rowList.add(String.join(shMap.values(), ','));
+      }
+
+      // １行ごとに改行を付与
+      csvData = String.join(rowList, '\r\n');
+      // 最終行にも改行を付加する
+      csvData += '\r\n';
+    }
+
     // 召天者記念礼拝の案内を送付する遺族とその世帯を世帯単位で出力する
     @AuraEnabled(cacheable=false)
     public static List<Map<String, Object>> getSurvivorHouseholdList(List<Date> dateList, Boolean isForView){
-      List<DeceasedSurvivor__c> dList = DeceasedSurvivorDao.getDeceasedSurvivorByDate(dateList);
+      List<DeceasedSurvivor__c> dList = DeceasedSurvivorDao.getDeceasedSurvivorByDateOrderbyHousehold(dateList);
 
       // key: 世帯ID, value: 遺族とその召天者のMap
       Map<String, Map<String, Object>> dataMap = new Map<String, Map<String, Object>>();
@@ -181,5 +263,88 @@ public with sharing class ShotenshaWorshipController {
       } else {
         return '25年';
       }
+    }
+
+    // 召天者記念礼拝の対象となる召天者とその遺族を召天者単位で出力する
+    @AuraEnabled(cacheable=false)
+    public static List<Map<String, Object>> getDeceasedList(List<Date> dateList, Boolean isForView){
+      List<DeceasedSurvivor__c> dList = DeceasedSurvivorDao.getDeceasedSurvivorByDateOrderbyDeceasedDate(dateList);
+  
+      // 遺族とその召天者のMapのListを取得
+      List<Map<String, Object>> dataList = new List<Map<String, Object>>();
+
+      // 召天者×遺族オブジェクトを展開
+      for (DeceasedSurvivor__c d : dList) {
+        Map<String, Object> m = new Map<String, Object>();
+
+        // 召天者
+        m.put('DeceasedDateCat', decideDeceasedDateCategory(d.DeceasedDate__c, dateList));
+        m.put('DeceasedPersonType', d.DeceasedPerson__r.PersonType__c);
+        m.put('DeceasedPersonNumCurrent', d.DeceasedPerson__r.PersonNumCurrent__c);
+        m.put('DeceasedPersonName', d.DeceasedPerson__r.Name);
+        if(isForView){
+          m.put('DeceasedDate', d.DeceasedDate__c);
+          m.put('BoneDate', d.DeceasedPerson__r.BoneDate__c);
+        } else {
+          // CSV出力する場合は日付をフォーマットする（世界照準時形式で出力されてしまうため）
+          m.put('DeceasedDate', String.valueOf(d.DeceasedDate__c));
+          m.put('BoneDate', String.valueOf(d.DeceasedPerson__r.BoneDate__c));
+        }
+        m.put('Remains', d.DeceasedPerson__r.Remains__c);
+        // 遺族
+        m.put('SurvivorName', d.SurvivorPerson__r.Name);
+        m.put('SurvivorPersonNumCurrent', d.SurvivorPerson__r.PersonNumCurrent__c);
+        m.put('SurvivorRelationship', d.SurvivorRelationship__c);
+        m.put('CelestialWorshipShipment', d.SurvivorPerson__r.CelestialWorshipShipment__c);
+        // 世帯
+        m.put('PostalCode', d.SurvivorHousehold__r.PostalCode__c);
+        m.put('AddressAllCombined', d.SurvivorHousehold__r.AddressAllCombined__c);
+
+        dataList.add(m);
+      }
+
+      return dataList;
+    }
+
+    // 召天者記念礼拝の対象となる召天者とその遺族を遺族単位で出力する
+    @AuraEnabled(cacheable=false)
+    public static List<Map<String, Object>> getSurvivorList(List<Date> dateList, Boolean isForView){
+      List<DeceasedSurvivor__c> dList = DeceasedSurvivorDao.getDeceasedSurvivorByDateOrderbyPostalcode(dateList);
+  
+      // 遺族とその召天者のMapのListを取得
+      List<Map<String, Object>> dataList = new List<Map<String, Object>>();
+
+      // 召天者×遺族オブジェクトを展開
+      for (DeceasedSurvivor__c d : dList) {
+        Map<String, Object> m = new Map<String, Object>();
+
+        // 遺族
+        m.put('SurvivorPersonNumCurrent', d.SurvivorPerson__r.PersonNumCurrent__c);
+        m.put('SurvivorName', d.SurvivorPerson__r.Name);
+        m.put('SurvivorPersonType', d.SurvivorPerson__r.PersonType__c);
+        // 世帯
+        m.put('PostalCode', d.SurvivorHousehold__r.PostalCode__c);
+        m.put('AddressAllCombined', d.SurvivorHousehold__r.AddressAllCombined__c);
+        m.put('SurvivorRelationship', d.SurvivorRelationship__c);
+        m.put('CelestialWorshipShipment', d.SurvivorPerson__r.CelestialWorshipShipment__c);
+        // 召天者
+        m.put('DeceasedDateCat', decideDeceasedDateCategory(d.DeceasedDate__c, dateList));
+        m.put('DeceasedPersonType', d.DeceasedPerson__r.PersonType__c);
+        m.put('DeceasedPersonNumCurrent', d.DeceasedPerson__r.PersonNumCurrent__c);
+        m.put('DeceasedPersonName', d.DeceasedPerson__r.Name);
+        if(isForView){
+          m.put('DeceasedDate', d.DeceasedDate__c);
+          m.put('BoneDate', d.DeceasedPerson__r.BoneDate__c);
+        } else {
+          // CSV出力する場合は日付をフォーマットする（世界照準時形式で出力されてしまうため）
+          m.put('DeceasedDate', String.valueOf(d.DeceasedDate__c));
+          m.put('BoneDate', String.valueOf(d.DeceasedPerson__r.BoneDate__c));
+        }
+        m.put('Remains', d.DeceasedPerson__r.Remains__c);
+
+        dataList.add(m);
+      }
+
+      return dataList;
     }
 }

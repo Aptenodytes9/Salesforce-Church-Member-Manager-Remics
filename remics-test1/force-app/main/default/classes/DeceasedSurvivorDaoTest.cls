@@ -53,7 +53,7 @@ public with sharing class DeceasedSurvivorDaoTest {
     }
 
     @isTest
-    static void getDeceasedSurvivorByDateTest() {
+    static void getDeceasedSurvivorByDateOrderbyHouseholdTest() {
 
         List<Date> dateList = new List<Date>();
         dateList.add(Date.newInstance(2020, 1, 1));
@@ -71,10 +71,62 @@ public with sharing class DeceasedSurvivorDaoTest {
         dateList.add(Date.newInstance(1995, 1, 1));
         dateList.add(Date.newInstance(1995, 12, 31));
 
-        List<DeceasedSurvivor__c> dList = DeceasedSurvivorDao.getDeceasedSurvivorByDate(dateList);
+        List<DeceasedSurvivor__c> dList = DeceasedSurvivorDao.getDeceasedSurvivorByDateOrderbyHousehold(dateList);
 
         Test.startTest();
-        System.assertEquals(3, dList.size(), 'DeceasedSurvivorDao.getDeceasedSurvivorByDate Error');
+        System.assertEquals(3, dList.size(), 'DeceasedSurvivorDao.getDeceasedSurvivorByDateOrderbyHousehold Error');
+        Test.stopTest();
+    }
+
+    @isTest
+    static void getDeceasedSurvivorByDateOrderbyDeceasedDateTest() {
+
+        List<Date> dateList = new List<Date>();
+        dateList.add(Date.newInstance(2020, 1, 1));
+        dateList.add(Date.newInstance(2020, 12, 31));
+        dateList.add(Date.newInstance(2019, 1, 1));
+        dateList.add(Date.newInstance(2019, 12, 31));
+        dateList.add(Date.newInstance(2015, 1, 1));
+        dateList.add(Date.newInstance(2015, 12, 31));
+        dateList.add(Date.newInstance(2010, 1, 1));
+        dateList.add(Date.newInstance(2010, 12, 31));
+        dateList.add(Date.newInstance(2005, 1, 1));
+        dateList.add(Date.newInstance(2005, 12, 31));
+        dateList.add(Date.newInstance(2000, 1, 1));
+        dateList.add(Date.newInstance(2000, 12, 31));
+        dateList.add(Date.newInstance(1995, 1, 1));
+        dateList.add(Date.newInstance(1995, 12, 31));
+
+        List<DeceasedSurvivor__c> dList = DeceasedSurvivorDao.getDeceasedSurvivorByDateOrderbyDeceasedDate(dateList);
+
+        Test.startTest();
+        System.assertEquals(3, dList.size(), 'DeceasedSurvivorDao.getDeceasedSurvivorByDateOrderbyDeceasedDate Error');
+        Test.stopTest();
+    }
+
+    @isTest
+    static void getDeceasedSurvivorByDateOrderbyPostalcodeTest() {
+
+        List<Date> dateList = new List<Date>();
+        dateList.add(Date.newInstance(2020, 1, 1));
+        dateList.add(Date.newInstance(2020, 12, 31));
+        dateList.add(Date.newInstance(2019, 1, 1));
+        dateList.add(Date.newInstance(2019, 12, 31));
+        dateList.add(Date.newInstance(2015, 1, 1));
+        dateList.add(Date.newInstance(2015, 12, 31));
+        dateList.add(Date.newInstance(2010, 1, 1));
+        dateList.add(Date.newInstance(2010, 12, 31));
+        dateList.add(Date.newInstance(2005, 1, 1));
+        dateList.add(Date.newInstance(2005, 12, 31));
+        dateList.add(Date.newInstance(2000, 1, 1));
+        dateList.add(Date.newInstance(2000, 12, 31));
+        dateList.add(Date.newInstance(1995, 1, 1));
+        dateList.add(Date.newInstance(1995, 12, 31));
+
+        List<DeceasedSurvivor__c> dList = DeceasedSurvivorDao.getDeceasedSurvivorByDateOrderbyPostalcode(dateList);
+
+        Test.startTest();
+        System.assertEquals(3, dList.size(), 'DeceasedSurvivorDao.getDeceasedSurvivorByDateOrderbyPostalcode Error');
         Test.stopTest();
     }
 }

@@ -1,0 +1,6 @@
+<apex:page controller="ShotenshaWorshipController" action="{!createSurvivorListCsvData}" sidebar="false" showHeader="false"
+    contentType="text/csv;charset=Shift-JIS#Izoku_Shotensha_{!YEAR(TODAY())}{!LPAD(TEXT(MONTH(TODAY())), 2 , '0')}{!DAY(TODAY())}.csv"
+    readOnly="true" title="遺族-召天者一覧CSV出力">
+
+    <apex:outputText value="{!csvData}" />
+</apex:page>
