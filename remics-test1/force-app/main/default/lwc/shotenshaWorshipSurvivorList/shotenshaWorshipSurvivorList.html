@@ -66,15 +66,47 @@
         </div>
     </lightning-card>
 
-    <!-- 遺族一覧 -->
-    <lightning-card title="遺族一覧" class="slds-p-horizontal_small" if:true={tableData}>
-        <lightning-button label="ダウンロード" title="表のデータをCSVダウンロード" onclick={exportCsv} class="slds-m-left_x-small" ></lightning-button>
+    <!-- 遺族宛案内 送付先世帯 一覧 -->
+    <lightning-card title="遺族宛案内 送付先世帯 一覧" class="slds-p-horizontal_small" if:true={atenaListTableData}>
+        <lightning-button label="ダウンロード" title="表のデータをCSVダウンロード" onclick={exportAtenaCsv} class="slds-m-left_x-small" ></lightning-button>
 
         <div class="slds-m-around_medium slds-scrollable">
             <lightning-datatable
                 key-field="Id"
-                data={tableData}
-                columns={tableColumns}
+                data={atenaListTableData}
+                columns={aTableColumns}
+                column-widths-mode="auto"
+                show-row-number-column
+                hide-checkbox-column>
+            </lightning-datatable>
+        </div>
+    </lightning-card>
+
+    <!-- 召天者-遺族 一覧 -->
+    <lightning-card title="召天者-遺族 一覧" class="slds-p-horizontal_small" if:true={deceasedListTableData}>
+        <lightning-button label="ダウンロード" title="表のデータをCSVダウンロード" onclick={exportDeceasedListCsv} class="slds-m-left_x-small" ></lightning-button>
+
+        <div class="slds-m-around_medium slds-scrollable">
+            <lightning-datatable
+                key-field="Id"
+                data={deceasedListTableData}
+                columns={dTableColumns}
+                column-widths-mode="auto"
+                show-row-number-column
+                hide-checkbox-column>
+            </lightning-datatable>
+        </div>
+    </lightning-card>
+
+    <!-- 遺族-召天者 一覧 -->
+    <lightning-card title="遺族-召天者 一覧" class="slds-p-horizontal_small" if:true={survivorListTableData}>
+        <lightning-button label="ダウンロード" title="表のデータをCSVダウンロード" onclick={exportSurvivorListCsv} class="slds-m-left_x-small" ></lightning-button>
+
+        <div class="slds-m-around_medium slds-scrollable">
+            <lightning-datatable
+                key-field="Id"
+                data={survivorListTableData}
+                columns={sTableColumns}
                 column-widths-mode="auto"
                 show-row-number-column
                 hide-checkbox-column>
