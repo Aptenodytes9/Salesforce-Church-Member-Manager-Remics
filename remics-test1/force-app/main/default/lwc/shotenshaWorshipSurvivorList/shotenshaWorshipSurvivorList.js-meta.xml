@@ -6,9 +6,9 @@
         <target>lightning__AppPage</target>
     </targets>
     <masterLabel>
-        遺族宛案内者抽出画面
+        召天者記念礼拝リスト作成画面
     </masterLabel>
     <description>
-        遺族宛案内者抽出画面
+        召天者記念礼拝リスト作成画面
     </description>
 </LightningComponentBundle>
