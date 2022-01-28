@@ -22,7 +22,6 @@ import DONATIONSTARTDATE_FIELD from '@salesforce/schema/Donation__c.DonationStar
 import DONATIONFINISHDATE_FIELD from '@salesforce/schema/Donation__c.DonationFinishDate__c';
 import DONATIONMONTHNUM_FIELD from '@salesforce/schema/Donation__c.DonationMonthNum__c';
 import DONATIONNOTE_FIELD from '@salesforce/schema/Donation__c.DonationNote__c';
-import ACCOUNTINGUNIT_FIELD from '@salesforce/schema/Donation__c.AccountingUnit__c';
 
 // 行アクション
 const actions = [
@@ -76,7 +75,6 @@ const TABLE_COLUMNS = [
     { label: '終了日', fieldName: DONATIONFINISHDATE_FIELD.fieldApiName, type: 'date-local', editable: true },
     { label: '月数', fieldName: DONATIONMONTHNUM_FIELD.fieldApiName, type: 'text', editable: false },
     { label: '摘要', fieldName: DONATIONNOTE_FIELD.fieldApiName, type: 'text', editable: true },
-    { label: '会計単位', fieldName: ACCOUNTINGUNIT_FIELD.fieldApiName, type: 'text', editable: false },
     { type: 'action', typeAttributes: { rowActions: actions } }
 ];
 
