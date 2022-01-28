@@ -70,18 +70,21 @@ public with sharing class ShotenshaWorshipControllerTest {
         pDeceased3.BoneDate__c = Date.newInstance(2020, 12, 1);
         pDeceased3.Remains__c = '有';
         pDeceased3.MainBoneType__c = '本骨';
+        pDeceased3.OfficiantPastorName__c = '後宮敬爾牧師';
         Person__c pDeceased4 = pList[4];
         pDeceased4.Deceased__c = true;
         pDeceased4.DeceasedDate__c = Date.newInstance(2019, 12, 1);
         pDeceased4.BoneDate__c = Date.newInstance(2019, 12, 1);
         pDeceased4.Remains__c = '有';
         pDeceased4.MainBoneType__c = '本骨';
+        pDeceased4.OfficiantPastorName__c = '後宮敬爾牧師';
         Person__c pDeceased5 = pList[5];
         pDeceased5.Deceased__c = true;
         pDeceased5.DeceasedDate__c = Date.newInstance(2015, 12, 1);
         pDeceased5.BoneDate__c = Date.newInstance(2015, 12, 1);
         pDeceased5.Remains__c = '無';
         pDeceased5.MainBoneType__c = '本骨';
+        pDeceased5.OfficiantPastorName__c = '後宮敬爾牧師';
 
         // 後藤家の召天者の作成
         Person__c pDeceased9 = pList[9];
@@ -90,24 +93,28 @@ public with sharing class ShotenshaWorshipControllerTest {
         pDeceased9.BoneDate__c = Date.newInstance(2020, 12, 1);
         pDeceased9.Remains__c = '有';
         pDeceased9.MainBoneType__c = '本骨';
+        pDeceased9.OfficiantPastorName__c = '後宮敬爾牧師';
         Person__c pDeceased10 = pList[10];
         pDeceased10.Deceased__c = true;
         pDeceased10.DeceasedDate__c = Date.newInstance(2005, 12, 1);
         pDeceased10.BoneDate__c = Date.newInstance(2005, 12, 1);
         pDeceased10.Remains__c = '有';
         pDeceased10.MainBoneType__c = '本骨';
+        pDeceased10.OfficiantPastorName__c = '後宮敬爾牧師';
         Person__c pDeceased11 = pList[11];
         pDeceased11.Deceased__c = true;
         pDeceased11.DeceasedDate__c = Date.newInstance(2000, 12, 1);
         pDeceased11.BoneDate__c = Date.newInstance(2000, 12, 1);
         pDeceased11.Remains__c = '無';
         pDeceased11.MainBoneType__c = '本骨';
+        pDeceased11.OfficiantPastorName__c = '後宮敬爾牧師';
         Person__c pDeceased12 = pList[12];
         pDeceased12.Deceased__c = true;
         pDeceased12.DeceasedDate__c = Date.newInstance(1995, 12, 1);
         pDeceased12.BoneDate__c = Date.newInstance(1995, 12, 1);
         pDeceased12.Remains__c = '無';
         pDeceased12.MainBoneType__c = '本骨';
+        pDeceased12.OfficiantPastorName__c = '後宮敬爾牧師';
         
         update pList;
 
