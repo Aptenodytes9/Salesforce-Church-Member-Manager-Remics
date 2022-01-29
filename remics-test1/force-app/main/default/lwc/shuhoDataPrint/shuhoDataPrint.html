@@ -1,7 +1,7 @@
 <template>
     <!-- 週報原稿データ作成画面 -->
     <!-- 納入期間指定フォーム -->
-    <lightning-card title="納入期間の指定" class="slds-p-horizontal_small">
+    <lightning-card title="納入期間の指定">
         <div class="slds-m-around_medium">
             <lightning-record-edit-form object-api-name={DonationObjectName}>
                 <lightning-messages></lightning-messages>
@@ -18,7 +18,7 @@
     </lightning-card>
 
     <!-- 週報原稿データ -->
-    <lightning-card title="週報原稿データ" if:true={shuhoData.data}>
+    <lightning-card title="週報原稿データ" class="slds-p-horizontal_small" if:true={shuhoData.data}>
         <div class="slds-m-around_medium">
             <lightning-input-rich-text
             value={shuhoData.data} disabled-categories="INSERT_CONTENT"></lightning-input-rich-text>
