@@ -1,0 +1,5 @@
+<apex:page controller="JornalExportController" action="{!createSienCsvData}" sidebar="false" showHeader="false" contentType="text/csv;charset=Shift-JIS#SIEN_IF.csv"
+    readOnly="true" title="仕訳データSIEN_IF出力">
+
+    <apex:outputText value="{!csvData}" />
+</apex:page>

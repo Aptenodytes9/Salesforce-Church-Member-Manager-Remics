@@ -1,0 +1,5 @@
+<apex:page controller="JornalExportController" action="{!createKaikeiCsvData}" sidebar="false" showHeader="false" contentType="text/csv;charset=Shift-JIS#KAIKEI_IF.csv"
+    readOnly="true" title="仕訳データKAIKEI_IF出力">
+
+    <apex:outputText value="{!csvData}" />
+</apex:page>

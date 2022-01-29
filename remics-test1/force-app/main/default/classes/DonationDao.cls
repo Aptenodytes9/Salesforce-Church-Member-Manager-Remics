@@ -22,6 +22,7 @@ public with sharing class DonationDao {
                 DonationMonthNum__c,
                 DonationNo__c,
                 DonationMainOrSub__c,
+                AccountingUnit__c,
                 ParentDonation__c,
                 NotUsedForAggregation__c,
                 DonationNote__c
@@ -30,7 +31,8 @@ public with sharing class DonationDao {
             WHERE
                 Donor__c = :donorId
                 AND DonationDate__c >= :donationDateFrom
-                AND DonationDate__c <= :donationDateTo WITH SECURITY_ENFORCED
+                AND DonationDate__c <= :donationDateTo
+                WITH SECURITY_ENFORCED
             ORDER BY DonationDate__c ASC, Name ASC
         ];
     }
@@ -59,7 +61,8 @@ public with sharing class DonationDao {
                 DonationMainOrSub__c <> 'サブ献金'
                 AND Donor__r.PersonType__c IN ('現住陪餐会員','陪餐会員')
                 AND DonationDate__c >= :donationDateFrom
-                AND DonationDate__c <= :donationDateTo WITH SECURITY_ENFORCED
+                AND DonationDate__c <= :donationDateTo
+                WITH SECURITY_ENFORCED
             ORDER BY DonationType__c ASC, DonorName__c ASC
         ];
     }
@@ -78,9 +81,47 @@ public with sharing class DonationDao {
                 DonationMainOrSub__c <> 'サブ献金'
                 AND Donor__r.PersonType__c IN ('現住陪餐会員','陪餐会員')
                 AND DonationDate__c >= :donationDateFrom
-                AND DonationDate__c <= :donationDateTo WITH  SECURITY_ENFORCED
+                AND DonationDate__c <= :donationDateTo
+                WITH SECURITY_ENFORCED
             GROUP BY DonationType__c, Donor__r.Name
             ORDER BY DonationType__c ASC, Donor__r.Name ASC
+        ];
+    }
+
+    public static List<AggregateResult> getJornalKaikeiListAggregate(Date donationDateFrom, Date donationDateTo, Boolean isKaikei) {
+
+        List<String> accountingUnitList = new List<String>();
+        if (isKaikei) {
+            // 「KAIKEI_IF.csv」の出力対象の会計単位
+            accountingUnitList.add('月次献金');
+            accountingUnitList.add('感謝献金');
+            accountingUnitList.add('礼拝献金');
+            accountingUnitList.add('その他献金');
+        } else {
+            // 「SIEN_IF.csv」の出力対象の会計単位
+            accountingUnitList.add('支援と発展会計');
+            accountingUnitList.add('特別献金');
+        }
+
+        return [
+            SELECT
+                DonationDate__c,
+                tolabel(DonationType__c) dTypeStr,
+                MAX(DebitCode__c) DebitCode,
+                MAX(CreditCode__c) CreditCode,
+                SUM(DonationAmount__c) DonationAmountSum,
+                COUNT(Id) RecordNum
+            From
+                Donation__c
+            WHERE
+                DonationMainOrSub__c <> 'サブ献金'
+                AND AccountingUnit__c IN :accountingUnitList
+                AND DonationDate__c >= :donationDateFrom
+                AND DonationDate__c <= :donationDateTo
+                WITH SECURITY_ENFORCED
+            GROUP BY
+                DonationDate__c, DonationType__c
+            ORDER BY DonationDate__c ASC, DonationType__c ASC
         ];
     }
 
