@@ -1,5 +1,5 @@
 @isTest
-public with sharing class DonationDaoTest {
+public with sharing class JornalExportControllerTest {
 
     @testSetup
     static void setup() {
@@ -126,94 +126,66 @@ public with sharing class DonationDaoTest {
     }
 
     @isTest
-    static void getDonationsByDonorIdTest() {
-        Person__c p = [SELECT Id, Name FROM Person__c WHERE Name = '佐藤一郎1' LIMIT 1];
+    static void getJornalListTest() {
         Date dateFrom = Date.newInstance(2022, 12, 1);
         Date dateTo = Date.newInstance(2022, 12, 31);
-        List<Donation__c> dList = DonationDao.getDonationsByDonorId(p.Id, dateFrom, dateTo);
+        List<Map<String, Object>> dListForView = JornalExportController.getJornalList(dateFrom, dateTo, true, true);
+        List<Map<String, Object>> dListForCsv = JornalExportController.getJornalList(dateFrom, dateTo, true, false);
 
         Test.startTest();
-        System.assertEquals(8, dList.size(), 'DonationDaoTest.getDonationsByDonorIdTest Error');
+        System.assertEquals(3, dListForView.size(), 'JornalExportController.getDonationsByDonorIdTest Error');
+        System.assertEquals('2022/12/01,015001,1,1101,4101,90000,月次献金6口', String.join(dListForView[0].values(), ','), 'JornalExportController.getDonationsByDonorIdTest Error');
+
+        System.assertEquals(3, dListForCsv.size(), 'JornalExportController.getDonationsByDonorIdTest Error');
+        System.assertEquals('"2022/12/01","015001","1","1101","4101","90000","月次献金6口"', String.join(dListForCsv[0].values(), ','), 'JornalExportController.getDonationsByDonorIdTest Error');
         Test.stopTest();
     }
 
     @isTest
-    static void getDonationsByDonorIdNullTest() {
+    static void createKaikeiCsvDataTest() {
         Date dateFrom = Date.newInstance(2022, 12, 1);
         Date dateTo = Date.newInstance(2022, 12, 31);
-        List<Donation__c> dList = DonationDao.getDonationsByDonorId(null, dateFrom, dateTo);
+        List<Map<String, Object>> dList = JornalExportController.getJornalList(dateFrom, dateTo, true, true);
+
+        JornalExportController.createKaikeiCsvData();
+        JornalExportController.updateLastExportDatetime(dateFrom, dateTo);
+        List<String> csvList = JornalExportController.csvData.split('\r\n');
 
         Test.startTest();
-        System.assert(dList == null, 'DonationDaoTest.getDonationsByDonorIdTest Error');
+        System.assertEquals('"2022/12/01","015001","1","1101","4101","90000","月次献金6口"', csvList[0], 'JornalExportController.createCsvData Error');
+        System.assertEquals('"2022/12/15","015002","1","1101","4104","90000","冬季特別献金6口"', csvList[1], 'JornalExportController.createCsvData Error');
         Test.stopTest();
     }
 
     @isTest
-    static void getDonationsByDateTest() {
+    static void createSienCsvDataTest() {
         Date dateFrom = Date.newInstance(2022, 12, 1);
         Date dateTo = Date.newInstance(2022, 12, 31);
-        List<Donation__c> dList = DonationDao.getDonationsByDate(dateFrom, dateTo);
+        List<Map<String, Object>> dList = JornalExportController.getJornalList(dateFrom, dateTo, true, true);
+
+        JornalExportController.createSienCsvData();
+        JornalExportController.updateLastExportDatetime(dateFrom, dateTo);
+        List<String> csvList = JornalExportController.csvData.split('\r\n');
 
         Test.startTest();
-        System.assertEquals(16, dList.size(), 'DonationDaoTest.getDonationsByDateTest Error');
+        System.assertEquals('"2022/12/31","015001","1","1101","4101","120000","伝道支援献金3口"', csvList[0], 'JornalExportController.createCsvData Error');
+        System.assertEquals('"2022/12/31","015002","1","1101","4102","150000","会堂保全献金3口"', csvList[1], 'JornalExportController.createCsvData Error');
         Test.stopTest();
     }
 
     @isTest
-    static void getDonationsByDateAggregateTest() {
+    static void getLastExportConditionTest() {
         Date dateFrom = Date.newInstance(2022, 12, 1);
         Date dateTo = Date.newInstance(2022, 12, 31);
-        List<AggregateResult> dList = DonationDao.getDonationsByDateAggregate(dateFrom, dateTo);
+        List<Map<String, Object>> dList = JornalExportController.getJornalList(dateFrom, dateTo, true, true);
+
+        JornalExportController.createSienCsvData();
+        JornalExportController.updateLastExportDatetime(dateFrom, dateTo);
+        Map<String, Object> dMap = JornalExportController.getLastExportCondition();
 
         Test.startTest();
-        System.assertEquals(12, dList.size(), 'DonationDaoTest.getDonationsByDateAggregate Error');
-        Test.stopTest();
-    }
-
-    @isTest
-    static void getJornalKaikeiListAggregateTest() {
-        Date dateFrom = Date.newInstance(2022, 12, 1);
-        Date dateTo = Date.newInstance(2022, 12, 31);
-        List<AggregateResult> dKList = DonationDao.getJornalKaikeiListAggregate(dateFrom, dateTo, true);
-        List<AggregateResult> dSList = DonationDao.getJornalKaikeiListAggregate(dateFrom, dateTo, false);
-
-        Test.startTest();
-        System.assertEquals(3, dKList.size(), 'DonationDaoTest.getJornalKaikeiListAggregate Error');
-        System.assertEquals(3, dKList.size(), 'DonationDaoTest.getJornalKaikeiListAggregate Error');
-        Test.stopTest();
-    }
-
-    @isTest
-    static void updateDonationsTest() {
-        Person__c p = [SELECT Id, Name FROM Person__c WHERE Name = '佐藤一郎1' LIMIT 1];
-        Date dateFrom = Date.newInstance(2022, 12, 1);
-        Date dateTo = Date.newInstance(2022, 12, 31);
-        List<Donation__c> dList = DonationDao.getDonationsByDonorId(p.Id, dateFrom, dateTo);
-
-        dList[0].DonationNote__c = 'new value';
-        DonationDao.updateDonations(dList);
-        List<Donation__c> newDList = DonationDao.getDonationsByDonorId(p.Id, dateFrom, dateTo);
-
-        Test.startTest();
-        System.assertEquals(8, newDList.size(), 'DonationDaoTest.updateDonations Size Error');
-        System.assertEquals('new value', newDList[0].DonationNote__c, 'DonationDaoTest.updateDonations DonationNote__c Error');
-        Test.stopTest();
-    }
-
-    @isTest
-    static void deleteDonationByIdTest() {
-        Person__c p = [SELECT Id, Name FROM Person__c WHERE Name = '佐藤一郎1' LIMIT 1];
-        Date dateFrom = Date.newInstance(2022, 12, 1);
-        Date dateTo = Date.newInstance(2022, 12, 31);
-        List<Donation__c> dList = DonationDao.getDonationsByDonorId(p.Id, dateFrom, dateTo);
-
-        Donation__c donation = dList[0];
-        String msg = DonationDao.deleteDonationById(donation.Id);
-        List<Donation__c> deletedDList = DonationDao.getDonationsByDonorId(p.Id, dateFrom, dateTo);
-
-        Test.startTest();
-        System.assertEquals(7, deletedDList.size(), 'DonationDaoTest.deleteDonationByIdTest Error');
-        System.assert(msg.contains('DonationDao#deleteDonationById Done Successfully'), 'DonationDaoTest.deleteDonationByIdTest Error');
+        System.assertEquals('2022-12-01 00:00:00', String.valueOf(dMap.get('donationDateFrom')), 'JornalExportController.createCsvData Error');
+        System.assertEquals('2022-12-31 00:00:00', String.valueOf(dMap.get('donationDateTo')), 'JornalExportController.createCsvData Error');
         Test.stopTest();
     }
 }
