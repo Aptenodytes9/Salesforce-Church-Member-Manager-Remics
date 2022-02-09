@@ -49,8 +49,9 @@ public with sharing class JornalExportController {
             Map<String, Object> m = new Map<String, Object>();
             dateNoIndex += 1;
 
-            String donationDateStr = Date.valueOf(data.get('DonationDate__c')).format();
-            String dateNoStr = String.valueOf(Date.today().month()).leftPad(2, '0') + String.valueOf(dateNoIndex);
+            Date donationDate = Date.valueOf(data.get('DonationDate__c'));
+            String donationDateStr = donationDate.format();
+            String dateNoStr = String.valueOf(donationDate.month()).leftPad(2, '0') + String.valueOf(dateNoIndex);
             String donationNoteStr = String.valueOf(data.get('dTypeStr')) + String.valueOf(data.get('RecordNum')) + '口';
 
             if (isForView) {
