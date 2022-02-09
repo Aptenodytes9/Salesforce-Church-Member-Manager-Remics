@@ -134,10 +134,10 @@ public with sharing class JornalExportControllerTest {
 
         Test.startTest();
         System.assertEquals(3, dListForView.size(), 'JornalExportController.getDonationsByDonorIdTest Error');
-        System.assertEquals('2022/12/01,015001,1,1101,4101,90000,月次献金6口', String.join(dListForView[0].values(), ','), 'JornalExportController.getDonationsByDonorIdTest Error');
+        System.assertEquals('2022/12/01,125001,1,1101,4101,90000,月次献金6口', String.join(dListForView[0].values(), ','), 'JornalExportController.getDonationsByDonorIdTest Error');
 
         System.assertEquals(3, dListForCsv.size(), 'JornalExportController.getDonationsByDonorIdTest Error');
-        System.assertEquals('"2022/12/01","015001","1","1101","4101","90000","月次献金6口"', String.join(dListForCsv[0].values(), ','), 'JornalExportController.getDonationsByDonorIdTest Error');
+        System.assertEquals('"2022/12/01","125001","1","1101","4101","90000","月次献金6口"', String.join(dListForCsv[0].values(), ','), 'JornalExportController.getDonationsByDonorIdTest Error');
         Test.stopTest();
     }
 
@@ -152,8 +152,8 @@ public with sharing class JornalExportControllerTest {
         List<String> csvList = JornalExportController.csvData.split('\r\n');
 
         Test.startTest();
-        System.assertEquals('"2022/12/01","015001","1","1101","4101","90000","月次献金6口"', csvList[0], 'JornalExportController.createCsvData Error');
-        System.assertEquals('"2022/12/15","015002","1","1101","4104","90000","冬季特別献金6口"', csvList[1], 'JornalExportController.createCsvData Error');
+        System.assertEquals('"2022/12/01","125001","1","1101","4101","90000","月次献金6口"', csvList[0], 'JornalExportController.createCsvData Error');
+        System.assertEquals('"2022/12/15","125002","1","1101","4104","90000","冬季特別献金6口"', csvList[1], 'JornalExportController.createCsvData Error');
         Test.stopTest();
     }
 
@@ -168,8 +168,8 @@ public with sharing class JornalExportControllerTest {
         List<String> csvList = JornalExportController.csvData.split('\r\n');
 
         Test.startTest();
-        System.assertEquals('"2022/12/31","015001","1","1101","4101","120000","伝道支援献金3口"', csvList[0], 'JornalExportController.createCsvData Error');
-        System.assertEquals('"2022/12/31","015002","1","1101","4102","150000","会堂保全献金3口"', csvList[1], 'JornalExportController.createCsvData Error');
+        System.assertEquals('"2022/12/31","125001","1","1101","4101","120000","伝道支援献金3口"', csvList[0], 'JornalExportController.createCsvData Error');
+        System.assertEquals('"2022/12/31","125002","1","1101","4102","150000","会堂保全献金3口"', csvList[1], 'JornalExportController.createCsvData Error');
         Test.stopTest();
     }
 
