@@ -84,6 +84,8 @@ export default class DonationCreationLwc extends LightningElement {
     // 献金者検索フォーム
     @api donorId;
     @api personNumCurrent;
+    @api boxNum;
+    @api shelfNum;
 
     DonationObjectName = DONATION_OBJECT;
     donorNameField = DONOR_FIELD;
@@ -97,6 +99,8 @@ export default class DonationCreationLwc extends LightningElement {
         // 原籍番号からレコードIDを取得
         await getPersonByPersonNumCurrent({ personNumCurrent: this.personNumCurrent }).then(record => {
             this.donorId = record.Id;
+            this.boxNum = record.WeeklyReportBoxNum__c;
+            this.shelfNum = record.ShelfNum__c;
             this.fetchTableData();
         }).catch(error => {
             this.dispatchEvent(

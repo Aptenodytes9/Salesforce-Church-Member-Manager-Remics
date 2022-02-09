@@ -124,7 +124,9 @@ public with sharing class PersonDao {
             SELECT 
                 Id,
                 Name,
-                PersonNumCurrent__c
+                PersonNumCurrent__c,
+                WeeklyReportBoxNum__c,
+                ShelfNum__c
             FROM Person__c 
             WHERE PersonNumCurrent__c = :personNumCurrent
             LIMIT 1
