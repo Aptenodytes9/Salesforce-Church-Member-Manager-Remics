@@ -119,7 +119,7 @@ public with sharing class ShuhoDataPrintUtilTest {
         Date dateFrom = Date.newInstance(2022, 12, 1);
         Date dateTo = Date.newInstance(2022, 12, 31);
         String actualStr = ShuhoDataPrintUtil.getShuhoData(dateFrom, dateTo);
-        String expectedStr = '◇月次献金　佐藤一郎0、佐藤夫1・妻2、佐藤父3・息子4<br/>◇冬季特別献金　佐藤一郎0（感謝）、佐藤夫1・妻2（感謝）、佐藤父3・息子4（感謝）<br/>◇夕礼拝　佐藤一郎0、佐藤夫1・妻2、佐藤父3・息子4';
+        String expectedStr = '◇<b>月次献金</b>　佐藤一郎0、佐藤夫1・妻2、佐藤父3・息子4（以上12〜1月分）<br/>◇<b>冬季特別献金</b>　佐藤一郎0（感謝）、佐藤夫1・妻2（感謝）、佐藤父3・息子4（感謝）<br/>◇<b>夕礼拝</b>　佐藤一郎0、佐藤夫1・妻2、佐藤父3・息子4';
 
         Test.startTest();
         System.assertEquals(expectedStr, actualStr, 'ShuhoDataPrintUtilTest.getDonationsByDateAggregate Error');
