@@ -166,7 +166,7 @@ public with sharing class DonationDaoTest {
         List<AggregateResult> dList = DonationDao.getDonationsByDateAggregate(dateFrom, dateTo);
 
         Test.startTest();
-        System.assertEquals(12, dList.size(), 'DonationDaoTest.getDonationsByDateAggregate Error');
+        System.assertEquals(14, dList.size(), 'DonationDaoTest.getDonationsByDateAggregate Error');
         Test.stopTest();
     }
 

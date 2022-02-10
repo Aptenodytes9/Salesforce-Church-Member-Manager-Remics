@@ -19,7 +19,7 @@ public with sharing class DonationDao {
                 DonationFamilyName__c,
                 DonationStartDate__c,
                 DonationFinishDate__c,
-                DonationMonthNum__c,
+                DonationMonthStr__c,
                 DonationNo__c,
                 DonationMainOrSub__c,
                 AccountingUnit__c,
@@ -44,7 +44,7 @@ public with sharing class DonationDao {
                 Id,
                 Name,
                 DonationDate__c,
-                DonationType__c,
+                toLabel(DonationType__c) DonationType__c,
                 DonationAmount__c,
                 DonorName__c,
                 DonationUnitClass__c,
@@ -52,7 +52,7 @@ public with sharing class DonationDao {
                 DonationFamilyName__c,
                 DonationStartDate__c,
                 DonationFinishDate__c,
-                DonationMonthNum__c,
+                DonationMonthStr__c,
                 DonationMainOrSub__c,
                 DonationNote__c
             FROM
@@ -63,7 +63,7 @@ public with sharing class DonationDao {
                 AND DonationDate__c >= :donationDateFrom
                 AND DonationDate__c <= :donationDateTo
                 WITH SECURITY_ENFORCED
-            ORDER BY DonationType__c ASC, DonorName__c ASC
+            ORDER BY DonationType__c ASC, DonationDate__c ASC, DonorName__c ASC, DonationMonthStr__c ASC
         ];
     }
 
@@ -72,6 +72,7 @@ public with sharing class DonationDao {
             SELECT 
                 DonationType__c,
                 Donor__r.Name DonorName,
+                DonationMonthStr__c,
                 MAX(DonationSpouseName__c) DonationSpouseName,
                 MAX(DonationFamilyName__c) DonationFamilyName,
                 MAX(DonationNote__c) DonationNote
@@ -83,8 +84,8 @@ public with sharing class DonationDao {
                 AND DonationDate__c >= :donationDateFrom
                 AND DonationDate__c <= :donationDateTo
                 WITH SECURITY_ENFORCED
-            GROUP BY DonationType__c, Donor__r.Name
-            ORDER BY DonationType__c ASC, Donor__r.Name ASC
+            GROUP BY DonationType__c, Donor__r.Name, DonationMonthStr__c
+            ORDER BY DonationType__c ASC, Donor__r.Name ASC, DonationMonthStr__c ASC
         ];
     }
 
