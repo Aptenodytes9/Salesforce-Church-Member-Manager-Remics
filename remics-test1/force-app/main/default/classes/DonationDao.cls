@@ -19,7 +19,7 @@ public with sharing class DonationDao {
                 DonationFamilyName__c,
                 DonationStartDate__c,
                 DonationFinishDate__c,
-                DonationMonthStr__c,
+                DonationYearMonth__c,
                 DonationNo__c,
                 DonationMainOrSub__c,
                 AccountingUnit__c,
@@ -86,6 +86,28 @@ public with sharing class DonationDao {
                 WITH SECURITY_ENFORCED
             GROUP BY DonationType__c, Donor__r.Name, DonationMonthStr__c
             ORDER BY DonationType__c ASC, Donor__r.Name ASC, DonationMonthStr__c ASC
+        ];
+    }
+
+    public static List<Donation__c> getMonthlyDonationsByDonorId(Id donorId, ID id) {
+        if(donorId == null){
+            return null;
+        }
+        return [
+            SELECT
+                Id,
+                name,
+                DonationYearMonth__c,
+                DonationStartDate__c,
+                DonationFinishDate__c
+            FROM
+                Donation__c
+            WHERE
+                Donor__c = :donorId
+                AND Id != :id
+                AND DonationType__c = '1'
+                WITH SECURITY_ENFORCED
+            ORDER BY DonationFinishDate__c DESC
         ];
     }
 

@@ -69,7 +69,7 @@ public with sharing class DonationDaoTest {
             );
             Donation__c dGetsuji2 = new Donation__c(
                 DonationDate__c = Date.newInstance(2022, 12, 1),
-                DonationStartDate__c = Date.newInstance(2022, 2, 1),
+                DonationStartDate__c = Date.newInstance(2023, 2, 1),
                 DonationFinishDate__c = Date.newInstance(2023, 3, 31),
                 Donor__c = p.Id,
                 DonationAmount__c = 20000,

@@ -20,7 +20,7 @@ import DONATIONDATE_FIELD from '@salesforce/schema/Donation__c.DonationDate__c';
 import DONATIONAMOUNT_FIELD from '@salesforce/schema/Donation__c.DonationAmount__c';
 import DONATIONSTARTDATE_FIELD from '@salesforce/schema/Donation__c.DonationStartDate__c';
 import DONATIONFINISHDATE_FIELD from '@salesforce/schema/Donation__c.DonationFinishDate__c';
-import DONATIONMONTHSTR_FIELD from '@salesforce/schema/Donation__c.DonationMonthStr__c';
+import DONATIONYEARMONTH_FIELD from '@salesforce/schema/Donation__c.DonationYearMonth__c';
 import DONATIONNOTE_FIELD from '@salesforce/schema/Donation__c.DonationNote__c';
 import ACCOUNTINGUNIT_FIELD from '@salesforce/schema/Donation__c.AccountingUnit__c';
 
@@ -74,7 +74,7 @@ const TABLE_COLUMNS = [
     { label: '献金額', fieldName: DONATIONAMOUNT_FIELD.fieldApiName, type: 'currency', typeAttributes: { currencyCode: 'JPY', step: '1' },editable: true },
     { label: '開始日', fieldName: DONATIONSTARTDATE_FIELD.fieldApiName, type: 'date-local', editable: true },
     { label: '終了日', fieldName: DONATIONFINISHDATE_FIELD.fieldApiName, type: 'date-local', editable: true },
-    { label: '献金月数', fieldName: DONATIONMONTHSTR_FIELD.fieldApiName, type: 'text', editable: false },
+    { label: '献金年月', fieldName: DONATIONYEARMONTH_FIELD.fieldApiName, type: 'text', editable: false },
     { label: '摘要', fieldName: DONATIONNOTE_FIELD.fieldApiName, type: 'text', editable: true },
     { label: '会計単位', fieldName: ACCOUNTINGUNIT_FIELD.fieldApiName, type: 'text', editable: false },
     { type: 'action', typeAttributes: { rowActions: actions } }
