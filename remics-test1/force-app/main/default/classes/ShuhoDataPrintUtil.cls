@@ -1,14 +1,14 @@
 public with sharing class ShuhoDataPrintUtil {
 
 /*
-    指定された週に献金した教会員の一覧をテキスト出力するクラス
-    週報の原稿に使用する
-    テキストのフォーマットは下記の通り
+    A class that outputs a txt list of church members who donated in the specified week.
+    This is used for weekly manuscripts.
+    The text format is as follows.
 
-    ┌────────────────　フォーマット　─────────────────────┐
-    ｜◇{献金種類}　{献金者1}、{献金者2}、....　　　　　　　　　｜
+    ┌───────────────────　format　─────────────────────┐
+    ｜◇{Donation type}　{Donor 1}、{Donor 2}、....　　　 ｜
     └──────────────────────────────────────────────────┘
-    ┌────────────────────　例　─────────────────────────┐
+    ┌──────────────────　Example　─────────────────────┐
     ｜◇月次献金　佐藤麻衣子、山田大地（以上1月分）　 　　　　　　｜
     ｜　佐藤正雄、佐藤一郎（以上１〜３月分） 　　　　　　　　　　｜
     ｜　山田恵（２〜３月分）　　　　　　 　　　　　　　　　　　　｜
@@ -17,34 +17,34 @@ public with sharing class ShuhoDataPrintUtil {
     ｜◇その他感謝献金　山田大地（会場利用）　　　　　　　　　　　｜
     └──────────────────────────────────────────────────┘
 
-    【出力仕様】
-    ・下記条件をすべて満たす献金レコードが出力対象（DonationDao#getDonationsByDateAggregate参照）
-        ・検索期間内に納入日が含まれる
-        ・「メイン／サブ献金」＝「メイン献金」
-        ・献金者の会員区分＝「現住陪餐会員」「陪餐会員」
-    ・献金種類ごとに、献金者名を記載する
-    ・献金レコードの「献金者配偶者名」「献金者家族名」に値が登録されている場合は、中点（・）を挟んで続けて記載する
-    ・献金レコードの「摘要」欄に値が登録されている場合は、献金者名のあとに括弧内で記載する
-    ・月次献金の場合のみ
-        ・献金種別に続けて、さらに献金レコードの「献金月」ごとに分類する
-        ・献金月は献金者名のあとに括弧内で記載する
-        ・当該献金月の献金者が1名のみの場合は、括弧内に「以上」を記載する
+    [Specifications]
+    -  Output targets for donation records that meet all of the following conditions（cf: DonationDao#getDonationsByDateAggregate）
+        -  Delivery date is included in the search period
+        -  "Main / sub donation" = "main donation"
+        -  Membership classification of donors = "current communion members" and "communion members"
+    -  Enter the donor name for each type of donation
+    -  If a value is registered in the "donor spouse name" or "donor family name" of the donation record, enter it in succession with a midpoint (・) in between.
+    -  If the value is registered in the "Summary" column of the donation record, enter it in parentheses after the donor name.
+    -  Only for monthly donations
+        -  Following the donation type, further classify by "donation month" of the donation record
+        -  The donation month is written in parentheses after the donor's name.
+        -  If there is only one donor in the month of the donation, enter "or more" in parentheses.
 */
 
-    // 「献金種類」項目のMap(key: 選択肢API参照名, value: 選択肢表示ラベル)
+    // Map of "donation type" (key: choice API reference name, value: choice display label)
     private static Map<String, String> donaitonTypeMap = new Map<String, String>();
 
-    //「献金種類」項目の選択肢API参照名List
+    //"Donations type" option's API name List
     private static List<String> donationTypeList = new List<String>();
 
     /* 
-        献金種類別の献金者名Listを格納するMap
-        key:「献金種類」項目の選択肢のAPI参照名
-        value: その種類の献金をした献金者名のSet
+        Map that stores the list of donor names by donation type
+        key:"Donations type" option's API name List
+        value: Set of donor names who made that type of donation
     */
     private static Map<String, Set<String>> dTypeDonorSetMap = new Map<String, Set<String>>();
 
-    // 初期化コード
+    // Initialization
     static {
         Schema.DescribeFieldResult o = Donation__c.DonationType__c.getDescribe();
         List<Schema.PicklistEntry> v = o.getPicklistValues();
@@ -62,15 +62,15 @@ public with sharing class ShuhoDataPrintUtil {
 
     @AuraEnabled(cacheable=true)
     public static String getShuhoData(Date donationDateFrom, Date donationDateTo){
-        // 検索期間に納入された献金一覧を取得
+        // Get a list of donations paid during the search period
         List<AggregateResult> dList = DonationDao.getDonationsByDateAggregate(donationDateFrom, donationDateTo);
 
-        // 【月次献金専用】献金者格納Map
-        // key: 月次献金の月名（例：『１〜３月分』）
-        // value: 献金者名List（例：『佐藤麻衣子、山田大地、佐藤正雄、…』）
+        // [Monthly donation only] Donor info storage map
+        // key: Monthly donation month name（ex：『１〜３月分』）
+        // value: Donor Name List（ex：『佐藤麻衣子、山田大地、佐藤正雄、…』）
         Map<String, List<String>> monthDonationMap = new Map<String, List<String>>();
 
-        // 献金者名を取得して献金種類別にListに格納
+        // Obtain the donor name and store it in the List by donation type
         for (AggregateResult d : dList) {
             String dType = String.valueOf(d.get('DonationType__c'));
             Set<String> donorSet = dTypeDonorSetMap.get(dType);
@@ -80,18 +80,18 @@ public with sharing class ShuhoDataPrintUtil {
             String donationFamilyName = String.valueOf(d.get('DonationFamilyName'));
             String donationNote = String.valueOf(d.get('DonationNote'));
 
-            // 献金者名・献金者配偶者名・献金者家族名・摘要を結合（例：『佐藤健志・正雄・麻衣子』）
+            // Combine donor name, donor spouse name, donor family name, and summary（ex：『佐藤健志・正雄・麻衣子』）
             if(!String.isEmpty(donationSpouseName)){
                 donorNameStr += '・' + donationSpouseName;
             } else if (!String.isEmpty(donationFamilyName)) {
                 donorNameStr += '・' + donationFamilyName;
             }
             if(!String.isEmpty(donationNote) && !'1'.equals(dType)){
-                // 「摘要」内容を括弧書きで連結（月次献金の場合は括弧内に月名を記載するためスキップ）
+                // Concatenate the "Summary" in parentheses (for monthly donations, skip because the month name is written in parentheses)
                 donorNameStr += '（' + donationNote + '）';
             }
 
-            // 月次献金の場合
+            // For Monthly donations
             if('1'.equals(dType)){
                 String month = String.valueOf(d.get('DonationMonthStr__c'));
                 if(monthDonationMap.containsKey(month)){
@@ -114,7 +114,7 @@ public with sharing class ShuhoDataPrintUtil {
 
             if('1'.equals(dType)){
                 if (monthDonationMap.keySet().isEmpty()) {
-                    // 献金者が存在しなかった場合はスキップする
+                    // Skip if the donor does not exist
                     continue;
                 }
 
@@ -125,8 +125,8 @@ public with sharing class ShuhoDataPrintUtil {
                     String monthDonorsStr = String.join(monthDonorList, '、');
                     String connector = monthDonorList.size() == 1 ? '（' : '（以上';
 
-                    // 献金月名と、その献金月の全献金者名の文字列を生成
-                    // 例：『佐藤正雄、佐藤一郎（以上１〜３月分）』
+                    // Generates a string of donation month names and all donor names
+                    // ex：『佐藤正雄、佐藤一郎（以上１〜３月分）』
                     String donorAndMonth = monthDonorsStr + connector + month + '）';
                     donorAndMonthList.add(donorAndMonth);
                 }
@@ -135,19 +135,19 @@ public with sharing class ShuhoDataPrintUtil {
             } else {
                 Set<String> donorSet = dTypeDonorSetMap.get(dType);
                 if (donorSet.isEmpty()) {
-                    // 献金者が存在しなかった献金種類はスキップする
+                    // Skip if the donor does not exist
                     continue;
                 }
-                // すべての献金者名を結合
+                // Combine all donor names
                 List<String> donorList = new List<String>(donorSet);
                 allDonorsStr = String.join(donorList, '、');
             }
 
-            // 行頭文字を作成
+            // Create bullet
             String dTypeStr = '◇' + '<b>' + donaitonTypeMap.get(dType) + '</b>';
 
-            // 行頭文字+全献金者名を結合
-            // 例：『◇月次献金　佐藤麻衣子、山田大地、佐藤正雄（以上１〜３月分）』
+            // Combine bullets and all donor names
+            // ex：『◇月次献金　佐藤麻衣子、山田大地、佐藤正雄（以上１〜３月分）』
             String dTypeAndDonorStr = dTypeStr + '　' + allDonorsStr;
 
             dTypeAndDonorList.add(dTypeAndDonorStr);

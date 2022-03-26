@@ -3,12 +3,12 @@ import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-// カスタムメソッド
+// Custom Method
 import getQualifiedDonorsByDate from '@salesforce/apex/PersonDao.getQualifiedDonorsByDate';
 import getUnqualifiedDonorsByDate from '@salesforce/apex/PersonDao.getUnqualifiedDonorsByDate';
 import updatePersons from '@salesforce/apex/PersonDao.updatePersons';
 
-// 人オブジェクト カスタム項目
+// Person Object Custom Item
 import PARLIAMENTARYQUALIFICATION_FIELD from '@salesforce/schema/Person__c.ParliamentaryQualification__c';
 import NAME_FIELD from '@salesforce/schema/Person__c.Name';
 import FURIGANA_FIELD from '@salesforce/schema/Person__c.WholeNameFurigana__c';
@@ -19,7 +19,7 @@ import DECEASED_FIELD from '@salesforce/schema/Person__c.Deceased__c';
 import POSTALCODE_FIELD from '@salesforce/schema/Person__c.PostalCode__c';
 import ADDRESS_FIELD from '@salesforce/schema/Person__c.AddressAllCombined__c';
 
-// 総会議員資格 候補者一覧表 項目
+// Qualified Person Candidate List Item
 const TABLE_COLUMNS = [
     { label: '総会議員資格あり', fieldName: PARLIAMENTARYQUALIFICATION_FIELD.fieldApiName, type: 'boolean', editable: true },
     { label: '名前', fieldName: NAME_FIELD.fieldApiName, type: 'text' },
@@ -34,11 +34,11 @@ const TABLE_COLUMNS = [
 ];
 
 export default class Sokaishikaku extends LightningElement {
-    // 献金レコード検索フォーム
+    // Donation Record Search Form
     @api dateFrom;
     @api dateTo;
 
-    // 総会議員資格 候補者一覧表
+    // Qualified Person Candidate List
     @track qualifiedPersonData;
     @track unQualifiedPersonData;
     tableColumns = TABLE_COLUMNS;
@@ -50,7 +50,7 @@ export default class Sokaishikaku extends LightningElement {
 
             data.forEach((record) => {
                 let tempPerson = Object.assign({}, record);
-                // 期間内の月次献金数を計算して格納
+                // Calc and store the number of monthly donations during the period
                 tempPerson.DonationNum = tempPerson.DonorRef__r.length;
                 tempPersonList.push(tempPerson);
             });
@@ -74,7 +74,6 @@ export default class Sokaishikaku extends LightningElement {
 
             data.forEach((record) => {
                 let tempPerson = Object.assign({}, record);
-                // 期間内の月次献金数を計算して格納
                 tempPerson.DonationNum = tempPerson.DonorRef__r ? tempPerson.DonorRef__r.length : 0;
                 tempPersonList.push(tempPerson);
             });
@@ -92,20 +91,19 @@ export default class Sokaishikaku extends LightningElement {
         });
     };
 
-    // 「判定対象日（から）」欄を変更したとき
     onChangeDateFromField(event) {
         this.dateFrom = event.detail.value;
         this.getQualifiedPerson();
         this.getUnqualifiedPerson();
     };
-    // 「判定対象日（まで）」欄を変更したとき
+
     onChangeDateToField(event) {
         this.dateTo = event.detail.value;
         this.getQualifiedPerson();
         this.getUnqualifiedPerson();
     };
 
-    // 総会議員資格 候補者一覧表のインライン編集の保存ボタンをクリックしたとき
+    // When you click the Save Btn of Qualified Person Candidate List
     async handleSave(event) {
         const updatedFields = event.detail.draftValues;
 

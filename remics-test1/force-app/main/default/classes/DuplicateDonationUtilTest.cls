@@ -3,7 +3,7 @@ public with sharing class DuplicateDonationUtilTest {
 
     static void setup(Boolean isInsertDuplicateDonation) {
 
-        // 世帯レコードの作成
+        // Creating household records
         Household__c h = new Household__c(
             Name = '佐藤家',
             Prefecture__c = '東京都',
@@ -12,7 +12,7 @@ public with sharing class DuplicateDonationUtilTest {
         );
         insert h;
 
-        // 人レコード(教会員)の作成
+        // Creating person records (member of the church)
         Person__c p = new Person__c(
             Name = '佐藤一郎',
             PersonType__c = '現住陪餐会員',
@@ -26,7 +26,7 @@ public with sharing class DuplicateDonationUtilTest {
         );
         insert p;
 
-        // 献金レコードの作成
+        // Creating onation records
         List<Donation__c> dList = new List<Donation__c>();
 
         Donation__c dGetsuji = new Donation__c(
@@ -35,7 +35,7 @@ public with sharing class DuplicateDonationUtilTest {
             DonationFinishDate__c = Date.newInstance(2023, 1, 31),
             Donor__c = p.Id,
             DonationAmount__c = 10000,
-            DonationType__c = '1' // 月次献金
+            DonationType__c = '1' // Monthly donations
         );
         Donation__c dGetsuji2 = new Donation__c(
             DonationDate__c = Date.newInstance(2022, 12, 1),
@@ -43,7 +43,7 @@ public with sharing class DuplicateDonationUtilTest {
             DonationFinishDate__c = Date.newInstance(2023, 3, 31),
             Donor__c = p.Id,
             DonationAmount__c = 20000,
-            DonationType__c = '1' // 月次献金
+            DonationType__c = '1' // Monthly donations
         );
         Donation__c dToki = new Donation__c(
             DonationDate__c = Date.newInstance(2022, 12, 1),
@@ -51,7 +51,7 @@ public with sharing class DuplicateDonationUtilTest {
             DonationFinishDate__c = Date.newInstance(2023, 1, 31),
             Donor__c = p.Id,
             DonationAmount__c = 20000,
-            DonationType__c = '3', // 冬期特別献金
+            DonationType__c = '3', // Special winter donations
             DonationNote__c = '感謝'
         );
         Donation__c dToki2 = new Donation__c(
@@ -60,7 +60,7 @@ public with sharing class DuplicateDonationUtilTest {
             DonationFinishDate__c = Date.newInstance(2023, 1, 31),
             Donor__c = p.Id,
             DonationAmount__c = 10000,
-            DonationType__c = '3', // 冬期特別献金
+            DonationType__c = '3', // Special winter donations
             DonationNote__c = '感謝'
         );
         dList.add(dGetsuji);
@@ -77,7 +77,7 @@ public with sharing class DuplicateDonationUtilTest {
                 DonationFinishDate__c = Date.newInstance(2023, 3, 31),
                 Donor__c = p.Id,
                 DonationAmount__c = 30000,
-                DonationType__c = '1' // 月次献金
+                DonationType__c = '1' // Monthly donations
             );
             insert dGetsujiDuplicate;
         }
@@ -107,7 +107,7 @@ public with sharing class DuplicateDonationUtilTest {
         System.assertEquals(true, expectedExceptionThrown, 'DuplicateDonationUtilTest.failDupliDonationInsertTest Error');
     }
 
-    // 「開始日」「終了日」の変更がない更新時に「献金年月」項目の変更トリガーが作動しないことの確認
+    // Confirmation of the "donation date" change trigger not working when updating without changing the "start date" and "end date"
     @isTest
     static void unTriggerDonationUpdateTest() {
         setup(false);
@@ -125,7 +125,7 @@ public with sharing class DuplicateDonationUtilTest {
         System.assertEquals('test', dAfterUpdate.DonationNote__c, 'DuplicateDonationUtilTest.unTriggerDonationUpdateTest Error');
     }
 
-    // 「開始日」「終了日」を空にする更新時でも正常に保存できることの確認
+    // Saving Confirmation of Updating the "start date" and "end date" to Empty
     @isTest
     static void nullDateUpdateTest() {
         setup(false);

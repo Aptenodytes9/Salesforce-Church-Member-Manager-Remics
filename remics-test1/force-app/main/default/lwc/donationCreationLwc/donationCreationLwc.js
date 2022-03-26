@@ -2,17 +2,17 @@ import { LightningElement, api, wire, track } from 'lwc';
 import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-// カスタムメソッド
+// Custom method
 import getDonationsByDonorId from '@salesforce/apex/DonationDao.getDonationsByDonorId';
 import updateDonations from '@salesforce/apex/DonationDao.updateDonations';
 import deleteDonationById from '@salesforce/apex/DonationDao.deleteDonationById';
 import getPersonByPersonNumCurrent from '@salesforce/apex/PersonDao.getPersonByPersonNumCurrent';
 import getPersonById from '@salesforce/apex/PersonDao.getPersonById';
 
-// 献金オブジェクト
+// Donation Object
 import DONATION_OBJECT from '@salesforce/schema/Donation__c';
 
-// 献金オブジェクト カスタム項目
+// Donation Object Custom Item
 import NAME_FIELD from '@salesforce/schema/Donation__c.Name';
 import DONOR_FIELD from '@salesforce/schema/Donation__c.Donor__c';
 import DONATIONTYPE_FIELD from '@salesforce/schema/Donation__c.DonationType__c';
@@ -24,12 +24,12 @@ import DONATIONYEARMONTH_FIELD from '@salesforce/schema/Donation__c.DonationYear
 import DONATIONNOTE_FIELD from '@salesforce/schema/Donation__c.DonationNote__c';
 import ACCOUNTINGUNIT_FIELD from '@salesforce/schema/Donation__c.AccountingUnit__c';
 
-// 行アクション
+// Row Acrtions
 const actions = [
     { label: 'この行を削除', name: 'delete' }
 ];
 
-// 現在日付を文字列[yyyy-mm-dd]にフォーマットする
+// Format the current date to the string [yyyy-mm-dd]
 var today = new Date();
 var formattedToday = `
 ${today.getFullYear()}-
@@ -37,7 +37,7 @@ ${(today.getMonth()+1).toString().padStart(2, '0')}-
 ${today.getDate().toString().padStart(2, '0')}
 `.replace(/\n|\r/g, '');
 
-// 献金一覧表 項目
+// Donation List Item
 const TABLE_COLUMNS = [
     { label: '献金', fieldName: NAME_FIELD.fieldApiName, type: 'text' },
     { label: '納入日', fieldName: DONATIONDATE_FIELD.fieldApiName, type: 'date-local', editable: true },
@@ -81,7 +81,7 @@ const TABLE_COLUMNS = [
 ];
 
 export default class DonationCreationLwc extends LightningElement {
-    // 献金者検索フォーム
+    // Donor Search Form
     @api donorId;
     @api personNumCurrent;
     @api boxNum;
@@ -90,13 +90,11 @@ export default class DonationCreationLwc extends LightningElement {
     DonationObjectName = DONATION_OBJECT;
     donorNameField = DONOR_FIELD;
 
-    // 「原籍番号（現在）」欄を変更したとき
     async onChangePersonNumCurrentField(event) {
         this.personNumCurrent = event.target.value;
 
         if (!this.personNumCurrent) { return; }
 
-        // 原籍番号からレコードIDを取得
         await getPersonByPersonNumCurrent({ personNumCurrent: this.personNumCurrent }).then(record => {
             this.donorId = record.Id;
             this.boxNum = record.WeeklyReportBoxNum__c;
@@ -114,13 +112,11 @@ export default class DonationCreationLwc extends LightningElement {
         });
     };
 
-    // 「献金者」欄を変更したとき
     onChangeDonorNameField(event) {
         this.donorId = event.detail.value[0];
 
         if (!this.donorId) { return; }
 
-        // レコードIDから原籍番号を取得
         getPersonById({ id: this.donorId }).then(record => {
             this.personNumCurrent = record.PersonNumCurrent__c;
         }).catch(error => {
@@ -135,7 +131,7 @@ export default class DonationCreationLwc extends LightningElement {
         });
     };
 
-    // 新規献金レコード入力フォーム
+    // New Donation Record Input Form
     donationFields = [NAME_FIELD, DONOR_FIELD, DONATIONTYPE_FIELD, DONATIONDATE_FIELD, DONATIONAMOUNT_FIELD, DONATIONSTARTDATE_FIELD, DONATIONFINISHDATE_FIELD, DONATIONNOTE_FIELD];
     donationTypeField = DONATIONTYPE_FIELD;
     donationDateField = DONATIONDATE_FIELD;
@@ -148,12 +144,10 @@ export default class DonationCreationLwc extends LightningElement {
     @api donationMonthNumVal = 1;
     @api donationAmountAveVal = 0;
 
-    // 「献金種類」欄（数字）を変更したとき
     onChangeDonationTypeNumField(event) {
         this.donationTypeVal = event.target.value;
     };
 
-    // 「献金額」欄を変更したとき
     onChangeDonationAmountField(event) {
         const donationAmount = this.template.querySelector('.donationAmount').value;
         const donationMonthNum = this.template.querySelector('.donationMonthNum').value;
@@ -162,11 +156,9 @@ export default class DonationCreationLwc extends LightningElement {
             this.donationAmountAveVal = 0;
         }
 
-        // 「献金額（月当たり）」を計算
         this.donationAmountAveVal = (donationAmount / donationMonthNum);
     };
 
-    // 「開始日」「終了日」欄を変更したとき
     onChangeDonationStartOrFinishdate() {
         const startdateStr = this.template.querySelector('.donationStartdate').value;
         const finishdateStr = this.template.querySelector('.donationFinishdate').value;
@@ -182,13 +174,11 @@ export default class DonationCreationLwc extends LightningElement {
         this.onChangeDonationAmountField();
     };
     
-    // 新規献金レコードの作成に成功したとき
     async handleInsertSuccess(event) {
         // Display fresh data in the datatable
         await this.fetchTableData();
         this.draftValues = [];
 
-        // 入力欄をリセット
         const inputFields = this.template.querySelectorAll('.resetField');
         if (inputFields) {
             inputFields.forEach(field => {
@@ -206,25 +196,21 @@ export default class DonationCreationLwc extends LightningElement {
             })
         );
 
-        // 「原籍番号（現在）」欄にフォーカスをセット
         this.template.querySelector('.personNumCurrent').focus();
     };
 
-    // 献金一覧表
+    // Donation List
     @api donationDateFrom = formattedToday;
     @api donationDateTo = formattedToday;
-
-    // 献金額合計
     @api donationSum = 0;
-    
-    // 献金一覧表のデータ
+
+    // Data of Donation List
     @api tableData;
 
     tableColumns = TABLE_COLUMNS;
     draftValues = [];
     lastSavedData = [];
 
-    // 献金額合計を計算
     calcDonationSum() {
         let sum = 0;
         for (const record of this.tableData) {
@@ -233,7 +219,6 @@ export default class DonationCreationLwc extends LightningElement {
         this.donationSum = sum;
     }
 
-    // 献金一覧表のデータを取得
     async fetchTableData(){
         await getDonationsByDonorId({ donorId: this.donorId, donationDateFrom: this.donationDateFrom, donationDateTo: this.donationDateTo })
             .then( result => {
@@ -251,18 +236,17 @@ export default class DonationCreationLwc extends LightningElement {
             });
     };
 
-    // 「納入日（から）」欄を変更したとき
     onChangeDonationDateFromField(event) {
         this.donationDateFrom = event.detail.value;
         this.fetchTableData();
     };
-    // 「納入日（まで）」欄を変更したとき
+
     onChangeDonationDateToField(event) {
         this.donationDateTo = event.detail.value;
         this.fetchTableData();
     };
 
-    // 献金一覧表のインライン編集の保存が成功したとき
+    // When the inline edit of the donation list is saved successfully
     async handleSave(event) {
         const updatedFields = event.detail.draftValues;
         
@@ -293,7 +277,6 @@ export default class DonationCreationLwc extends LightningElement {
                 })
             );
 
-            // 「原籍番号（現在）」欄にフォーカスをセット
             this.template.querySelector('.personNumCurrent').focus();
        } catch(error) {
                this.dispatchEvent(
@@ -308,8 +291,8 @@ export default class DonationCreationLwc extends LightningElement {
         };
     };
 
+    // Remove draftValues & revert data changes
     handleCancel(event) {
-        //remove draftValues & revert data changes
         this.data = JSON.parse(JSON.stringify(this.lastSavedData));
         this.draftValues = [];
     }
@@ -351,8 +334,8 @@ export default class DonationCreationLwc extends LightningElement {
         }
     }
 
-    // 選択リスト項目「献金種類」の値を変更したとき
-    // sent from DatatablePicklist.js
+    // When the item "Donation type" is changed
+    // Sent from DatatablePicklist.js
     picklistChanged(event) {
         event.stopPropagation();
         let dataRecieved = event.detail.data;
@@ -361,18 +344,18 @@ export default class DonationCreationLwc extends LightningElement {
         this.updateDataValues(updatedItem);
     }
 
-    // インライン編集をしたとき
+    // When doing inline editing
     handleCellChange(event) {
         this.updateDraftValues(event.detail.draftValues[0]);
     }
 
-    // 献金一覧表の行削除
+    // Deleted a row in the donation list
     @track isDialogVisible = false;
     @track deletingRecordId;
     @track displayMessage = 'この献金レコードを削除してよろしいでしょうか？';
     @track displayMessage2;
 
-    // 献金一覧表の行アクション
+    // Row action of Donation list
     handleRowAction(event) {
         const actionName = event.detail.action.name;
         switch (actionName) {
@@ -385,11 +368,12 @@ export default class DonationCreationLwc extends LightningElement {
         }
     }
 
-    // 献金レコード削除確認ダイアログをクリックしたとき
+    // When you click the donation record deletion confirmation dialog
     clickConfirmDialog(event){
         if(event.target.name === 'confirmModal'){
 
-            //when user clicks outside of the dialog area, the event is dispatched with detail value as 1
+            // When user clicks outside of the dialog area,
+            // the event is dispatched with detail value as 1
             if(event.detail !== 1){
                 console.log('[ConfirmDialog] Status: ' + event.detail.status + ', DeletingRecordId: ' + JSON.stringify(event.detail.originalMessage) + '.');
 
@@ -420,7 +404,6 @@ export default class DonationCreationLwc extends LightningElement {
                 })
             );
 
-            // 「原籍番号（現在）」欄にフォーカスをセット
             this.template.querySelector('.personNumCurrent').focus();
         } catch(error) {
                this.dispatchEvent(

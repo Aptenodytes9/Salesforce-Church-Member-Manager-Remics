@@ -1,11 +1,11 @@
 import { LightningElement, api } from 'lwc';
 
-// カスタムメソッド
+// Custom Method
 import getJornalList from '@salesforce/apex/JornalExportController.getJornalList';
 import getLastExportCondition from '@salesforce/apex/JornalExportController.getLastExportCondition';
 import updateLastExportDatetime from '@salesforce/apex/JornalExportController.updateLastExportDatetime';
 
-// 現在日付を文字列[yyyy-mm-dd]にフォーマットする
+// Format the current date to the string [yyyy-mm-dd]
 var today = new Date();
 var firstDateOfMonth = `${today.getFullYear()}-${(today.getMonth()+1).toString().padStart(2, '0')}-01`;
 var formattedToday = `${today.getFullYear()}-${(today.getMonth()+1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;
@@ -24,14 +24,14 @@ export default class JournalExport extends LightningElement {
     @api donationDateFrom = firstDateOfMonth;
     @api donationDateTo = formattedToday;
 
-    // 仕訳データ「KAIKEI_IF」 一覧
+    // Journal Data "KAIKEI_IF" List
     @api kaikeiData;
     tableColumns = TABLE_COLUMNS;
 
-    // 仕訳データ「SIEN_IF」 一覧
+    // Journal Data "SIEN_IF" List
     @api sienData;
 
-    // 最後にエクスポートした日時とその時の検索条件
+    // Last exported datetime & search conditions
     @api lastExportDatetime;
     @api lastExportDonationDateFrom;
     @api lastExportDonationDateTo;
@@ -92,7 +92,6 @@ export default class JournalExport extends LightningElement {
         });
     }
 
-    // 仕訳データ「KAIKEI_IF」 一覧を出力
     async exportKaikeiCsv(){
         await updateLastExportDatetime({
             donationDateFrom: this.donationDateFrom,
@@ -103,7 +102,6 @@ export default class JournalExport extends LightningElement {
         window.open(url, '_blank');
     };
 
-    // 仕訳データ「SIEN_IF」 一覧を出力
     async exportSienCsv(){
         await updateLastExportDatetime({
             donationDateFrom: this.donationDateFrom,

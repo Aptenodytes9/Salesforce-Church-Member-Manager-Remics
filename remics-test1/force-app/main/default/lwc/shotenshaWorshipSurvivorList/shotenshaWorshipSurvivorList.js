@@ -1,6 +1,6 @@
 import { LightningElement, api } from 'lwc';
 
-// カスタムメソッド
+// Custom Method
 import getSurvivorHouseholdList from '@salesforce/apex/ShotenshaWorshipController.getSurvivorHouseholdList';
 import getDeceasedList from '@salesforce/apex/ShotenshaWorshipController.getDeceasedList';
 import getSurvivorList from '@salesforce/apex/ShotenshaWorshipController.getSurvivorList';
@@ -86,7 +86,7 @@ const S_TABLE_COLUMNS = [
 ];
 
 export default class ShotenshaWorshipSurvivorList extends LightningElement {
-    // 検索日付入力フォーム
+    // Search date input form
     @api year;
     @api thisYearFrom;
     @api thisYearTo;
@@ -108,7 +108,6 @@ export default class ShotenshaWorshipSurvivorList extends LightningElement {
         this.onChangeYear();
     }
 
-    // 「処理年度」欄を変更したとき
     async onChangeYear(event) {
         await this.fillThisYear(event);
         this.fillYearInputs();
@@ -161,15 +160,15 @@ export default class ShotenshaWorshipSurvivorList extends LightningElement {
         this.thisYearTo = event.detail.value;
     };
 
-    // 遺族宛案内 送付先世帯 一覧
+    // Destination Households List
     @api atenaListTableData;
     aTableColumns = ATENA_TABLE_COLUMNS;
 
-    // 召天者-遺族 一覧
+    // Deceased Person List
     @api deceasedListTableData;
     dTableColumns = D_TABLE_COLUMNS;
 
-    // 遺族-召天者 一覧
+    // Survivor Person List
     @api survivorListTableData;
     sTableColumns = S_TABLE_COLUMNS;
 
@@ -210,19 +209,16 @@ export default class ShotenshaWorshipSurvivorList extends LightningElement {
         });
     }
 
-    // 遺族宛案内 送付先世帯 一覧を出力
     exportAtenaCsv(){
        let url = '/apex/shotenshaWorshipSurvivorList';
        window.open(url, '_blank');
     };
 
-    // 召天者-遺族 一覧を出力
     exportDeceasedListCsv(){
        let url = '/apex/deceasedList';
        window.open(url, '_blank');
     };
 
-    // 遺族-召天者 一覧を出力
     exportSurvivorListCsv(){
        let url = '/apex/survivorList';
        window.open(url, '_blank');
