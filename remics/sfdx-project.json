@@ -1,0 +1,12 @@
+{
+  "packageDirectories": [
+    {
+      "path": "force-app",
+      "default": true
+    }
+  ],
+  "name": "remics-test1",
+  "namespace": "",
+  "sfdcLoginUrl": "https://reinanzaka-church-dev-ed--test1.my.salesforce.com/",
+  "sourceApiVersion": "52.0"
+}

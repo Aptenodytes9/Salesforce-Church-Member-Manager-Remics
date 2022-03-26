@@ -1,0 +1,100 @@
+<template>
+    <!-- Donation Registration Page -->
+    <!-- New Donation Record Input Form -->
+    <lightning-card title="新規献金レコードの登録" class="slds-m-horizontal_small">
+        <div class="slds-m-around_medium">
+            <lightning-record-edit-form object-api-name={DonationObjectName} onsuccess={handleInsertSuccess}>
+                <lightning-messages></lightning-messages>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-6">
+                        <lightning-input type="number" value={personNumCurrent} name="personNumCurrent" label="原籍番号（現在）" variant="label-stacked" class="personNumCurrent" onblur={onChangePersonNumCurrentField}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-6">
+                        <lightning-input-field field-name={donorNameField} value={donorId} variant="label-stacked" tabindex=-1 onchange={onChangeDonorNameField}></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-6">
+                        <lightning-input label="週報BOX番号" value={boxNum} variant="label-stacked" tabindex=-1 disabled></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-6">
+                        <lightning-input label="棚番号" value={shelfNum} variant="label-stacked" tabindex=-1 disabled></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-6">
+                        <lightning-input-field field-name={donationDateField} variant="label-stacked" tabindex=-1 ></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-6">
+                    </div>
+
+
+                    <div class="slds-col slds-size_1-of-6">
+                        <lightning-input type="number" name="donationTypeNum" label="献金種類" variant="label-stacked" onblur={onChangeDonationTypeNumField}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-6">
+                        <lightning-input-field field-name={donationTypeField} value={donationTypeVal} variant="label-stacked" tabindex=-1 ></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-6">
+                        <lightning-input-field field-name={donationStartdateField} variant="label-stacked" class="donationStartdate" onchange={onChangeDonationStartOrFinishdate}></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-6">
+                        <lightning-input-field field-name={donationFinishdateField} variant="label-stacked" class="donationFinishdate" onchange={onChangeDonationStartOrFinishdate}></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-6">
+                        <lightning-input type="number" disabled value={donationMonthNumVal} label="月数" class="donationMonthNum"></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-6">
+                        <lightning-input-field field-name={donationAmountField} variant="label-stacked" step=100 formatter="currency" class="donationAmount" onchange={onChangeDonationAmountField}></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-6">
+                        <lightning-input type="number" disabled value={donationAmountAveVal} label="献金額（月当たり）" ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-6">
+                        <lightning-input-field field-name={donationNoteField} variant="label-stacked" class="resetField"></lightning-input-field>
+                    </div>
+                 </div>
+                <lightning-button type="submit" variant="brand" label="作成"></lightning-button>
+            </lightning-record-edit-form>
+        </div>
+    </lightning-card>
+
+    <!-- Donation List -->
+    <lightning-card title="献金者の献金一覧表" if:true={tableData}>
+        <div class="slds-m-around_medium">
+            <div class="slds-m-around_medium slds-grid">
+                <div class="slds-col slds-size_1-of-6">
+                    <lightning-input type="date" value={donationDateFrom} name="donationDateFrom" label="納入日（から）" variant="label-stacked" tabindex=-1 onchange={onChangeDonationDateFromField}></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-6">
+                    <lightning-input type="date" value={donationDateTo} name="donationDateTo" label="納入日（まで）" variant="label-stacked" tabindex=-1 onchange={onChangeDonationDateToField}></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-6">
+                    <lightning-input type="number" formatter="currency" disabled value={donationSum} label="献金額合計" ></lightning-input>
+                </div>
+            </div>
+
+            <c-custom-data-table
+                key-field="Id"
+                data={tableData}
+                columns={tableColumns}
+                oncellchange={handleCellChange}
+                onpicklistchanged={picklistChanged}
+                onsave={handleSave}
+                oncancel={handleCancel}
+                draft-values={draftValues}
+                onrowaction={handleRowAction}
+                show-row-number-column
+                hide-checkbox-column>
+            </c-custom-data-table>
+        </div>
+    </lightning-card>
+
+    <!-- Donation Record Deletion Confirmation Dialog -->
+    <c-confirmation-dialog title='献金レコードの削除'
+                           message={displayMessage}
+                           message2={displayMessage2}
+                           confirm-label='はい'
+                           cancel-label='いいえ'
+                           visible={isDialogVisible}
+                           original-message={deletingRecordId}
+                           name="confirmModal"
+                           onclick={clickConfirmDialog}>
+    </c-confirmation-dialog>
+</template>

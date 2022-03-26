@@ -1,0 +1,73 @@
+<template>
+    <!-- Journal Data Export Page -->
+    <lightning-card title="エクスポートする献金データの指定" >
+        <div class="slds-m-around_medium">
+            <lightning-record-edit-form>
+                <lightning-messages></lightning-messages>
+                <div class="slds-grid slds-gutters slds-wrap">
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input type="date" value={donationDateFrom} name="donationDateFrom" label="納入日（から）" variant="label-inline" onchange={onChangeDateFrom}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input type="date" value={donationDateTo} name="donationDateTo" label="納入日（まで）" variant="label-inline" onchange={onChangeDateTo}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-button label="検索" title="検索" onclick={search} class="slds-m-left_x-small" ></lightning-button>
+                    </div>
+                </div>
+            </lightning-record-edit-form>
+        </div>
+    </lightning-card>
+
+    <lightning-card title="最後にエクスポートした日時とその時の検索条件" class="slds-p-horizontal_small">
+        <div class="slds-m-around_medium">
+            <lightning-record-edit-form>
+                <lightning-messages></lightning-messages>
+                <div class="slds-grid slds-gutters slds-wrap">
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input type="date" value={lastExportDonationDateFrom} name="lastExportDonationDateFrom" label="納入日（から）" disabled variant="label-inline"></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input type="date" value={lastExportDonationDateTo} name="lastExportDonationDateTo" label="納入日（まで）" disabled variant="label-inline"></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_2-of-4">
+                        <lightning-input type="datetime" value={lastExportDatetime} name="lastExportDatetime" label="最終エクスポート日時" disabled variant="label-inline"></lightning-input>
+                    </div>
+                </div>
+            </lightning-record-edit-form>
+        </div>
+    </lightning-card>
+
+    <!-- Journal Data "KAIKEI_IF" List -->
+    <lightning-card title="仕訳データ「KAIKEI_IF」 一覧" class="slds-p-horizontal_small" if:true={kaikeiData}>
+        <lightning-button label="ダウンロード" title="表のデータをCSVダウンロード" onclick={exportKaikeiCsv} class="slds-m-left_x-small" ></lightning-button>
+
+        <div class="slds-m-around_medium slds-scrollable">
+            <lightning-datatable
+                key-field="Id"
+                data={kaikeiData}
+                columns={tableColumns}
+                column-widths-mode="auto"
+                show-row-number-column
+                hide-checkbox-column>
+            </lightning-datatable>
+        </div>
+    </lightning-card>
+
+    <!-- Journal Data "SIEN_IF" List -->
+    <lightning-card title="仕訳データ「SIEN_IF」 一覧" class="slds-p-horizontal_small" if:true={sienData}>
+        <lightning-button label="ダウンロード" title="表のデータをCSVダウンロード" onclick={exportSienCsv} class="slds-m-left_x-small" ></lightning-button>
+
+        <div class="slds-m-around_medium slds-scrollable">
+            <lightning-datatable
+                key-field="Id"
+                data={sienData}
+                columns={tableColumns}
+                column-widths-mode="auto"
+                show-row-number-column
+                hide-checkbox-column>
+            </lightning-datatable>
+        </div>
+    </lightning-card>
+    
+</template>

@@ -1,0 +1,47 @@
+<template>
+    <!-- 総会議員資格者情報 更新画面 -->
+    <!-- 判定対象期間指定フォーム -->
+    <lightning-card title="判定対象期間の指定">
+        <div class="slds-m-around_medium">
+            <lightning-messages></lightning-messages>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input type="date" value={donationDateFrom} name="donationDateFrom" label="判定対象日（から）" variant="label-stacked" onchange={onChangeDateFromField}></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input type="date" value={donationDateTo} name="donationDateTo" label="判定対象日（まで）" variant="label-stacked" onchange={onChangeDateToField}></lightning-input>
+                </div>
+            </div>
+        </div>
+    </lightning-card>
+
+    <!-- Qualified Person Candidate List -->
+    <lightning-card title="総会議員資格 候補者一覧表" class="slds-p-horizontal_small" if:true={qualifiedPersonData}>
+        <div class="slds-m-around_medium">
+            <lightning-datatable
+                key-field="Id"
+                data={qualifiedPersonData}
+                columns={tableColumns}
+                onsave={handleSave}
+                oncancel={handleCancel}
+                draft-values={draftValues}
+                show-row-number-column>
+            </lightning-datatable>
+        </div>
+    </lightning-card>
+
+    <!-- 総会議員資格 非候補者一覧表 -->
+    <lightning-card title="総会議員資格 非候補者一覧表" class="slds-p-horizontal_small" if:true={unQualifiedPersonData}>
+        <div class="slds-m-around_medium">
+            <lightning-datatable
+                key-field="Id"
+                data={unQualifiedPersonData}
+                columns={tableColumns}
+                onsave={handleSave}
+                oncancel={handleCancel}
+                draft-values={draftValues}
+                show-row-number-column>
+            </lightning-datatable>
+        </div>
+    </lightning-card>
+</template>
