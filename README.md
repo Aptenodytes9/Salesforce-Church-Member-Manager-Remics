@@ -5,7 +5,7 @@ It can manage information on congregations attending church, their families, and
 It also has the Functions to manage congregational giving information and integrate with other accounting management systems.  
 This system is packaged for Salesforce administrators and developers.
 
-![Image](https://user-images.githubusercontent.com/29101328/160237973-a8812fd1-25f0-42b8-9505-59d39e8eb906.png)
+![Image](https://user-images.githubusercontent.com/29101328/160239487-5d3185ce-3714-434b-85b3-82796619e3bb.png)
 
 # Features
 
