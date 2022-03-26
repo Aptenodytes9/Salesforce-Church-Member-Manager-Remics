@@ -1,7 +1,6 @@
-開発メモ.md
-remics-test1/.vscode/extensions.json
-remics-test1/.vscode/launch.json
-remics-test1/.vscode/settings.json
-remics-prod/.vscode/extensions.json
-remics-prod/.vscode/launch.json
-remics-prod/.vscode/settings.json
+dev_memo.md
+remics/.vscode/extensions.json
+remics/.vscode/launch.json
+remics/.vscode/settings.json
+remics/sfdx-project.json
+remics-prod/
