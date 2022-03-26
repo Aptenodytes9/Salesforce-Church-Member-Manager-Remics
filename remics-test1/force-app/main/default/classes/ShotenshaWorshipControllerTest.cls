@@ -4,7 +4,7 @@ public with sharing class ShotenshaWorshipControllerTest {
     @testSetup
     static void setup() {
 
-        // 世帯レコードの作成
+        // Creating household records
         List<Household__c> hList = new List<Household__c>();
         Household__c h1 = new Household__c(
             Name = '佐藤家',
@@ -24,7 +24,7 @@ public with sharing class ShotenshaWorshipControllerTest {
         hList.add(h2);
         insert hList;
 
-        // 人レコード(教会員)の作成
+        // Creating person records (member of the church)
         List<Person__c> pList = new List<Person__c>();
         for (Integer i = 0; i < 6; i++) {
             Person__c p = new Person__c(
@@ -62,8 +62,7 @@ public with sharing class ShotenshaWorshipControllerTest {
         }
         insert pList;
 
-        // 召天した人レコードの作成
-        // 佐藤家の召天者の作成
+        // Creating a record of dead people
         Person__c pDeceased3 = pList[3];
         pDeceased3.Deceased__c = true;
         pDeceased3.DeceasedDate__c = Date.newInstance(2020, 12, 1);
@@ -86,7 +85,6 @@ public with sharing class ShotenshaWorshipControllerTest {
         pDeceased5.MainBoneType__c = '本骨';
         pDeceased5.OfficiantPastorName__c = 'その他';
 
-        // 後藤家の召天者の作成
         Person__c pDeceased9 = pList[9];
         pDeceased9.Deceased__c = true;
         pDeceased9.DeceasedDate__c = Date.newInstance(2010, 12, 1);
@@ -118,10 +116,9 @@ public with sharing class ShotenshaWorshipControllerTest {
         
         update pList;
 
-        // 召天者×遺族レコードの作成
+        // Creating DeceasedSurvivor Object Records
         List<DeceasedSurvivor__c> dList = new List<DeceasedSurvivor__c>();
 
-        // 佐藤家の召天者に関する召天者×遺族レコードの作成
         for (Integer i = 3; i < 6; i++) {
             Person__c pDeceased = pList[i];
             for (Integer j = 0; j < 3; j++) {
@@ -133,7 +130,6 @@ public with sharing class ShotenshaWorshipControllerTest {
             }
         }
 
-        // 後藤家の召天者に関する召天者×遺族レコードの作成
         for (Integer i = 9; i < 13; i++) {
             Person__c pDeceased = pList[i];
             for (Integer j = 6; j < 9; j++) {

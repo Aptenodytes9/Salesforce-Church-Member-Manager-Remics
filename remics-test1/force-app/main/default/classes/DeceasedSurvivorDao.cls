@@ -1,16 +1,16 @@
 public with sharing class DeceasedSurvivorDao {
 
-    // 指定期間に召天した召天者とその遺族を世帯順に取得
+    // Acquire the Deceased People and their bereaved families in the order of households
     @AuraEnabled(cacheable=true)
     public static List<DeceasedSurvivor__c> getDeceasedSurvivorByDateOrderbyHousehold(List<Date> dateList) {
         return [
             SELECT 
                 Id,
                 Name,
-                // 遺族
+                // Bereaved families
                 SurvivorPerson__r.Name,
                 SurvivorIRelationshipFromHouseholder__c,
-                // 世帯
+                // Households
                 SurvivorHousehold__c,
                 SurvivorHousehold__r.Name,
                 SurvivorHousehold__r.PostalCode__c,
@@ -19,7 +19,7 @@ public with sharing class DeceasedSurvivorDao {
                 SurvivorHousehold__r.JointSignature1__c,
                 SurvivorHousehold__r.JointSignature2__c,
                 SurvivorHousehold__r.JointSignature3__c,
-                // 召天者
+                // Deceased People
                 DeceasedPerson__c,
                 DeceasedPerson__r.Name,
                 DeceasedDate__c,
@@ -45,14 +45,14 @@ public with sharing class DeceasedSurvivorDao {
         ];
     }
 
-    // 指定期間に召天した召天者とその遺族を召天年度順に取得
+    // Acquire the Deceased People and their bereaved families in the order of Death date
     @AuraEnabled(cacheable=true)
     public static List<DeceasedSurvivor__c> getDeceasedSurvivorByDateOrderbyDeceasedDate(List<Date> dateList) {
         return [
             SELECT 
                 Id,
                 Name,
-                // 召天者
+                // Deceased People
                 DeceasedPerson__c,
                 DeceasedPerson__r.Name,
                 DeceasedPerson__r.PersonNumCurrent__c,
@@ -60,12 +60,12 @@ public with sharing class DeceasedSurvivorDao {
                 DeceasedDate__c,
                 DeceasedPerson__r.BoneDate__c,
                 DeceasedPerson__r.Remains__c,
-                // 遺族
+                // Bereaved families
                 SurvivorPerson__r.Name,
                 SurvivorPerson__r.PersonNumCurrent__c,
                 SurvivorRelationship__c,
                 SurvivorPerson__r.CelestialWorshipShipment__c,
-                // 世帯
+                // Households
                 SurvivorHousehold__r.PostalCode__c,
                 SurvivorHousehold__r.AddressAllCombined__c
             FROM DeceasedSurvivor__c 
@@ -86,14 +86,14 @@ public with sharing class DeceasedSurvivorDao {
         ];
     }
 
-    // 指定期間に召天した召天者とその遺族を遺族郵便番号・住所・続柄・誕生日順に取得
+    // Acquire the Deceased People and their bereaved families in the order of Bereaved family zip code, address, relationship, birthday
     @AuraEnabled(cacheable=true)
     public static List<DeceasedSurvivor__c> getDeceasedSurvivorByDateOrderbyPostalcode(List<Date> dateList) {
         return [
             SELECT 
                 Id,
                 Name,
-                // 召天者
+                // Deceased People
                 DeceasedPerson__c,
                 DeceasedPerson__r.Name,
                 DeceasedPerson__r.PersonNumCurrent__c,
@@ -101,13 +101,13 @@ public with sharing class DeceasedSurvivorDao {
                 DeceasedDate__c,
                 DeceasedPerson__r.BoneDate__c,
                 DeceasedPerson__r.Remains__c,
-                // 遺族
+                // Bereaved families
                 SurvivorPerson__r.Name,
                 SurvivorPerson__r.PersonNumCurrent__c,
                 SurvivorPerson__r.PersonType__c,
                 SurvivorRelationship__c,
                 SurvivorPerson__r.CelestialWorshipShipment__c,
-                // 世帯
+                // Households
                 SurvivorHousehold__r.PostalCode__c,
                 SurvivorHousehold__r.AddressAllCombined__c
             FROM DeceasedSurvivor__c 

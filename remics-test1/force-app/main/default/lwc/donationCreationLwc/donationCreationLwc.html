@@ -1,6 +1,6 @@
 <template>
-    <!-- 献金登録画面 -->
-    <!-- 新規献金レコード入力フォーム -->
+    <!-- Donation Registration Page -->
+    <!-- New Donation Record Input Form -->
     <lightning-card title="新規献金レコードの登録" class="slds-m-horizontal_small">
         <div class="slds-m-around_medium">
             <lightning-record-edit-form object-api-name={DonationObjectName} onsuccess={handleInsertSuccess}>
@@ -55,7 +55,7 @@
         </div>
     </lightning-card>
 
-    <!-- 献金一覧表 -->
+    <!-- Donation List -->
     <lightning-card title="献金者の献金一覧表" if:true={tableData}>
         <div class="slds-m-around_medium">
             <div class="slds-m-around_medium slds-grid">
@@ -86,7 +86,7 @@
         </div>
     </lightning-card>
 
-    <!-- 献金レコード削除確認ダイアログ -->
+    <!-- Donation Record Deletion Confirmation Dialog -->
     <c-confirmation-dialog title='献金レコードの削除'
                            message={displayMessage}
                            message2={displayMessage2}

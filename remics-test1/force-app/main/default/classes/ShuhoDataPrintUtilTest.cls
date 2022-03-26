@@ -4,7 +4,7 @@ public with sharing class ShuhoDataPrintUtilTest {
     @testSetup
     static void setup() {
 
-        // 世帯レコードの作成
+        // Creating household records
         List<Household__c> hList = new List<Household__c>();
         Household__c h1 = new Household__c(
             Name = '佐藤家',
@@ -22,7 +22,7 @@ public with sharing class ShuhoDataPrintUtilTest {
         hList.add(h2);
         insert hList;
 
-        // 人レコード(教会員)の作成
+        // Creating person records (member of the church)
         List<Person__c> pList = new List<Person__c>();
         for (Integer i = 0; i < 6; i++) {
             Person__c p = new Person__c(
@@ -40,7 +40,7 @@ public with sharing class ShuhoDataPrintUtilTest {
         }
         insert pList;
 
-        // 献金単位区分=「夫婦」の人レコードの作成
+        // Creating person records (Donation unit  = "Couple")
         Person__c pHusband = pList[1];
         Person__c pWife = pList[2];
 
@@ -55,7 +55,7 @@ public with sharing class ShuhoDataPrintUtilTest {
         pWife.Spouse__c = pHusband.Id;
         pWife.RelationshipFromHouseholder__c = '配偶者';
 
-        // 献金単位区分=「家族」の人レコードの作成
+        // Creating person records (Donation unit  = "Family")
         Person__c pFather = pList[3];
         Person__c pSon = pList[4];
 
@@ -70,7 +70,7 @@ public with sharing class ShuhoDataPrintUtilTest {
         pSon.Household__c = h2.Id;
         pSon.RelationshipFromHouseholder__c = '子';
 
-        // 会員区分=「非会員」の人レコードの作成
+        // Creating person records (Membership category = "Non-member")
         Person__c pHikaiin = pList[5];
         pHikaiin.PersonType__c = '非会員';
         
@@ -78,10 +78,9 @@ public with sharing class ShuhoDataPrintUtilTest {
 
         List<Donation__c> dList = new List<Donation__c>();
         
-        // 献金レコードの作成
+        // Creating onation records
         for(Person__c p : pList){
-            // 献金単位区分=「夫婦」の場合の配偶者や、献金単位区分=「家族」の場合の家族は
-            // 単独で献金するケースはないので除外する
+            // If the donation unit = "couple" or "Family", the spouse or family does not make a donation alone, so it is excluded.
             if(p.Id == pWife.Id || p.Id == pSon.Id){
                 continue;
             }

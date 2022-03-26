@@ -1,5 +1,5 @@
 <template>
-    <!-- 仕訳データエクスポート画面 -->
+    <!-- Journal Data Export Page -->
     <lightning-card title="エクスポートする献金データの指定" >
         <div class="slds-m-around_medium">
             <lightning-record-edit-form>
@@ -38,7 +38,7 @@
         </div>
     </lightning-card>
 
-    <!-- 仕訳データ「KAIKEI_IF」 一覧 -->
+    <!-- Journal Data "KAIKEI_IF" List -->
     <lightning-card title="仕訳データ「KAIKEI_IF」 一覧" class="slds-p-horizontal_small" if:true={kaikeiData}>
         <lightning-button label="ダウンロード" title="表のデータをCSVダウンロード" onclick={exportKaikeiCsv} class="slds-m-left_x-small" ></lightning-button>
 
@@ -54,7 +54,7 @@
         </div>
     </lightning-card>
 
-    <!-- 仕訳データ「SIEN_IF」 一覧 -->
+    <!-- Journal Data "SIEN_IF" List -->
     <lightning-card title="仕訳データ「SIEN_IF」 一覧" class="slds-p-horizontal_small" if:true={sienData}>
         <lightning-button label="ダウンロード" title="表のデータをCSVダウンロード" onclick={exportSienCsv} class="slds-m-left_x-small" ></lightning-button>
 
