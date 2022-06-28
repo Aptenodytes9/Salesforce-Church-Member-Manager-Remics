@@ -25,14 +25,14 @@ trigger DonationTrigger on Donation__c (before insert, before update) {
         System.debug('Donation DonationYearMonth: ' + d.DonationYearMonth__c);
 
         // Only for monthly donations
-        if('1'.equals(d.DonationType__c)){
-            List<Donation__c> duplicateDList = DuplicateDonationUtil.getDuplicateDonation(d);
+        // if('1'.equals(d.DonationType__c)){
+        //     List<Donation__c> duplicateDList = DuplicateDonationUtil.getDuplicateDonation(d);
 
-            if(duplicateDList.size() > 0){
-                d.addError('献金月が同じ月次献金レコードがすでに存在します');
-            } else {
-                System.debug('Not Exist DuplicateDonation');
-            }
-        }
+        //     if(duplicateDList.size() > 0){
+        //         d.addError('献金月が同じ月次献金レコードがすでに存在します');
+        //     } else {
+        //         System.debug('Not Exist DuplicateDonation');
+        //     }
+        // }
     } 
 }
