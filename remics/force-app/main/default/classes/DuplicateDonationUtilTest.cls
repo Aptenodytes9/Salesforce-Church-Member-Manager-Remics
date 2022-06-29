@@ -94,18 +94,18 @@ public with sharing class DuplicateDonationUtilTest {
         System.assertEquals(false, expectedExceptionThrown, 'DuplicateDonationUtilTest.successCurrectDonationInsertTest Error');
     }
 
-    @isTest
-    static void failDupliDonationInsertTest() {
-        Boolean expectedExceptionThrown = false;
-        try {
-            setup(true);
-        } catch(Exception e) {
-            System.debug('fail');
-            System.debug(e.getMessage());
-            expectedExceptionThrown =  e.getMessage().contains('献金月が同じ月次献金レコードがすでに存在します');
-        }
-        System.assertEquals(true, expectedExceptionThrown, 'DuplicateDonationUtilTest.failDupliDonationInsertTest Error');
-    }
+    // @isTest
+    // static void failDupliDonationInsertTest() {
+    //     Boolean expectedExceptionThrown = false;
+    //     try {
+    //         setup(true);
+    //     } catch(Exception e) {
+    //         System.debug('fail');
+    //         System.debug(e.getMessage());
+    //         expectedExceptionThrown =  e.getMessage().contains('献金月が同じ月次献金レコードがすでに存在します');
+    //     }
+    //     System.assertEquals(true, expectedExceptionThrown, 'DuplicateDonationUtilTest.failDupliDonationInsertTest Error');
+    // }
 
     // Confirmation of the "donation date" change trigger not working when updating without changing the "start date" and "end date"
     @isTest

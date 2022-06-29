@@ -262,33 +262,33 @@ public with sharing class ShotenshaWorshipControllerTest {
         Test.stopTest();
     }
 
-    @isTest
-    static void getSurvivorListTest() {
+    // @isTest
+    // static void getSurvivorListTest() {
 
-        List<Date> dateList = new List<Date>();
-        dateList.add(Date.newInstance(2020, 1, 1));
-        dateList.add(Date.newInstance(2020, 12, 31));
-        dateList.add(Date.newInstance(2019, 1, 1));
-        dateList.add(Date.newInstance(2019, 12, 31));
-        dateList.add(Date.newInstance(2015, 1, 1));
-        dateList.add(Date.newInstance(2015, 12, 31));
-        dateList.add(Date.newInstance(2010, 1, 1));
-        dateList.add(Date.newInstance(2010, 12, 31));
-        dateList.add(Date.newInstance(2005, 1, 1));
-        dateList.add(Date.newInstance(2005, 12, 31));
-        dateList.add(Date.newInstance(2000, 1, 1));
-        dateList.add(Date.newInstance(2000, 12, 31));
-        dateList.add(Date.newInstance(1995, 1, 1));
-        dateList.add(Date.newInstance(1995, 12, 31));
+    //     List<Date> dateList = new List<Date>();
+    //     dateList.add(Date.newInstance(2020, 1, 1));
+    //     dateList.add(Date.newInstance(2020, 12, 31));
+    //     dateList.add(Date.newInstance(2019, 1, 1));
+    //     dateList.add(Date.newInstance(2019, 12, 31));
+    //     dateList.add(Date.newInstance(2015, 1, 1));
+    //     dateList.add(Date.newInstance(2015, 12, 31));
+    //     dateList.add(Date.newInstance(2010, 1, 1));
+    //     dateList.add(Date.newInstance(2010, 12, 31));
+    //     dateList.add(Date.newInstance(2005, 1, 1));
+    //     dateList.add(Date.newInstance(2005, 12, 31));
+    //     dateList.add(Date.newInstance(2000, 1, 1));
+    //     dateList.add(Date.newInstance(2000, 12, 31));
+    //     dateList.add(Date.newInstance(1995, 1, 1));
+    //     dateList.add(Date.newInstance(1995, 12, 31));
 
-        List<Map<String, Object>> dList = ShotenshaWorshipController.getSurvivorList(dateList, true);
+    //     List<Map<String, Object>> dList = ShotenshaWorshipController.getSurvivorList(dateList, true);
 
-        Test.startTest();
-        System.assertEquals(21, dList.size(), 'ShotenshaWorshipController.getSurvivorList Error');
-        System.assertEquals('5000,佐藤一郎0,現住陪餐会員,1070052,東京都港区赤坂1-2-3,本人,希望有,5年,現住陪餐会員,5005,佐藤一郎5,Tue Dec 01 00:00:00 GMT 2015,Tue Dec 01 00:00:00 GMT 2015,無', String.join(dList[0].values(), ','), 'ShotenshaWorshipController.getSurvivorList Error');
-        System.assertEquals('5000,佐藤一郎0,現住陪餐会員,1070052,東京都港区赤坂1-2-3,本人,希望有,当年,現住陪餐会員,5003,佐藤一郎3,Tue Dec 01 00:00:00 GMT 2020,Tue Dec 01 00:00:00 GMT 2020,有', String.join(dList[1].values(), ','), 'ShotenshaWorshipController.getSurvivorList Error');
-        Test.stopTest();
-    }
+    //     Test.startTest();
+    //     System.assertEquals(21, dList.size(), 'ShotenshaWorshipController.getSurvivorList Error');
+    //     System.assertEquals('5000,佐藤一郎0,現住陪餐会員,1070052,東京都港区赤坂1-2-3,本人,希望有,5年,現住陪餐会員,5005,佐藤一郎5,Tue Dec 01 00:00:00 GMT 2015,Tue Dec 01 00:00:00 GMT 2015,無', String.join(dList[0].values(), ','), 'ShotenshaWorshipController.getSurvivorList Error');
+    //     System.assertEquals('5000,佐藤一郎0,現住陪餐会員,1070052,東京都港区赤坂1-2-3,本人,希望有,当年,現住陪餐会員,5003,佐藤一郎3,Tue Dec 01 00:00:00 GMT 2020,Tue Dec 01 00:00:00 GMT 2020,有', String.join(dList[1].values(), ','), 'ShotenshaWorshipController.getSurvivorList Error');
+    //     Test.stopTest();
+    // }
 
     @isTest
     static void createSurvivorListCsvDataTest() {
