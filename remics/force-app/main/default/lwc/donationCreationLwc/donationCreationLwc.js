@@ -65,6 +65,7 @@ const TABLE_COLUMNS = [
                 { label: '会堂保全献金', value: '31' },
                 { label: '愛の業献金', value: '32' },
                 { label: '隠遁牧師謝恩献金', value: '33' },
+                { label: 'ハルモニウム特別献金', value: '34' },
                 { label: '東日本大震災被災教会', value: '35' },
             ]
             , value: { fieldName: DONATIONTYPE_FIELD.fieldApiName } 
@@ -181,7 +182,14 @@ export default class DonationCreationLwc extends LightningElement {
        
         this.donationMonthNumVal = finishMonth - startMonth + 1;
 
-        this.onChangeDonationAmountField();
+        const donationAmount = this.template.querySelector('.donationAmount').value;
+
+        if(!donationAmount || !this.donationMonthNumVal || this.donationMonthNumVal == 0) { 
+            this.donationAmountAveVal = 0;
+        }
+
+        // 「献金額（月当たり）」を計算
+        this.donationAmountAveVal = (donationAmount / this.donationMonthNumVal);
     };
     
     // 新規献金レコードの作成に成功したとき
@@ -190,13 +198,19 @@ export default class DonationCreationLwc extends LightningElement {
         await this.fetchTableData();
         this.draftValues = [];
 
-        // 入力欄をリセット
+        // 開始日・終了日・献金額・摘要の各入力欄をリセット
+        // reset method をcallできるのはlightning-input-field tagのみ
+        // lightning-input tagを利用している項目は不可
         const inputFields = this.template.querySelectorAll('.resetField');
         if (inputFields) {
             inputFields.forEach(field => {
                 field.reset();
             });
         }
+
+        // 月数・献金額（月当たり）欄をリセット
+        this.donationMonthNumVal = 1;
+        this.donationAmountAveVal = 0;
 
         this.dispatchEvent(
             new ShowToastEvent({

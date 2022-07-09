@@ -33,16 +33,16 @@
                         <lightning-input-field field-name={donationTypeField} value={donationTypeVal} variant="label-stacked" tabindex=-1 ></lightning-input-field>
                     </div>
                     <div class="slds-col slds-size_1-of-6">
-                        <lightning-input-field field-name={donationStartdateField} variant="label-stacked" class="donationStartdate" onchange={onChangeDonationStartOrFinishdate}></lightning-input-field>
+                        <lightning-input-field field-name={donationStartdateField} variant="label-stacked" class="donationStartdate resetField" onchange={onChangeDonationStartOrFinishdate}></lightning-input-field>
                     </div>
                     <div class="slds-col slds-size_1-of-6">
-                        <lightning-input-field field-name={donationFinishdateField} variant="label-stacked" class="donationFinishdate" onchange={onChangeDonationStartOrFinishdate}></lightning-input-field>
+                        <lightning-input-field field-name={donationFinishdateField} variant="label-stacked" class="donationFinishdate resetField" onchange={onChangeDonationStartOrFinishdate}></lightning-input-field>
                     </div>
                     <div class="slds-col slds-size_1-of-6">
                         <lightning-input type="number" disabled value={donationMonthNumVal} label="月数" class="donationMonthNum"></lightning-input>
                     </div>
                     <div class="slds-col slds-size_1-of-6">
-                        <lightning-input-field field-name={donationAmountField} variant="label-stacked" step=100 formatter="currency" class="donationAmount" onchange={onChangeDonationAmountField}></lightning-input-field>
+                        <lightning-input-field field-name={donationAmountField} variant="label-stacked" class="donationAmount resetField" onchange={onChangeDonationAmountField}></lightning-input-field>
                     </div>
                     <div class="slds-col slds-size_1-of-6">
                         <lightning-input type="number" disabled value={donationAmountAveVal} label="献金額（月当たり）" ></lightning-input>
