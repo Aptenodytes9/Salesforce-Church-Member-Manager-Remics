@@ -6,7 +6,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getDonationsByDonorId from '@salesforce/apex/DonationDao.getDonationsByDonorId';
 import updateDonations from '@salesforce/apex/DonationDao.updateDonations';
 import deleteDonationById from '@salesforce/apex/DonationDao.deleteDonationById';
-import getPersonByPersonNumCurrent from '@salesforce/apex/PersonDao.getPersonByPersonNumCurrent';
+import getAlivePersonByPersonNumCurrent from '@salesforce/apex/PersonDao.getAlivePersonByPersonNumCurrent';
 import getPersonById from '@salesforce/apex/PersonDao.getPersonById';
 
 // 献金オブジェクト
@@ -84,6 +84,7 @@ export default class DonationCreationLwc extends LightningElement {
     // 献金者検索フォーム
     @api donorId;
     @api personNumCurrent;
+    @api donationUnitClass;
     @api boxNum;
     @api shelfNum;
 
@@ -97,8 +98,9 @@ export default class DonationCreationLwc extends LightningElement {
         if (!this.personNumCurrent) { return; }
 
         // 原籍番号からレコードIDを取得
-        await getPersonByPersonNumCurrent({ personNumCurrent: this.personNumCurrent }).then(record => {
+        await getAlivePersonByPersonNumCurrent({ personNumCurrent: this.personNumCurrent }).then(record => {
             this.donorId = record.Id;
+            this.donationUnitClass = record.DonationUnitClass__c;
             this.boxNum = record.WeeklyReportBoxNum__c;
             this.shelfNum = record.ShelfNum__c;
             this.fetchTableData();

@@ -119,16 +119,19 @@ public with sharing class PersonDao {
 
     // 「原籍番号（現在）」から教会員を取得
     @AuraEnabled
-    public static Person__c getPersonByPersonNumCurrent(Integer personNumCurrent) {
+    public static Person__c getAlivePersonByPersonNumCurrent(Integer personNumCurrent) {
         return [
             SELECT 
                 Id,
                 Name,
                 PersonNumCurrent__c,
+                DonationUnitClass__c,
                 WeeklyReportBoxNum__c,
                 ShelfNum__c
             FROM Person__c 
             WHERE PersonNumCurrent__c = :personNumCurrent
+            AND Deceased__c = FALSE
+            AND StatusType__c NOT IN ('召天', '転出', '不明 ', '削除')
             LIMIT 1
         ];
     }

@@ -150,13 +150,13 @@ public with sharing class PersonDaoTest {
     }
 
     @isTest
-    static void getPersonByPersonNumCurrentTest() {
-        Person__c p1 = PersonDao.getPersonByPersonNumCurrent(5000);
+    static void getAlivePersonByPersonNumCurrentTest() {
+        Person__c p1 = PersonDao.getAlivePersonByPersonNumCurrent(5000);
         Person__c p2 = PersonDao.getPersonById(p1.Id);
 
         Test.startTest();
-        System.assertEquals('佐藤一郎0', p1.Name, 'PersonDao.getPersonByPersonNumCurrent Error');
-        System.assertEquals(5000, p1.PersonNumCurrent__c, 'PersonDao.getPersonByPersonNumCurrent Error');
+        System.assertEquals('佐藤一郎0', p1.Name, 'PersonDao.getAlivePersonByPersonNumCurrent Error');
+        System.assertEquals(5000, p1.PersonNumCurrent__c, 'PersonDao.getAlivePersonByPersonNumCurrent Error');
         
         System.assertEquals('佐藤一郎0', p2.Name, 'PersonDao.getPersonById Error');
         System.assertEquals(5000, p2.PersonNumCurrent__c, 'PersonDao.getPersonById Error');
