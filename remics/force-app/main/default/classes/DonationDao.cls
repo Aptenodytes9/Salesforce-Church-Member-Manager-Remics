@@ -115,13 +115,13 @@ public with sharing class DonationDao {
 
         List<String> accountingUnitList = new List<String>();
         if (isKaikei) {
-            // Accounting unit for output of "KAIKEI_IF.csv"
+            // 「KAIKEI_IF.csv」の出力対象の会計単位
             accountingUnitList.add('月次献金');
             accountingUnitList.add('感謝献金');
             accountingUnitList.add('礼拝献金');
             accountingUnitList.add('その他献金');
         } else {
-            // Accounting unit for output of "SIEN_IF.csv"
+            // 「SIEN_IF.csv」の出力対象の会計単位
             accountingUnitList.add('支援と発展会計');
             accountingUnitList.add('特別献金');
         }

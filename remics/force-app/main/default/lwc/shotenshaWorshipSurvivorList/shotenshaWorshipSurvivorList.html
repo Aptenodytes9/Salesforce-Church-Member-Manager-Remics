@@ -1,6 +1,6 @@
 <template>
-    <!-- Commemorative Worship List Creation Page -->
-    <!-- Search date input form -->
+    <!-- 召天者記念礼拝リスト作成画面 -->
+    <!-- 検索日付入力フォーム -->
     <lightning-card title="検索日付の指定">
         <div class="slds-m-around_medium">
             <lightning-record-edit-form>
@@ -66,7 +66,7 @@
         </div>
     </lightning-card>
 
-    <!-- Destination Households List -->
+    <!-- 遺族宛案内 送付先世帯 一覧 -->
     <lightning-card title="遺族宛案内 送付先世帯 一覧" class="slds-p-horizontal_small" if:true={atenaListTableData}>
         <lightning-button label="ダウンロード" title="表のデータをCSVダウンロード" onclick={exportAtenaCsv} class="slds-m-left_x-small" ></lightning-button>
 
@@ -82,7 +82,7 @@
         </div>
     </lightning-card>
 
-    <!-- Deceased Person List -->
+    <!-- 召天者-遺族 一覧 -->
     <lightning-card title="召天者-遺族 一覧" class="slds-p-horizontal_small" if:true={deceasedListTableData}>
         <lightning-button label="ダウンロード" title="表のデータをCSVダウンロード" onclick={exportDeceasedListCsv} class="slds-m-left_x-small" ></lightning-button>
 
@@ -98,7 +98,7 @@
         </div>
     </lightning-card>
 
-    <!-- Survivor Person List -->
+    <!-- 遺族-召天者 一覧 -->
     <lightning-card title="遺族-召天者 一覧" class="slds-p-horizontal_small" if:true={survivorListTableData}>
         <lightning-button label="ダウンロード" title="表のデータをCSVダウンロード" onclick={exportSurvivorListCsv} class="slds-m-left_x-small" ></lightning-button>
 

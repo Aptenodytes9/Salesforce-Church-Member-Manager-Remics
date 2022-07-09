@@ -5,8 +5,8 @@
       "default": true
     }
   ],
-  "name": "remics-test1",
+  "name": "remics",
   "namespace": "",
   "sfdcLoginUrl": "https://reinanzaka-church-dev-ed--test1.my.salesforce.com/",
-  "sourceApiVersion": "52.0"
+  "sourceApiVersion": "55.0"
 }

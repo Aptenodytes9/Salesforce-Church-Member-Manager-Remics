@@ -4,7 +4,7 @@ public with sharing class DeceasedSurvivorDaoTest {
     @testSetup
     static void setup() {
 
-        // Creating household records
+        // 世帯レコードの作成
         Household__c h = new Household__c(
             Name = '佐藤家',
             Prefecture__c = '東京都',
@@ -13,7 +13,7 @@ public with sharing class DeceasedSurvivorDaoTest {
         );
         insert h;
 
-        // Creating person records (member of the church)
+        // 人レコード(教会員)の作成
         List<Person__c> pList = new List<Person__c>();
         for (Integer i = 0; i < 4; i++) {
             Person__c p = new Person__c(
@@ -31,14 +31,14 @@ public with sharing class DeceasedSurvivorDaoTest {
         }
         insert pList;
 
-        // Creating a record of dead people
+        // 召天した人レコードの作成
         Person__c pDeceased = pList[3];
         pDeceased.Deceased__c = true;
         pDeceased.DeceasedDate__c = Date.newInstance(2020, 12, 1);
         
         update pList;
 
-        // Creating DeceasedSurvivor Object Records
+        // 召天者×遺族レコードの作成
         List<DeceasedSurvivor__c> dList = new List<DeceasedSurvivor__c>();
 
         for (Integer i = 0; i < 3; i++) {

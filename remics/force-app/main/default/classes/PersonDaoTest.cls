@@ -4,7 +4,7 @@ public with sharing class PersonDaoTest {
     @testSetup
     static void setup() {
 
-        // Creating household records
+        // 世帯レコードの作成
         Household__c h = new Household__c(
             Name = '佐藤家',
             Prefecture__c = '東京都',
@@ -13,7 +13,7 @@ public with sharing class PersonDaoTest {
         );
         insert h;
 
-        // Creating person records (member of the church)
+        // 人レコード(教会員)の作成
         List<Person__c> pList = new List<Person__c>();
         for (Integer i = 0; i < 6; i++) {
             Person__c p = new Person__c(
@@ -32,7 +32,7 @@ public with sharing class PersonDaoTest {
         }
         insert pList;
 
-        // Creating person records (Donation unit  = "Couple")
+        // 献金単位区分=「夫婦」の人レコードの作成
         Person__c pHusband = pList[1];
         Person__c pWife = pList[2];
         
@@ -45,17 +45,17 @@ public with sharing class PersonDaoTest {
         pWife.Spouse__c = pHusband.Id;
         pWife.RelationshipFromHouseholder__c = '配偶者';
 
-        // Creating person records (Membership category = "Non-member")
+        // 会員区分=「非会員」の人レコードの作成
         Person__c pHikaiin = pList[3];
         pHikaiin.PersonType__c = '非会員';
 
-        // Members who do not do monthly donations at all
-        // Until last year, it is set to be qualified
+        // 月次献金を全くしていない会員
+        // 昨年までは総会議員資格ありの設定とする（「総会議員資格あり」= True）
         Person__c pNoDonation = pList[4];
         pNoDonation.ParliamentaryQualification__c = true;
 
-        // Members who have not made monthly donations within the specified period
-        // Until last year, it is set to be qualified
+        // 指定期間内に月次献金をしていない会員
+        // 昨年までは総会議員資格ありの設定とする（「総会議員資格あり」= True）
         Person__c pNoDonationWhileTerm = pList[5];
         pNoDonationWhileTerm.ParliamentaryQualification__c = true;
         
@@ -63,9 +63,9 @@ public with sharing class PersonDaoTest {
 
         List<Donation__c> dList = new List<Donation__c>();
         
-        // Creating onation records
+        // 献金レコードの作成
         for(Person__c p : pList){
-            // If the donation unit = "couple", the spouse does not make a donation alone, so it is excluded.
+            // 献金単位区分=「夫婦」の場合、その配偶者が単独で献金するケースはないので除外する
             if(p.Id == pWife.Id){
                 continue;
             }

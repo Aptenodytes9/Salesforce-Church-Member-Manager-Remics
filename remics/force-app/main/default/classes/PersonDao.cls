@@ -1,6 +1,6 @@
 public with sharing class PersonDao {
 
-    // Acquire a church member who meets the general assembly qualification
+    // 総会議員資格を満たしている教会員を取得
     @AuraEnabled(cacheable=false)
     public static List<Person__c> getQualifiedDonorsByDate(Date dateFrom, Date dateTo) {
         return [
@@ -26,7 +26,7 @@ public with sharing class PersonDao {
                 FROM 
                     DonorRef__r
                 WHERE 
-                    DonationType__c = '1' // Monthly donations
+                    DonationType__c = '1' // 月次献金
                     AND DonationDate__c >= :dateFrom 
                     AND DonationDate__c <= :dateTo)
             FROM Person__c 
@@ -35,7 +35,7 @@ public with sharing class PersonDao {
                         FROM 
                             Donation__c 
                         WHERE 
-                            DonationType__c = '1' // Monthly donations
+                            DonationType__c = '1' // 月次献金
                             AND DonationDate__c >= :dateFrom 
                             AND DonationDate__c <= :dateTo)
                 AND PersonType__c IN ('現住陪餐会員', '陪餐会員')
@@ -46,11 +46,11 @@ public with sharing class PersonDao {
         ];
     }
 
-    // Acquired a church member who does not have a qualification within the judgment target period even though "qualified" = True
+    // 「総会議員資格あり」= True にも関わらず、判定対象期間内の総会議員資格を満たしていない教会員を取得
     @AuraEnabled(cacheable=false)
     public static List<Person__c> getUnqualifiedDonorsByDate(Date dateFrom, Date dateTo) {
 
-        // Create a set of church members who make "monthly donations" even once during the judgment period
+        // 判定対象期間の間に「月次献金」を1回でも行っている教会員のSetを作成
         List<Donation__c> donationList = [
             SELECT 
                 Donor__r.Id
@@ -90,7 +90,7 @@ public with sharing class PersonDao {
                 FROM 
                     DonorRef__r
                 WHERE 
-                    DonationType__c = '1' // Monthly donations
+                    DonationType__c = '1' // 月次献金
                     AND DonationDate__c >= :dateFrom 
                     AND DonationDate__c <= :dateTo)
             FROM Person__c 
@@ -117,6 +117,7 @@ public with sharing class PersonDao {
         System.debug('DonationDao#updatePersons Done Successfully');
     }
 
+    // 「原籍番号（現在）」から教会員を取得
     @AuraEnabled
     public static Person__c getPersonByPersonNumCurrent(Integer personNumCurrent) {
         return [
@@ -132,6 +133,7 @@ public with sharing class PersonDao {
         ];
     }
 
+    // レコードIDから人情報を取得
     @AuraEnabled
     public static Person__c getPersonById(Id id) {
         return [

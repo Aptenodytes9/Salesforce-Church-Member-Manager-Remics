@@ -1,6 +1,6 @@
 <template>
-    <!-- Weekly Report Manuscript Data Creation Page -->
-    <!-- Delivery Period Specification Form -->
+    <!-- 週報原稿データ作成画面 -->
+    <!-- 納入期間指定フォーム -->
     <lightning-card title="納入期間の指定">
         <div class="slds-m-around_medium">
             <lightning-record-edit-form object-api-name={DonationObjectName}>
@@ -17,7 +17,7 @@
         </div>
     </lightning-card>
 
-    <!-- Weekly Report Manuscript Data -->
+    <!-- 週報原稿データ -->
     <lightning-card title="週報原稿データ" class="slds-p-horizontal_small" if:true={shuhoData.data}>
         <div class="slds-m-around_medium">
             <lightning-input-rich-text
@@ -25,7 +25,7 @@
         </div>
     </lightning-card>
 
-    <!-- Donation List -->
+    <!-- 献金一覧表 -->
     <lightning-card title={tableTitle} class="slds-p-horizontal_small" if:true={tableData.data}>
         <div class="slds-m-around_medium">
             <lightning-datatable

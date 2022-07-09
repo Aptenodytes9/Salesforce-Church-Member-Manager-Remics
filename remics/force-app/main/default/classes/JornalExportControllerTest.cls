@@ -4,7 +4,7 @@ public with sharing class JornalExportControllerTest {
     @testSetup
     static void setup() {
 
-        // Creating household records
+        // 世帯レコードの作成
         Household__c h = new Household__c(
             Name = '佐藤家',
             Prefecture__c = '東京都',
@@ -13,7 +13,7 @@ public with sharing class JornalExportControllerTest {
         );
         insert h;
 
-        // Creating person records (member of the church)
+        // 人レコード(教会員)の作成
         List<Person__c> pList = new List<Person__c>();
         for (Integer i = 0; i < 4; i++) {
             Person__c p = new Person__c(
@@ -31,7 +31,7 @@ public with sharing class JornalExportControllerTest {
         }
         insert pList;
 
-        // Creating person records (Donation unit  = "Couple")
+        // 献金単位区分=「夫婦」の人レコードの作成
         Person__c pHusband = pList[1];
         Person__c pWife = pList[2];
         
@@ -44,7 +44,7 @@ public with sharing class JornalExportControllerTest {
         pWife.Spouse__c = pHusband.Id;
         pWife.RelationshipFromHouseholder__c = '配偶者';
 
-        // Creating person records (Membership category = "Non-member")
+        // 会員区分=「非会員」の人レコードの作成
         Person__c pHikaiin = pList[3];
         pHikaiin.PersonType__c = '非会員';
         
@@ -52,9 +52,9 @@ public with sharing class JornalExportControllerTest {
 
         List<Donation__c> dList = new List<Donation__c>();
         
-        // Creating onation records
+        // 献金レコードの作成
         for(Person__c p : pList){
-            // If the donation unit = "couple", the spouse does not make a donation alone, so it is excluded.
+            // 献金単位区分=「夫婦」の場合、その配偶者が単独で献金するケースはないので除外する
             if(p.Id == pWife.Id){
                 continue;
             }
@@ -65,7 +65,7 @@ public with sharing class JornalExportControllerTest {
                 DonationFinishDate__c = Date.newInstance(2023, 1, 31),
                 Donor__c = p.Id,
                 DonationAmount__c = 10000,
-                DonationType__c = '1' // Monthly donations
+                DonationType__c = '1' // 月次献金
             );
             Donation__c dGetsuji2 = new Donation__c(
                 DonationDate__c = Date.newInstance(2022, 12, 1),
@@ -73,45 +73,45 @@ public with sharing class JornalExportControllerTest {
                 DonationFinishDate__c = Date.newInstance(2023, 3, 31),
                 Donor__c = p.Id,
                 DonationAmount__c = 20000,
-                DonationType__c = '1' // Monthly donations
+                DonationType__c = '1' // 月次献金
             );
             Donation__c dToki = new Donation__c(
                 DonationDate__c = Date.newInstance(2022, 12, 15),
                 Donor__c = p.Id,
                 DonationAmount__c = 20000,
-                DonationType__c = '3', // Special winter donations
+                DonationType__c = '3', // 冬期特別献金
                 DonationNote__c = '感謝'
             );
             Donation__c dToki2 = new Donation__c(
                 DonationDate__c = Date.newInstance(2022, 12, 15),
                 Donor__c = p.Id,
                 DonationAmount__c = 10000,
-                DonationType__c = '3', // Special winter donations
+                DonationType__c = '3', // 冬期特別献金
                 DonationNote__c = '感謝'
             );
             Donation__c dOnline = new Donation__c(
                 DonationDate__c = Date.newInstance(2022, 12, 31),
                 Donor__c = p.Id,
                 DonationAmount__c = 30000,
-                DonationType__c = '18' // Online worship donations
+                DonationType__c = '18' // オンライン礼拝献金
             );
             Donation__c dDendo = new Donation__c(
                 DonationDate__c = Date.newInstance(2022, 12, 31),
                 Donor__c = p.Id,
                 DonationAmount__c = 40000,
-                DonationType__c = '20' // Evangelism support donations
+                DonationType__c = '20' // 伝道支援献金
             );
             Donation__c dKaido = new Donation__c(
                 DonationDate__c = Date.newInstance(2022, 12, 31),
                 Donor__c = p.Id,
                 DonationAmount__c = 50000,
-                DonationType__c = '31' // Hall Conservation Donation
+                DonationType__c = '31' // 会堂保全献金
             );
             Donation__c dIntai = new Donation__c(
                 DonationDate__c = Date.newInstance(2022, 12, 31),
                 Donor__c = p.Id,
                 DonationAmount__c = 60000,
-                DonationType__c = '33' // Retirement teacher thank-you donation
+                DonationType__c = '33' // 隠退教師謝恩献金
             );
             dList.add(dGetsuji);
             dList.add(dGetsuji2);

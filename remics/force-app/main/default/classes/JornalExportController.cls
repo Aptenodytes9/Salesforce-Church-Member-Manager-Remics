@@ -2,36 +2,41 @@ public with sharing class JornalExportController {
 
     public static String csvData { get; set; }
 
+    // 仕訳CSVデータを作成
     public static void createCsvData(Boolean isKaikei) {
 
-        // Get the last search date the user searched from the custom settings
+        // 最後にユーザーが検索した検索日付をカスタム設定から取得
         JornalExport__c je = JornalExport__c.getOrgDefaults();
         Date donationDateFrom = je.donationDateFrom__c;
         Date donationDateTo = je.donationDateTo__c;
 
-        // Get the data that is the basis of CSV data
+        // CSVデータのもととなるデータを取得
         List<Map<String, Object>> jornalKaikeiList = getJornalList(donationDateFrom, donationDateTo, isKaikei, false);
 
         List<String> rowList = new List<String>();
 
-        // Create a row of data
+        // データ行を作成
         for(Map<String, Object> shMap : jornalKaikeiList) {
             rowList.add(String.join(shMap.values(), ','));
         }
 
+        // １行ごとに改行を付与
         csvData = String.join(rowList, '\r\n');
+        // 最終行にも改行を付加する
         csvData += '\r\n';
     }
 
+    // 仕訳データ「KAIKEI_IF」一覧 CSVデータを作成
     public static void createKaikeiCsvData() {
         createCsvData(true);
     }
 
+    // 仕訳データ「SIEN_IF」一覧 CSVデータを作成
     public static void createSienCsvData() {
         createCsvData(false);
     }
 
-    // Export donation data by donation type
+    // 献金データを献金種類単位で出力する
     @AuraEnabled(cacheable=false)
     public static List<Map<String, Object>> getJornalList(Date donationDateFrom, Date donationDateTo, Boolean isKaikei, Boolean isForView){
 
@@ -58,7 +63,7 @@ public with sharing class JornalExportController {
                 m.put('DonationAmountSum', Integer.valueOf(data.get('DonationAmountSum')));
                 m.put('DonationNote', donationNoteStr);
             } else {
-                // When outputting CSV, enclose the value in quotation marks.
+                // CSV出力する場合は、値を引用符で囲う
                 m.put('DonationDate', '"' + donationDateStr + '"');
                 m.put('DateNo', '"' + dateNoStr + '"');
                 m.put('No', '"' + 1 + '"');
@@ -68,7 +73,7 @@ public with sharing class JornalExportController {
                 m.put('DonationNote', '"' + donationNoteStr + '"');
             }
 
-            // Example: 2022/01/02 15001 1 1101 4101 405500 月次献金43口
+            // 例： 2022/01/02 15001 1 1101 4101 405500 月次献金43口
             dataList.add(m);
         }
 
@@ -79,7 +84,7 @@ public with sharing class JornalExportController {
     public static Map<String, Object> getLastExportCondition(){
         Map<String, Object> dMap = new Map<String, Object>();
 
-        // Get the date and time last exported by the user from the custom settings
+        // 最後にユーザーがエクスポートした日時をカスタム設定から取得
         JornalExport__c je = JornalExport__c.getOrgDefaults();
         dMap.put('lastExportDatetime', je.lastExportDatetime__c);
         dMap.put('donationDateFrom', je.donationDateFrom__c);
@@ -90,7 +95,7 @@ public with sharing class JornalExportController {
 
     @AuraEnabled(cacheable=false)
     public static void updateLastExportDatetime(Date donationDateFrom, Date donationDateTo){
-        // Save last user exported date and time and search date at that time in custom settings
+        // 最後にユーザーがエクスポートした日時とその時の検索日付をカスタム設定に保存
         JornalExport__c je = JornalExport__c.getOrgDefaults();
         je.lastExportDatetime__c = Datetime.now();
         je.donationDateFrom__c = donationDateFrom;
