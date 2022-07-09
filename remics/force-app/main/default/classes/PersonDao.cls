@@ -143,7 +143,10 @@ public with sharing class PersonDao {
             SELECT 
                 Id,
                 Name,
-                PersonNumCurrent__c
+                PersonNumCurrent__c,
+                DonationUnitClass__c,
+                WeeklyReportBoxNum__c,
+                ShelfNum__c
             FROM Person__c 
             WHERE id = :id
             LIMIT 1

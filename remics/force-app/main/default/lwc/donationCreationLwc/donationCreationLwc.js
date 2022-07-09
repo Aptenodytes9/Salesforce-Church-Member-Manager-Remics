@@ -99,6 +99,7 @@ export default class DonationCreationLwc extends LightningElement {
         if (!this.personNumCurrent) { return; }
 
         // 原籍番号からレコードIDを取得
+        // ただし「召天」=TRUE or「状況区分」=「転出, 召天, 不明, 削除」は除外して検索する
         await getAlivePersonByPersonNumCurrent({ personNumCurrent: this.personNumCurrent }).then(record => {
             this.donorId = record.Id;
             this.donationUnitClass = record.DonationUnitClass__c;
@@ -124,8 +125,14 @@ export default class DonationCreationLwc extends LightningElement {
         if (!this.donorId) { return; }
 
         // レコードIDから原籍番号を取得
+        // #onChangePersonNumCurrentField と異なり、召天者等を除外して検索することはしない
+        // （カスタム項目「献金者」は、召天者等を除外するルックアップ検索条件を設定しているため）
         getPersonById({ id: this.donorId }).then(record => {
             this.personNumCurrent = record.PersonNumCurrent__c;
+            this.donationUnitClass = record.DonationUnitClass__c;
+            this.boxNum = record.WeeklyReportBoxNum__c;
+            this.shelfNum = record.ShelfNum__c;
+            this.fetchTableData();
         }).catch(error => {
             this.dispatchEvent(
                 new ShowToastEvent({
