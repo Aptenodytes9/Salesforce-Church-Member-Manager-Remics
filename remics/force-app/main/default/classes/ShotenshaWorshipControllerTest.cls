@@ -226,8 +226,8 @@ public with sharing class ShotenshaWorshipControllerTest {
 
         Test.startTest();
         System.assertEquals(21, dList.size(), 'ShotenshaWorshipController.getDeceasedList Error');
-        System.assertEquals('当年,現住陪餐会員,5003,佐藤一郎3,Tue Dec 01 00:00:00 GMT 2020,Tue Dec 01 00:00:00 GMT 2020,有,佐藤一郎0,5000,本人,希望有,1070052,東京都港区赤坂1-2-3', String.join(dList[0].values(), ','), 'ShotenshaWorshipController.getDeceasedList Error');
-        System.assertEquals('当年,現住陪餐会員,5003,佐藤一郎3,Tue Dec 01 00:00:00 GMT 2020,Tue Dec 01 00:00:00 GMT 2020,有,佐藤一郎1,5001,本人,希望有,1070052,東京都港区赤坂1-2-3', String.join(dList[1].values(), ','), 'ShotenshaWorshipController.getDeceasedList Error');
+        System.assertEquals('当年,現住陪餐会員,5003,佐藤一郎3,Tue Dec 01 00:00:00 GMT 2020,Tue Dec 01 00:00:00 GMT 2020,有,佐藤一郎0,5000,,希望有,1070052,東京都港区赤坂1-2-3', String.join(dList[0].values(), ','), 'ShotenshaWorshipController.getDeceasedList Error');
+        System.assertEquals('当年,現住陪餐会員,5003,佐藤一郎3,Tue Dec 01 00:00:00 GMT 2020,Tue Dec 01 00:00:00 GMT 2020,有,佐藤一郎1,5001,,希望有,1070052,東京都港区赤坂1-2-3', String.join(dList[1].values(), ','), 'ShotenshaWorshipController.getDeceasedList Error');
         Test.stopTest();
     }
 
@@ -257,8 +257,8 @@ public with sharing class ShotenshaWorshipControllerTest {
 
         Test.startTest();
         System.assertEquals('召天年,召天者会員区分,召天者原簿番号,召天者名,召天日,納骨日,御遺影有無,遺族名,遺族原簿番号,遺族続柄,遺族召天案内,郵便番号,住所', csvList[0], 'ShotenshaWorshipController.createDeceasedListCsvData Error');
-        System.assertEquals('25年,現住陪餐会員,5003,佐藤一郎3,2020-12-01,2020-12-01,有,佐藤一郎0,5000,本人,希望有,1070052,東京都港区赤坂1-2-3', csvList[1], 'ShotenshaWorshipController.createDeceasedListCsvData Error');
-        System.assertEquals('25年,現住陪餐会員,5003,佐藤一郎3,2020-12-01,2020-12-01,有,佐藤一郎1,5001,本人,希望有,1070052,東京都港区赤坂1-2-3', csvList[2], 'ShotenshaWorshipController.createDeceasedListCsvData Error');
+        System.assertEquals('25年,現住陪餐会員,5003,佐藤一郎3,2020-12-01,2020-12-01,有,佐藤一郎0,5000,,希望有,1070052,東京都港区赤坂1-2-3', csvList[1], 'ShotenshaWorshipController.createDeceasedListCsvData Error');
+        System.assertEquals('25年,現住陪餐会員,5003,佐藤一郎3,2020-12-01,2020-12-01,有,佐藤一郎1,5001,,希望有,1070052,東京都港区赤坂1-2-3', csvList[2], 'ShotenshaWorshipController.createDeceasedListCsvData Error');
         Test.stopTest();
     }
 
@@ -285,8 +285,8 @@ public with sharing class ShotenshaWorshipControllerTest {
 
     //     Test.startTest();
     //     System.assertEquals(21, dList.size(), 'ShotenshaWorshipController.getSurvivorList Error');
-    //     System.assertEquals('5000,佐藤一郎0,現住陪餐会員,1070052,東京都港区赤坂1-2-3,本人,希望有,5年,現住陪餐会員,5005,佐藤一郎5,Tue Dec 01 00:00:00 GMT 2015,Tue Dec 01 00:00:00 GMT 2015,無', String.join(dList[0].values(), ','), 'ShotenshaWorshipController.getSurvivorList Error');
-    //     System.assertEquals('5000,佐藤一郎0,現住陪餐会員,1070052,東京都港区赤坂1-2-3,本人,希望有,当年,現住陪餐会員,5003,佐藤一郎3,Tue Dec 01 00:00:00 GMT 2020,Tue Dec 01 00:00:00 GMT 2020,有', String.join(dList[1].values(), ','), 'ShotenshaWorshipController.getSurvivorList Error');
+    //     System.assertEquals('5000,佐藤一郎0,現住陪餐会員,1070052,東京都港区赤坂1-2-3,,希望有,5年,現住陪餐会員,5005,佐藤一郎5,Tue Dec 01 00:00:00 GMT 2015,Tue Dec 01 00:00:00 GMT 2015,無', String.join(dList[0].values(), ','), 'ShotenshaWorshipController.getSurvivorList Error');
+    //     System.assertEquals('5000,佐藤一郎0,現住陪餐会員,1070052,東京都港区赤坂1-2-3,,希望有,当年,現住陪餐会員,5003,佐藤一郎3,Tue Dec 01 00:00:00 GMT 2020,Tue Dec 01 00:00:00 GMT 2020,有', String.join(dList[1].values(), ','), 'ShotenshaWorshipController.getSurvivorList Error');
     //     Test.stopTest();
     // }
 
@@ -316,8 +316,8 @@ public with sharing class ShotenshaWorshipControllerTest {
 
         Test.startTest();
         System.assertEquals('遺族原簿番号,遺族名,遺族会員区分,郵便番号,住所,遺族続柄,遺族召天案内,召天年,召天者会員区分,召天者原簿番号,召天者名,召天日,納骨日,御遺影有無', csvList[0], 'ShotenshaWorshipController.createSurvivorListCsvData Error');
-        System.assertEquals('5000,佐藤一郎0,現住陪餐会員,1070052,東京都港区赤坂1-2-3,本人,希望有,25年,現住陪餐会員,5003,佐藤一郎3,2020-12-01,2020-12-01,有', csvList[1], 'ShotenshaWorshipController.createSurvivorListCsvData Error');
-        System.assertEquals('5000,佐藤一郎0,現住陪餐会員,1070052,東京都港区赤坂1-2-3,本人,希望有,25年,現住陪餐会員,5005,佐藤一郎5,2015-12-01,2015-12-01,無', csvList[2], 'ShotenshaWorshipController.createSurvivorListCsvData Error');
+        System.assertEquals('5000,佐藤一郎0,現住陪餐会員,1070052,東京都港区赤坂1-2-3,,希望有,25年,現住陪餐会員,5003,佐藤一郎3,2020-12-01,2020-12-01,有', csvList[1], 'ShotenshaWorshipController.createSurvivorListCsvData Error');
+        System.assertEquals('5000,佐藤一郎0,現住陪餐会員,1070052,東京都港区赤坂1-2-3,,希望有,25年,現住陪餐会員,5005,佐藤一郎5,2015-12-01,2015-12-01,無', csvList[2], 'ShotenshaWorshipController.createSurvivorListCsvData Error');
         Test.stopTest();
     }
 }
