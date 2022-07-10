@@ -45,9 +45,9 @@ const TABLE_COLUMNS = [
         label: '献金種類', fieldName: DONATIONTYPE_FIELD.fieldApiName, type: 'picklist', typeAttributes: {
             placeholder: '選択してください', options: [
                 { label: '月次献金', value: '1' },
-                { label: '夏季特別献金', value: '2' },
-                { label: '冬季特別献金', value: '3' },
-                { label: '多摩墓地献金', value: '4' },
+                { label: '夏期特別献金', value: '2' },
+                { label: '冬期特別献金', value: '3' },
+                { label: '多磨墓地献金', value: '4' },
                 { label: '式典献金', value: '5' },
                 { label: '指定献金', value: '6' },
                 { label: 'イースター献金', value: '7' },
@@ -59,14 +59,12 @@ const TABLE_COLUMNS = [
                 { label: '結婚記念日献金', value: '13' },
                 { label: '召天記念日献金', value: '14' },
                 { label: 'その他感謝献金', value: '15' },
-                { label: '朝礼拝', value: '18' },
-                { label: '夕礼拝', value: '19' },
+                { label: 'オンライン礼拝献金', value: '18' },
                 { label: '伝道支援献金', value: '20' },
                 { label: '会堂保全献金', value: '31' },
                 { label: '愛の業献金', value: '32' },
-                { label: '隠遁牧師謝恩献金', value: '33' },
+                { label: '引退教師謝恩献金', value: '33' },
                 { label: 'ハルモニウム特別献金', value: '34' },
-                { label: '東日本大震災被災教会', value: '35' },
             ]
             , value: { fieldName: DONATIONTYPE_FIELD.fieldApiName } 
             , context: { fieldName: 'Id' }

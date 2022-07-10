@@ -153,7 +153,7 @@ public with sharing class JornalExportControllerTest {
 
         Test.startTest();
         System.assertEquals('"2022/12/01","125001","1","1101","4101","90000","月次献金6口"', csvList[0], 'JornalExportController.createCsvData Error');
-        System.assertEquals('"2022/12/15","125002","1","1101","4104","90000","冬季特別献金6口"', csvList[1], 'JornalExportController.createCsvData Error');
+        System.assertEquals('"2022/12/15","125002","1","1101","4104","90000","冬期特別献金6口"', csvList[1], 'JornalExportController.createCsvData Error');
         Test.stopTest();
     }
 
