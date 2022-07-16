@@ -120,7 +120,6 @@ public with sharing class DonationDao {
         } else {
             // 「SIEN_IF.csv」の出力対象の会計単位
             accountingUnitList.add('支援と発展会計');
-            accountingUnitList.add('ハルモニウム特別会計');
         }
 
         return [
