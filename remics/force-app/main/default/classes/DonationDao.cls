@@ -116,14 +116,11 @@ public with sharing class DonationDao {
         List<String> accountingUnitList = new List<String>();
         if (isKaikei) {
             // 「KAIKEI_IF.csv」の出力対象の会計単位
-            accountingUnitList.add('月次献金');
-            accountingUnitList.add('感謝献金');
-            accountingUnitList.add('礼拝献金');
-            accountingUnitList.add('その他献金');
+            accountingUnitList.add('教会通常会計');
         } else {
             // 「SIEN_IF.csv」の出力対象の会計単位
             accountingUnitList.add('支援と発展会計');
-            accountingUnitList.add('特別献金');
+            accountingUnitList.add('ハルモニウム特別会計');
         }
 
         return [

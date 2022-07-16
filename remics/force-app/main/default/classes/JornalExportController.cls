@@ -36,7 +36,7 @@ public with sharing class JornalExportController {
         createCsvData(false);
     }
 
-    // 献金データを献金種類単位で出力する
+    // 献金データを会計単位ごと出力する
     @AuraEnabled(cacheable=false)
     public static List<Map<String, Object>> getJornalList(Date donationDateFrom, Date donationDateTo, Boolean isKaikei, Boolean isForView){
 
