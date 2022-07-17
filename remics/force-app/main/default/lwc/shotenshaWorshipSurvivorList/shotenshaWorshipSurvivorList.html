@@ -1,117 +1,177 @@
 <template>
     <!-- 召天者記念礼拝リスト作成画面 -->
-    <!-- 検索日付入力フォーム -->
-    <lightning-card title="検索日付の指定">
-        <div class="slds-m-around_medium">
-            <lightning-record-edit-form>
-                <lightning-messages></lightning-messages>
-                <div class="slds-grid slds-gutters slds-wrap">
-                    <div class="slds-col slds-size_1-of-4">
-                        <lightning-input type="number" value={year} name="year" label="処理年度" min="2000" placeholder="半角数字4桁で入力" variant="label-inline" onchange={onChangeYear}></lightning-input>
-                    </div>
-                    <div class="slds-col slds-size_3-of-4">
-                        <lightning-button label="検索" title="検索" onclick={search} class="slds-m-left_x-small" ></lightning-button>
-                    </div>
+    <lightning-tabset variant="scoped" active-tab-value="one">
+        <lightning-tab label="1. 本画面の使い方" value="one">
+            <div class="slds-text-longform">
+                <p>召天者記念礼拝の対象となる世帯・召天者・遺族の各リストを作成・出力する画面です。指定した年度の召天者記念礼拝で対象となる方のリストを作成することができます。</p>
+            
+                <h3 class="slds-text-heading_small">本画面で出力可能なリスト</h3>
+                <ol class="slds-list_ordered">
+                    <li>遺族宛案内 送付先世帯 一覧：召天者記念礼拝の案内を送付する世帯リスト</li>
+                    <li>召天者-遺族 一覧：召天者記念礼拝の記念対象となる召天者リスト</li>
+                    <li>遺族-召天者 一覧：召天者記念礼拝の出席対象となる遺族リスト</li>
+                </ol>
 
-                    <div class="slds-col slds-size_1-of-4">
-                        <lightning-input type="date" value={thisYearFrom} name="thisYearFrom" label="当年度（から）" variant="label-inline" onchange={onChangeThisYearFrom}></lightning-input>
-                    </div>
-                    <div class="slds-col slds-size_1-of-4">
-                        <lightning-input type="date" value={thisYearTo} name="thisYearTo" label="当年度（まで）" variant="label-inline" onchange={onChangeThisYearTo}></lightning-input>
-                    </div>
+                <h3 class="slds-text-heading_small">操作手順</h3>
+                <ol class="slds-list_ordered">
+                    <li>画面上部の「2. 検索日付の入力」タブを開きます。</li>
+                    <li>「処理年度」欄に、召天者記念礼拝を実施する西暦年を半角数字4桁で入力してください。（初期状態では現在年がプリセットされています）</li>
+                    <li>「処理年度」欄を変更するとその年に応じて、当年〜200年の日付が自動で計算され、下部に表示されます。（当年〜1年の日付は任意に変更することが可能です）</li>
+                    <li>「検索」ボタンをクリックします。</li>
+                    <li>画面上部の「3. 検索結果のダウンロード」タブを開きます。</li>
+                    <li>入力した検索日付に基づいて３種類のリストが表示されます。</li>
+                    <li>「ダウンロード」ボタンをクリックすると、各リストの内容がCSVファイルでダウンロードできます。</li>
+                </ol>
 
-                    <div class="slds-col slds-size_1-of-4">
-                        <lightning-input type="date" value={lastYearFrom} name="lastYearFrom" label="1年（から）" variant="label-inline" onchange={onChangelastYearFrom}></lightning-input>
-                    </div>
-                    <div class="slds-col slds-size_1-of-4">
-                        <lightning-input type="date" value={lastYearTo} name="lastYearTo" label="1年（まで）" variant="label-inline" onchange={onChangelastYearTo}></lightning-input>
-                    </div>
+                <h3 class="slds-text-heading_small">[遺族宛案内 送付先世帯 一覧]の説明</h3>
+                <ul class="slds-list_ordered">
+                    <li>指定期間内に召天した召天者が所属する（一人でも含まれる）世帯が表示されます。</li>
+                    <li>表示順は「世帯名」「郵便番号」「住所」順です。</li>
+                    <li>ひとつの世帯に複数の召天者が属している場合は、同一行に最大10名まで連続して表示されます。</li>
+                    <li>「召天年」欄には、召天者が召天した年が、「当年」「1年」「5年」「10年」「15年」「20年」「25年」のいずれかの区分で表示されます。例えば召天日が「当年度（から）」〜「当年度（まで）」の間だった場合は「当年」と表示されます。</li>
+                </ul>
 
-                    <div class="slds-col slds-size_1-of-4">
-                        <lightning-input type="date" value={fiveYearFrom} name="fiveYearFrom" label="5年（から）" disabled variant="label-inline"></lightning-input>
-                    </div>
-                    <div class="slds-col slds-size_1-of-4">
-                        <lightning-input type="date" value={fiveYearTo} name="fiveYearTo" label="5年（まで）" disabled variant="label-inline"></lightning-input>
-                    </div>
+                <h3 class="slds-text-heading_small">[召天者-遺族 一覧]の説明</h3>
+                <ul class="slds-list_ordered">
+                    <li>指定期間内に召天した召天者が表示されます。</li>
+                    <li>表示順は「召天日（降順）」「召天者名」順です。</li>
+                    <li>一人の召天者に複数の遺族が登録されている場合は、各遺族につき一行ずつ表示されます。</li>
+                    <li>遺族も亡くなられている場合、本一覧には表示されません。</li>
+                </ul>
 
-                    <div class="slds-col slds-size_1-of-4">
-                        <lightning-input type="date" value={tenYearFrom} name="tenYearFrom" label="10年（から）" disabled variant="label-inline"></lightning-input>
-                    </div>
-                    <div class="slds-col slds-size_1-of-4">
-                        <lightning-input type="date" value={tenYearTo} name="tenYearTo" label="10年（まで）" disabled variant="label-inline"></lightning-input>
-                    </div>
+                <h3 class="slds-text-heading_small">[遺族-召天者 一覧]の説明</h3>
+                <ul class="slds-list_ordered">
+                    <li>指定期間内に召天した召天者の遺族が表示されます。</li>
+                    <li>表示順は「遺族郵便番号」「住所」「続柄」「誕生日」順です。</li>
+                    <li>一人の遺族に複数の召天者が登録されている場合は、各召天者につき一行ずつ表示されます。</li>
+                    <li>遺族も亡くなられている場合、本一覧には表示されません。</li>
+                </ul>
+            </div>
+        </lightning-tab>
+        <lightning-tab label="2. 検索日付の入力" value="two">
+            <!-- 検索日付入力フォーム -->
+            <lightning-card title="検索日付の指定">
+                <div class="slds-m-around_medium">
+                    <lightning-record-edit-form>
+                        <lightning-messages></lightning-messages>
+                        <div class="slds-grid slds-gutters slds-wrap">
+                            <div class="slds-col slds-size_1-of-4">
+                                <lightning-input type="number" value={year} name="year" label="処理年度" min="2000" placeholder="半角数字4桁で入力" variant="label-inline" onchange={onChangeYear}></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_3-of-4">
+                                <lightning-button label="検索" title="検索" onclick={search} class="slds-m-left_x-small" ></lightning-button>
+                            </div>
+        
+                            <div class="slds-col slds-size_1-of-4">
+                                <lightning-input type="date" value={thisYearFrom} name="thisYearFrom" label="当年度（から）" variant="label-inline" onchange={onChangeThisYearFrom}></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_1-of-4">
+                                <lightning-input type="date" value={thisYearTo} name="thisYearTo" label="当年度（まで）" variant="label-inline" onchange={onChangeThisYearTo}></lightning-input>
+                            </div>
+        
+                            <div class="slds-col slds-size_1-of-4">
+                                <lightning-input type="date" value={lastYearFrom} name="lastYearFrom" label="1年（から）" variant="label-inline" onchange={onChangelastYearFrom}></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_1-of-4">
+                                <lightning-input type="date" value={lastYearTo} name="lastYearTo" label="1年（まで）" variant="label-inline" onchange={onChangelastYearTo}></lightning-input>
+                            </div>
+        
+                            <div class="slds-col slds-size_1-of-4">
+                                <lightning-input type="date" value={fiveYearFrom} name="fiveYearFrom" label="5年（から）" disabled variant="label-inline"></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_1-of-4">
+                                <lightning-input type="date" value={fiveYearTo} name="fiveYearTo" label="5年（まで）" disabled variant="label-inline"></lightning-input>
+                            </div>
+        
+                            <div class="slds-col slds-size_1-of-4">
+                                <lightning-input type="date" value={tenYearFrom} name="tenYearFrom" label="10年（から）" disabled variant="label-inline"></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_1-of-4">
+                                <lightning-input type="date" value={tenYearTo} name="tenYearTo" label="10年（まで）" disabled variant="label-inline"></lightning-input>
+                            </div>
+        
+                            <div class="slds-col slds-size_1-of-4">
+                                <lightning-input type="date" value={fifteenYearFrom} name="fifteenYearFrom" label="15年（から）" disabled variant="label-inline"></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_1-of-4">
+                                <lightning-input type="date" value={fifteenYearTo} name="fifteenYearTo" label="15年（まで）" disabled variant="label-inline"></lightning-input>
+                            </div>
+        
+                            <div class="slds-col slds-size_1-of-4">
+                                <lightning-input type="date" value={twentyYearFrom} name="twentyYearFrom" label="20年（から）" disabled variant="label-inline"></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_1-of-4">
+                                <lightning-input type="date" value={twentyYearTo} name="twentyYearTo" label="20年（まで）" disabled variant="label-inline"></lightning-input>
+                            </div>
 
-                    <div class="slds-col slds-size_1-of-4">
-                        <lightning-input type="date" value={fifteenYearFrom} name="fifteenYearFrom" label="15年（から）" disabled variant="label-inline"></lightning-input>
-                    </div>
-                    <div class="slds-col slds-size_1-of-4">
-                        <lightning-input type="date" value={fifteenYearTo} name="fifteenYearTo" label="15年（まで）" disabled variant="label-inline"></lightning-input>
-                    </div>
-
-                    <div class="slds-col slds-size_1-of-4">
-                        <lightning-input type="date" value={twentyYearFrom} name="twentyYearFrom" label="20年（から）" disabled variant="label-inline"></lightning-input>
-                    </div>
-                    <div class="slds-col slds-size_1-of-4">
-                        <lightning-input type="date" value={twentyYearTo} name="twentyYearTo" label="20年（まで）" disabled variant="label-inline"></lightning-input>
-                    </div>
-
-                    <div class="slds-col slds-size_1-of-4">
-                        <lightning-input type="date" value={twentyFiveYearFrom} name="twentyFiveYearFrom" label="25年（から）" disabled variant="label-inline"></lightning-input>
-                    </div>
-                    <div class="slds-col slds-size_1-of-4">
-                        <lightning-input type="date" value={twentyFiveYearTo} name="twentyFiveYearTo" label="25年（まで）" disabled variant="label-inline"></lightning-input>
-                    </div>
+                            <div class="slds-col slds-size_1-of-4">
+                                <lightning-input type="date" value={twentyFiveYearFrom} name="twentyFiveYearFrom" label="25年（から）" disabled variant="label-inline"></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_1-of-4">
+                                <lightning-input type="date" value={twentyFiveYearTo} name="twentyFiveYearTo" label="25年（まで）" disabled variant="label-inline"></lightning-input>
+                            </div>
+        
+                            <div class="slds-col slds-size_1-of-4">
+                                <lightning-input type="date" value={thirtyYearFrom} name="thirtyYearFrom" label="30年（から）" disabled variant="label-inline"></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_1-of-4">
+                                <lightning-input type="date" value={thirtyYearTo} name="thirtyYearTo" label="30年（まで）" disabled variant="label-inline"></lightning-input>
+                            </div>
+                        </div>
+                    </lightning-record-edit-form>
                 </div>
-            </lightning-record-edit-form>
-        </div>
-    </lightning-card>
+            </lightning-card>
+        </lightning-tab>
 
-    <!-- 遺族宛案内 送付先世帯 一覧 -->
-    <lightning-card title="遺族宛案内 送付先世帯 一覧" class="slds-p-horizontal_small" if:true={atenaListTableData}>
-        <lightning-button label="ダウンロード" title="表のデータをCSVダウンロード" onclick={exportAtenaCsv} class="slds-m-left_x-small" ></lightning-button>
+        <lightning-tab label="3. 検索結果のダウンロード" value="three">
+            <!-- 遺族宛案内 送付先世帯 一覧 -->
+            <lightning-card title="遺族宛案内 送付先世帯 一覧" class="slds-p-horizontal_small" if:true={atenaListTableData}>
+                <lightning-button label="ダウンロード" title="表のデータをCSVダウンロード" onclick={exportAtenaCsv} class="slds-m-left_x-small" ></lightning-button>
+        
+                <div class="slds-m-around_medium slds-scrollable">
+                    <lightning-datatable
+                        key-field="Id"
+                        data={atenaListTableData}
+                        columns={aTableColumns}
+                        column-widths-mode="auto"
+                        show-row-number-column
+                        hide-checkbox-column>
+                    </lightning-datatable>
+                </div>
+            </lightning-card>
+        
+            <!-- 召天者-遺族 一覧 -->
+            <lightning-card title="召天者-遺族 一覧" class="slds-p-horizontal_small" if:true={deceasedListTableData}>
+                <lightning-button label="ダウンロード" title="表のデータをCSVダウンロード" onclick={exportDeceasedListCsv} class="slds-m-left_x-small" ></lightning-button>
+        
+                <div class="slds-m-around_medium slds-scrollable">
+                    <lightning-datatable
+                        key-field="Id"
+                        data={deceasedListTableData}
+                        columns={dTableColumns}
+                        column-widths-mode="auto"
+                        show-row-number-column
+                        hide-checkbox-column>
+                    </lightning-datatable>
+                </div>
+            </lightning-card>
+        
+            <!-- 遺族-召天者 一覧 -->
+            <lightning-card title="遺族-召天者 一覧" class="slds-p-horizontal_small" if:true={survivorListTableData}>
+                <lightning-button label="ダウンロード" title="表のデータをCSVダウンロード" onclick={exportSurvivorListCsv} class="slds-m-left_x-small" ></lightning-button>
+        
+                <div class="slds-m-around_medium slds-scrollable">
+                    <lightning-datatable
+                        key-field="Id"
+                        data={survivorListTableData}
+                        columns={sTableColumns}
+                        column-widths-mode="auto"
+                        show-row-number-column
+                        hide-checkbox-column>
+                    </lightning-datatable>
+                </div>
+            </lightning-card>
 
-        <div class="slds-m-around_medium slds-scrollable">
-            <lightning-datatable
-                key-field="Id"
-                data={atenaListTableData}
-                columns={aTableColumns}
-                column-widths-mode="auto"
-                show-row-number-column
-                hide-checkbox-column>
-            </lightning-datatable>
-        </div>
-    </lightning-card>
-
-    <!-- 召天者-遺族 一覧 -->
-    <lightning-card title="召天者-遺族 一覧" class="slds-p-horizontal_small" if:true={deceasedListTableData}>
-        <lightning-button label="ダウンロード" title="表のデータをCSVダウンロード" onclick={exportDeceasedListCsv} class="slds-m-left_x-small" ></lightning-button>
-
-        <div class="slds-m-around_medium slds-scrollable">
-            <lightning-datatable
-                key-field="Id"
-                data={deceasedListTableData}
-                columns={dTableColumns}
-                column-widths-mode="auto"
-                show-row-number-column
-                hide-checkbox-column>
-            </lightning-datatable>
-        </div>
-    </lightning-card>
-
-    <!-- 遺族-召天者 一覧 -->
-    <lightning-card title="遺族-召天者 一覧" class="slds-p-horizontal_small" if:true={survivorListTableData}>
-        <lightning-button label="ダウンロード" title="表のデータをCSVダウンロード" onclick={exportSurvivorListCsv} class="slds-m-left_x-small" ></lightning-button>
-
-        <div class="slds-m-around_medium slds-scrollable">
-            <lightning-datatable
-                key-field="Id"
-                data={survivorListTableData}
-                columns={sTableColumns}
-                column-widths-mode="auto"
-                show-row-number-column
-                hide-checkbox-column>
-            </lightning-datatable>
-        </div>
-    </lightning-card>
-
+        </lightning-tab>
+    </lightning-tabset>
 </template>
