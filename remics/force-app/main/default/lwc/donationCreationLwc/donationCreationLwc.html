@@ -16,16 +16,19 @@
                         <lightning-input label="献金単位区分" value={donationUnitClass} variant="label-stacked" tabindex=-1 disabled></lightning-input>
                     </div>
                     <div class="slds-col slds-size_1-of-6">
+                        <lightning-input label="配偶者 or 家族名" value={spouseOrFamily} variant="label-stacked" tabindex=-1 disabled></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-6">
                         <lightning-input label="週報BOX番号" value={boxNum} variant="label-stacked" tabindex=-1 disabled></lightning-input>
                     </div>
                     <div class="slds-col slds-size_1-of-6">
                         <lightning-input label="棚番号" value={shelfNum} variant="label-stacked" tabindex=-1 disabled></lightning-input>
                     </div>
+
+
                     <div class="slds-col slds-size_1-of-6">
                         <lightning-input-field field-name={donationDateField} variant="label-stacked" tabindex=-1 ></lightning-input-field>
                     </div>
-
-
                     <div class="slds-col slds-size_1-of-6">
                         <lightning-input type="number" name="donationTypeNum" label="献金種類" variant="label-stacked" onblur={onChangeDonationTypeNumField}></lightning-input>
                     </div>
@@ -41,6 +44,8 @@
                     <div class="slds-col slds-size_1-of-6">
                         <lightning-input type="number" disabled value={donationMonthNumVal} label="月数" class="donationMonthNum"></lightning-input>
                     </div>
+
+
                     <div class="slds-col slds-size_1-of-6">
                         <lightning-input-field field-name={donationAmountField} variant="label-stacked" class="donationAmount resetField" onchange={onChangeDonationAmountField}></lightning-input-field>
                     </div>

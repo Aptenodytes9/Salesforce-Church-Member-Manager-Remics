@@ -84,6 +84,7 @@ export default class DonationCreationLwc extends LightningElement {
     @api donorId;
     @api personNumCurrent;
     @api donationUnitClass;
+    @api spouseOrFamily;
     @api boxNum;
     @api shelfNum;
 
@@ -99,11 +100,7 @@ export default class DonationCreationLwc extends LightningElement {
         // 原籍番号からレコードIDを取得
         // ただし「召天」=TRUE or「状況区分」=「転出, 召天, 不明, 削除」は除外して検索する
         await getAlivePersonByPersonNumCurrent({ personNumCurrent: this.personNumCurrent }).then(record => {
-            this.donorId = record.Id;
-            this.donationUnitClass = record.DonationUnitClass__c;
-            this.boxNum = record.WeeklyReportBoxNum__c;
-            this.shelfNum = record.ShelfNum__c;
-            this.fetchTableData();
+            this.setPersonsInfo(record)
         }).catch(error => {
             this.dispatchEvent(
                 new ShowToastEvent({
@@ -114,10 +111,12 @@ export default class DonationCreationLwc extends LightningElement {
                 })
           );
         });
+
+        await this.fetchTableData();
     };
 
     // 「献金者」欄を変更したとき
-    onChangeDonorNameField(event) {
+    async onChangeDonorNameField(event) {
         this.donorId = event.detail.value[0];
 
         if (!this.donorId) { return; }
@@ -125,12 +124,8 @@ export default class DonationCreationLwc extends LightningElement {
         // レコードIDから原籍番号を取得
         // #onChangePersonNumCurrentField と異なり、召天者等を除外して検索することはしない
         // （カスタム項目「献金者」は、召天者等を除外するルックアップ検索条件を設定しているため）
-        getPersonById({ id: this.donorId }).then(record => {
-            this.personNumCurrent = record.PersonNumCurrent__c;
-            this.donationUnitClass = record.DonationUnitClass__c;
-            this.boxNum = record.WeeklyReportBoxNum__c;
-            this.shelfNum = record.ShelfNum__c;
-            this.fetchTableData();
+        await getPersonById({ id: this.donorId }).then(record => {
+            this.setPersonsInfo(record);
         }).catch(error => {
             this.dispatchEvent(
                 new ShowToastEvent({
@@ -141,7 +136,29 @@ export default class DonationCreationLwc extends LightningElement {
                 })
           );
         });
+
+        await this.fetchTableData();
     };
+
+    async setPersonsInfo(record) {
+        this.donorId = record.Id;
+        this.personNumCurrent = record.PersonNumCurrent__c;
+        this.donationUnitClass = record.DonationUnitClass__c;
+        this.boxNum = record.WeeklyReportBoxNum__c;
+        this.shelfNum = record.ShelfNum__c;
+
+        if(record.Spouse__c && '夫婦' == this.donationUnitClass){
+            this.spouseOrFamily = record.Spouse__r.Name;
+        } else if (record.LedgerRef__r && '家族' == this.donationUnitClass) {
+            let fname = '';
+            for (const e of record.LedgerRef__r) {
+                fname ? fname += "," + e.LedgerFamily__r.Name : fname = e.LedgerFamily__r.Name;
+            }
+            this.spouseOrFamily = fname;
+        } else {
+            this.spouseOrFamily = '';
+        }
+    }
 
     // 新規献金レコード入力フォーム
     donationFields = [NAME_FIELD, DONOR_FIELD, DONATIONTYPE_FIELD, DONATIONDATE_FIELD, DONATIONAMOUNT_FIELD, DONATIONSTARTDATE_FIELD, DONATIONFINISHDATE_FIELD, DONATIONNOTE_FIELD];
