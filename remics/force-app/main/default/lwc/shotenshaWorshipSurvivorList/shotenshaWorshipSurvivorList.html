@@ -63,59 +63,298 @@
                             </div>
         
                             <div class="slds-col slds-size_1-of-4">
-                                <lightning-input type="date" value={thisYearFrom} name="thisYearFrom" label="当年度（から）" variant="label-inline" onchange={onChangeThisYearFrom}></lightning-input>
+                                <lightning-input type="date" value={YearFrom0} name="YearFrom0" label="当年度（から）" variant="label-inline" onchange={onChangeYearFrom0}></lightning-input>
                             </div>
                             <div class="slds-col slds-size_1-of-4">
-                                <lightning-input type="date" value={thisYearTo} name="thisYearTo" label="当年度（まで）" variant="label-inline" onchange={onChangeThisYearTo}></lightning-input>
-                            </div>
-        
-                            <div class="slds-col slds-size_1-of-4">
-                                <lightning-input type="date" value={lastYearFrom} name="lastYearFrom" label="1年（から）" variant="label-inline" onchange={onChangelastYearFrom}></lightning-input>
-                            </div>
-                            <div class="slds-col slds-size_1-of-4">
-                                <lightning-input type="date" value={lastYearTo} name="lastYearTo" label="1年（まで）" variant="label-inline" onchange={onChangelastYearTo}></lightning-input>
+                                <lightning-input type="date" value={YearTo0} name="YearTo0" label="当年度（まで）" variant="label-inline" onchange={onChangeYearTo0}></lightning-input>
                             </div>
         
                             <div class="slds-col slds-size_1-of-4">
-                                <lightning-input type="date" value={fiveYearFrom} name="fiveYearFrom" label="5年（から）" disabled variant="label-inline"></lightning-input>
+                                <lightning-input type="date" value={YearFrom1} name="YearFrom1" label="1年（から）" variant="label-inline" onchange={onChangeYearFrom1}></lightning-input>
                             </div>
                             <div class="slds-col slds-size_1-of-4">
-                                <lightning-input type="date" value={fiveYearTo} name="fiveYearTo" label="5年（まで）" disabled variant="label-inline"></lightning-input>
-                            </div>
-        
-                            <div class="slds-col slds-size_1-of-4">
-                                <lightning-input type="date" value={tenYearFrom} name="tenYearFrom" label="10年（から）" disabled variant="label-inline"></lightning-input>
-                            </div>
-                            <div class="slds-col slds-size_1-of-4">
-                                <lightning-input type="date" value={tenYearTo} name="tenYearTo" label="10年（まで）" disabled variant="label-inline"></lightning-input>
+                                <lightning-input type="date" value={YearTo1} name="YearTo1" label="1年（まで）" variant="label-inline" onchange={onChangeYearTo1}></lightning-input>
                             </div>
         
                             <div class="slds-col slds-size_1-of-4">
-                                <lightning-input type="date" value={fifteenYearFrom} name="fifteenYearFrom" label="15年（から）" disabled variant="label-inline"></lightning-input>
+                                <lightning-input type="date" value={YearFrom5} name="YearFrom5" label="5年（から）" disabled variant="label-inline"></lightning-input>
                             </div>
                             <div class="slds-col slds-size_1-of-4">
-                                <lightning-input type="date" value={fifteenYearTo} name="fifteenYearTo" label="15年（まで）" disabled variant="label-inline"></lightning-input>
+                                <lightning-input type="date" value={YearTo5} name="YearTo5" label="5年（まで）" disabled variant="label-inline"></lightning-input>
                             </div>
         
                             <div class="slds-col slds-size_1-of-4">
-                                <lightning-input type="date" value={twentyYearFrom} name="twentyYearFrom" label="20年（から）" disabled variant="label-inline"></lightning-input>
+                                <lightning-input type="date" value={YearFrom10} name="YearFrom10" label="10年（から）" disabled variant="label-inline"></lightning-input>
                             </div>
                             <div class="slds-col slds-size_1-of-4">
-                                <lightning-input type="date" value={twentyYearTo} name="twentyYearTo" label="20年（まで）" disabled variant="label-inline"></lightning-input>
+                                <lightning-input type="date" value={YearTo10} name="YearTo10" label="10年（まで）" disabled variant="label-inline"></lightning-input>
+                            </div>
+        
+                            <div class="slds-col slds-size_1-of-4">
+                                <lightning-input type="date" value={YearFrom15} name="YearFrom15" label="15年（から）" disabled variant="label-inline"></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_1-of-4">
+                                <lightning-input type="date" value={YearTo15} name="YearTo15" label="15年（まで）" disabled variant="label-inline"></lightning-input>
+                            </div>
+        
+                            <div class="slds-col slds-size_1-of-4">
+                                <lightning-input type="date" value={YearFrom20} name="YearFrom20" label="20年（から）" disabled variant="label-inline"></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_1-of-4">
+                                <lightning-input type="date" value={YearTo20} name="YearTo20" label="20年（まで）" disabled variant="label-inline"></lightning-input>
                             </div>
 
                             <div class="slds-col slds-size_1-of-4">
-                                <lightning-input type="date" value={twentyFiveYearFrom} name="twentyFiveYearFrom" label="25年（から）" disabled variant="label-inline"></lightning-input>
+                                <lightning-input type="date" value={YearFrom25} name="YearFrom25" label="25年（から）" disabled variant="label-inline"></lightning-input>
                             </div>
                             <div class="slds-col slds-size_1-of-4">
-                                <lightning-input type="date" value={twentyFiveYearTo} name="twentyFiveYearTo" label="25年（まで）" disabled variant="label-inline"></lightning-input>
+                                <lightning-input type="date" value={YearTo25} name="YearTo25" label="25年（まで）" disabled variant="label-inline"></lightning-input>
                             </div>
-        
+
                             <div class="slds-col slds-size_1-of-4">
-                                <lightning-input type="date" value={thirtyYearFrom} name="thirtyYearFrom" label="30年（から）" disabled variant="label-inline"></lightning-input>
+                                <lightning-input type="date" value={YearFrom30} name="YearFrom30" label="30年（から）" disabled variant="label-inline"></lightning-input>
                             </div>
                             <div class="slds-col slds-size_1-of-4">
-                                <lightning-input type="date" value={thirtyYearTo} name="thirtyYearTo" label="30年（まで）" disabled variant="label-inline"></lightning-input>
+                                <lightning-input type="date" value={YearTo30} name="YearTo30" label="30年（まで）" disabled variant="label-inline"></lightning-input>
+                            </div>
+
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom35} name='YearFrom35' label='35年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo35} name='YearTo35' label='35年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom40} name='YearFrom40' label='40年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo40} name='YearTo40' label='40年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom45} name='YearFrom45' label='45年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo45} name='YearTo45' label='45年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom50} name='YearFrom50' label='50年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo50} name='YearTo50' label='50年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom55} name='YearFrom55' label='55年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo55} name='YearTo55' label='55年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom60} name='YearFrom60' label='60年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo60} name='YearTo60' label='60年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom65} name='YearFrom65' label='65年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo65} name='YearTo65' label='65年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom70} name='YearFrom70' label='70年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo70} name='YearTo70' label='70年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom75} name='YearFrom75' label='75年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo75} name='YearTo75' label='75年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom80} name='YearFrom80' label='80年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo80} name='YearTo80' label='80年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom85} name='YearFrom85' label='85年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo85} name='YearTo85' label='85年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom90} name='YearFrom90' label='90年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo90} name='YearTo90' label='90年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom95} name='YearFrom95' label='95年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo95} name='YearTo95' label='95年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom100} name='YearFrom100' label='100年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo100} name='YearTo100' label='100年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom105} name='YearFrom105' label='105年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo105} name='YearTo105' label='105年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom110} name='YearFrom110' label='110年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo110} name='YearTo110' label='110年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom115} name='YearFrom115' label='115年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo115} name='YearTo115' label='115年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom120} name='YearFrom120' label='120年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo120} name='YearTo120' label='120年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom125} name='YearFrom125' label='125年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo125} name='YearTo125' label='125年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom130} name='YearFrom130' label='130年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo130} name='YearTo130' label='130年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom135} name='YearFrom135' label='135年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo135} name='YearTo135' label='135年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom140} name='YearFrom140' label='140年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo140} name='YearTo140' label='140年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom145} name='YearFrom145' label='145年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo145} name='YearTo145' label='145年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom150} name='YearFrom150' label='150年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo150} name='YearTo150' label='150年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom155} name='YearFrom155' label='155年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo155} name='YearTo155' label='155年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom160} name='YearFrom160' label='160年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo160} name='YearTo160' label='160年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom165} name='YearFrom165' label='165年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo165} name='YearTo165' label='165年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom170} name='YearFrom170' label='170年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo170} name='YearTo170' label='170年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom175} name='YearFrom175' label='175年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo175} name='YearTo175' label='175年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom180} name='YearFrom180' label='180年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo180} name='YearTo180' label='180年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom185} name='YearFrom185' label='185年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo185} name='YearTo185' label='185年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom190} name='YearFrom190' label='190年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo190} name='YearTo190' label='190年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom195} name='YearFrom195' label='195年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo195} name='YearTo195' label='195年（まで）' disabled variant='label-inline'></lightning-input>
+                            </div>
+
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearFrom200} name='YearFrom200' label='200年（から）' disabled variant='label-inline'></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_1-of-4'>
+                                <lightning-input type='date' value={YearTo200} name='YearTo200' label='200年（まで）' disabled variant='label-inline'></lightning-input>
                             </div>
                         </div>
                     </lightning-record-edit-form>

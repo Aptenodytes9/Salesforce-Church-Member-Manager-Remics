@@ -6,26 +6,8 @@ public with sharing class ShotenshaWorshipController {
     // 遺族宛案内 送付先世帯一覧 CSVデータを作成
     public static void createAtenaCsvData() {
 
-      // 最後にユーザーが検索した検索日付をカスタム設定から取得
-      ShotenshaWorshipSurvivorList__c sws = ShotenshaWorshipSurvivorList__c.getInstance();
-
-      List<Date> dateList = new List<Date>();
-      dateList.add(sws.thisYearFrom__c);
-      dateList.add(sws.thisYearTo__c);
-      dateList.add(sws.lastYearFrom__c);
-      dateList.add(sws.lastYearTo__c);
-      dateList.add(sws.fiveYearFrom__c);
-      dateList.add(sws.fiveYearTo__c);
-      dateList.add(sws.tenYearFrom__c);
-      dateList.add(sws.tenYearTo__c);
-      dateList.add(sws.fifteenYearFrom__c);
-      dateList.add(sws.fifteenYearTo__c);
-      dateList.add(sws.twentyYearFrom__c);
-      dateList.add(sws.twentyYearTo__c);
-      dateList.add(sws.twentyFiveYearFrom__c);
-      dateList.add(sws.twentyFiveYearTo__c);
-
       // CSVデータのもととなるデータを取得
+      List<Date> dateList = fetchLastSearchDateCondition();
       List<Map<String, Object>> survivorHouseholdList = getSurvivorHouseholdList(dateList, false);
 
       List<String> rowList = new List<String>();
@@ -47,26 +29,8 @@ public with sharing class ShotenshaWorshipController {
     // 召天者-遺族 一覧 CSVデータを作成
     public static void createDeceasedListCsvData() {
 
-      // 最後にユーザーが検索した検索日付をカスタム設定から取得
-      ShotenshaWorshipSurvivorList__c sws = ShotenshaWorshipSurvivorList__c.getInstance();
-
-      List<Date> dateList = new List<Date>();
-      dateList.add(sws.thisYearFrom__c);
-      dateList.add(sws.thisYearTo__c);
-      dateList.add(sws.lastYearFrom__c);
-      dateList.add(sws.lastYearTo__c);
-      dateList.add(sws.fiveYearFrom__c);
-      dateList.add(sws.fiveYearTo__c);
-      dateList.add(sws.tenYearFrom__c);
-      dateList.add(sws.tenYearTo__c);
-      dateList.add(sws.fifteenYearFrom__c);
-      dateList.add(sws.fifteenYearTo__c);
-      dateList.add(sws.twentyYearFrom__c);
-      dateList.add(sws.twentyYearTo__c);
-      dateList.add(sws.twentyFiveYearFrom__c);
-      dateList.add(sws.twentyFiveYearTo__c);
-
       // CSVデータのもととなるデータを取得
+      List<Date> dateList = fetchLastSearchDateCondition();
       List<Map<String, Object>> deceasedList = getDeceasedList(dateList, false);
 
       List<String> rowList = new List<String>();
@@ -88,26 +52,8 @@ public with sharing class ShotenshaWorshipController {
     // 遺族-召天者 一覧 CSVデータを作成
     public static void createSurvivorListCsvData() {
 
-      // 最後にユーザーが検索した検索日付をカスタム設定から取得
-      ShotenshaWorshipSurvivorList__c sws = ShotenshaWorshipSurvivorList__c.getInstance();
-
-      List<Date> dateList = new List<Date>();
-      dateList.add(sws.thisYearFrom__c);
-      dateList.add(sws.thisYearTo__c);
-      dateList.add(sws.lastYearFrom__c);
-      dateList.add(sws.lastYearTo__c);
-      dateList.add(sws.fiveYearFrom__c);
-      dateList.add(sws.fiveYearTo__c);
-      dateList.add(sws.tenYearFrom__c);
-      dateList.add(sws.tenYearTo__c);
-      dateList.add(sws.fifteenYearFrom__c);
-      dateList.add(sws.fifteenYearTo__c);
-      dateList.add(sws.twentyYearFrom__c);
-      dateList.add(sws.twentyYearTo__c);
-      dateList.add(sws.twentyFiveYearFrom__c);
-      dateList.add(sws.twentyFiveYearTo__c);
-
       // CSVデータのもととなるデータを取得
+      List<Date> dateList = fetchLastSearchDateCondition();
       List<Map<String, Object>> survivorList = getSurvivorList(dateList, false);
 
       List<String> rowList = new List<String>();
@@ -168,22 +114,7 @@ public with sharing class ShotenshaWorshipController {
 
       // 最後にユーザーが検索した検索日付をカスタム設定に保存
       if(isForView){
-        ShotenshaWorshipSurvivorList__c sws = ShotenshaWorshipSurvivorList__c.getInstance();
-        sws.thisYearFrom__c = dateList[0];
-        sws.thisYearTo__c = dateList[1];
-        sws.lastYearFrom__c = dateList[2];
-        sws.lastYearTo__c = dateList[3];
-        sws.fiveYearFrom__c = dateList[4];
-        sws.fiveYearTo__c = dateList[5];
-        sws.tenYearFrom__c = dateList[6];
-        sws.tenYearTo__c = dateList[7];
-        sws.fifteenYearFrom__c = dateList[8];
-        sws.fifteenYearTo__c = dateList[9];
-        sws.twentyYearFrom__c = dateList[10];
-        sws.twentyYearTo__c = dateList[11];
-        sws.twentyFiveYearFrom__c = dateList[12];
-        sws.twentyFiveYearTo__c = dateList[13];
-        upsert sws;
+        saveLastSearchDateCondition(dateList);
       }
 
       return dataList;
@@ -260,8 +191,80 @@ public with sharing class ShotenshaWorshipController {
         return '15年';
       } else if (deceasedDate >= dateList[10] && deceasedDate <= dateList[11] ) {
         return '20年';
-      } else {
+      } else if (deceasedDate >= dateList[12] && deceasedDate <= dateList[13] ) {
         return '25年';
+      } else if (deceasedDate >= dateList[14] && deceasedDate <= dateList[15] ) {
+        return '30年';
+      } else if (deceasedDate >= dateList[16] && deceasedDate <= dateList[17] ) {
+        return '35年';
+      } else if (deceasedDate >= dateList[18] && deceasedDate <= dateList[19] ) {
+        return '40年';
+      } else if (deceasedDate >= dateList[20] && deceasedDate <= dateList[21] ) {
+        return '45年';
+      } else if (deceasedDate >= dateList[22] && deceasedDate <= dateList[23] ) {
+        return '50年';
+      } else if (deceasedDate >= dateList[24] && deceasedDate <= dateList[25] ) {
+        return '55年';
+      } else if (deceasedDate >= dateList[26] && deceasedDate <= dateList[27] ) {
+        return '60年';
+      } else if (deceasedDate >= dateList[28] && deceasedDate <= dateList[29] ) {
+        return '65年';
+      } else if (deceasedDate >= dateList[30] && deceasedDate <= dateList[31] ) {
+        return '70年';
+      } else if (deceasedDate >= dateList[32] && deceasedDate <= dateList[33] ) {
+        return '75年';
+      } else if (deceasedDate >= dateList[34] && deceasedDate <= dateList[35] ) {
+        return '80年';
+      } else if (deceasedDate >= dateList[36] && deceasedDate <= dateList[37] ) {
+        return '85年';
+      } else if (deceasedDate >= dateList[38] && deceasedDate <= dateList[39] ) {
+        return '90年';
+      } else if (deceasedDate >= dateList[40] && deceasedDate <= dateList[41] ) {
+        return '95年';
+      } else if (deceasedDate >= dateList[42] && deceasedDate <= dateList[43] ) {
+        return '100年';
+      } else if (deceasedDate >= dateList[44] && deceasedDate <= dateList[45] ) {
+        return '105年';
+      } else if (deceasedDate >= dateList[46] && deceasedDate <= dateList[47] ) {
+        return '110年';
+      } else if (deceasedDate >= dateList[48] && deceasedDate <= dateList[49] ) {
+        return '115年';
+      } else if (deceasedDate >= dateList[50] && deceasedDate <= dateList[51] ) {
+        return '120年';
+      } else if (deceasedDate >= dateList[52] && deceasedDate <= dateList[53] ) {
+        return '125年';
+      } else if (deceasedDate >= dateList[54] && deceasedDate <= dateList[55] ) {
+        return '130年';
+      } else if (deceasedDate >= dateList[56] && deceasedDate <= dateList[57] ) {
+        return '135年';
+      } else if (deceasedDate >= dateList[58] && deceasedDate <= dateList[59] ) {
+        return '140年';
+      } else if (deceasedDate >= dateList[60] && deceasedDate <= dateList[61] ) {
+        return '145年';
+      } else if (deceasedDate >= dateList[62] && deceasedDate <= dateList[63] ) {
+        return '150年';
+      } else if (deceasedDate >= dateList[64] && deceasedDate <= dateList[65] ) {
+        return '155年';
+      } else if (deceasedDate >= dateList[66] && deceasedDate <= dateList[67] ) {
+        return '160年';
+      } else if (deceasedDate >= dateList[68] && deceasedDate <= dateList[69] ) {
+        return '165年';
+      } else if (deceasedDate >= dateList[70] && deceasedDate <= dateList[71] ) {
+        return '170年';
+      } else if (deceasedDate >= dateList[72] && deceasedDate <= dateList[73] ) {
+        return '175年';
+      } else if (deceasedDate >= dateList[74] && deceasedDate <= dateList[75] ) {
+        return '180年';
+      } else if (deceasedDate >= dateList[76] && deceasedDate <= dateList[77] ) {
+        return '185年';
+      } else if (deceasedDate >= dateList[78] && deceasedDate <= dateList[79] ) {
+        return '190年';
+      } else if (deceasedDate >= dateList[80] && deceasedDate <= dateList[81] ) {
+        return '195年';
+      } else if (deceasedDate >= dateList[82] && deceasedDate <= dateList[83] ) {
+        return '200年';
+      } else {
+        return '不明';
       }
     }
 
@@ -346,5 +349,191 @@ public with sharing class ShotenshaWorshipController {
       }
 
       return dataList;
+    }
+
+    // 最後にユーザーが検索した検索日付をカスタム設定から取得
+    public static List<Date> fetchLastSearchDateCondition(){
+      ShotenshaWorshipSurvivorList__c sws = ShotenshaWorshipSurvivorList__c.getInstance();
+
+      List<Date> dateList = new List<Date>();
+      dateList.add(sws.YearFrom0__c);
+      dateList.add(sws.YearTo0__c);
+      dateList.add(sws.YearFrom1__c);
+      dateList.add(sws.YearTo1__c);
+      dateList.add(sws.YearFrom5__c);
+      dateList.add(sws.YearTo5__c);
+      dateList.add(sws.YearFrom10__c);
+      dateList.add(sws.YearTo10__c);
+      dateList.add(sws.YearFrom15__c);
+      dateList.add(sws.YearTo15__c);
+      dateList.add(sws.YearFrom20__c);
+      dateList.add(sws.YearTo20__c);
+      dateList.add(sws.YearFrom25__c);
+      dateList.add(sws.YearTo25__c);
+      dateList.add(sws.YearFrom30__c);
+      dateList.add(sws.YearTo30__c);
+      dateList.add(sws.YearFrom35__c);
+      dateList.add(sws.YearTo35__c);
+      dateList.add(sws.YearFrom40__c);
+      dateList.add(sws.YearTo40__c);
+      dateList.add(sws.YearFrom45__c);
+      dateList.add(sws.YearTo45__c);
+      dateList.add(sws.YearFrom50__c);
+      dateList.add(sws.YearTo50__c);
+      dateList.add(sws.YearFrom55__c);
+      dateList.add(sws.YearTo55__c);
+      dateList.add(sws.YearFrom60__c);
+      dateList.add(sws.YearTo60__c);
+      dateList.add(sws.YearFrom65__c);
+      dateList.add(sws.YearTo65__c);
+      dateList.add(sws.YearFrom70__c);
+      dateList.add(sws.YearTo70__c);
+      dateList.add(sws.YearFrom75__c);
+      dateList.add(sws.YearTo75__c);
+      dateList.add(sws.YearFrom80__c);
+      dateList.add(sws.YearTo80__c);
+      dateList.add(sws.YearFrom85__c);
+      dateList.add(sws.YearTo85__c);
+      dateList.add(sws.YearFrom90__c);
+      dateList.add(sws.YearTo90__c);
+      dateList.add(sws.YearFrom95__c);
+      dateList.add(sws.YearTo95__c);
+      dateList.add(sws.YearFrom100__c);
+      dateList.add(sws.YearTo100__c);
+      dateList.add(sws.YearFrom105__c);
+      dateList.add(sws.YearTo105__c);
+      dateList.add(sws.YearFrom110__c);
+      dateList.add(sws.YearTo110__c);
+      dateList.add(sws.YearFrom115__c);
+      dateList.add(sws.YearTo115__c);
+      dateList.add(sws.YearFrom120__c);
+      dateList.add(sws.YearTo120__c);
+      dateList.add(sws.YearFrom125__c);
+      dateList.add(sws.YearTo125__c);
+      dateList.add(sws.YearFrom130__c);
+      dateList.add(sws.YearTo130__c);
+      dateList.add(sws.YearFrom135__c);
+      dateList.add(sws.YearTo135__c);
+      dateList.add(sws.YearFrom140__c);
+      dateList.add(sws.YearTo140__c);
+      dateList.add(sws.YearFrom145__c);
+      dateList.add(sws.YearTo145__c);
+      dateList.add(sws.YearFrom150__c);
+      dateList.add(sws.YearTo150__c);
+      dateList.add(sws.YearFrom155__c);
+      dateList.add(sws.YearTo155__c);
+      dateList.add(sws.YearFrom160__c);
+      dateList.add(sws.YearTo160__c);
+      dateList.add(sws.YearFrom165__c);
+      dateList.add(sws.YearTo165__c);
+      dateList.add(sws.YearFrom170__c);
+      dateList.add(sws.YearTo170__c);
+      dateList.add(sws.YearFrom175__c);
+      dateList.add(sws.YearTo175__c);
+      dateList.add(sws.YearFrom180__c);
+      dateList.add(sws.YearTo180__c);
+      dateList.add(sws.YearFrom185__c);
+      dateList.add(sws.YearTo185__c);
+      dateList.add(sws.YearFrom190__c);
+      dateList.add(sws.YearTo190__c);
+      dateList.add(sws.YearFrom195__c);
+      dateList.add(sws.YearTo195__c);
+      dateList.add(sws.YearFrom200__c);
+      dateList.add(sws.YearTo200__c);
+
+      return dateList;
+    }
+
+    // 最後にユーザーが検索した検索日付をカスタム設定に保存
+    public static void saveLastSearchDateCondition(List<Date> dateList){
+      ShotenshaWorshipSurvivorList__c sws = ShotenshaWorshipSurvivorList__c.getInstance();
+
+      sws.YearFrom0__c = dateList[0];
+      sws.YearTo0__c = dateList[1];
+      sws.YearFrom1__c = dateList[2];
+      sws.YearTo1__c = dateList[3];
+      sws.YearFrom5__c = dateList[4];
+      sws.YearTo5__c = dateList[5];
+      sws.YearFrom10__c = dateList[6];
+      sws.YearTo10__c = dateList[7];
+      sws.YearFrom15__c = dateList[8];
+      sws.YearTo15__c = dateList[9];
+      sws.YearFrom20__c = dateList[10];
+      sws.YearTo20__c = dateList[11];
+      sws.YearFrom25__c = dateList[12];
+      sws.YearTo25__c = dateList[13];
+      sws.YearFrom30__c = dateList[14];
+      sws.YearTo30__c = dateList[15];
+      sws.YearFrom35__c = dateList[16];
+      sws.YearTo35__c = dateList[17];
+      sws.YearFrom40__c = dateList[18];
+      sws.YearTo40__c = dateList[19];
+      sws.YearFrom45__c = dateList[20];
+      sws.YearTo45__c = dateList[21];
+      sws.YearFrom50__c = dateList[22];
+      sws.YearTo50__c = dateList[23];
+      sws.YearFrom55__c = dateList[24];
+      sws.YearTo55__c = dateList[25];
+      sws.YearFrom60__c = dateList[26];
+      sws.YearTo60__c = dateList[27];
+      sws.YearFrom65__c = dateList[28];
+      sws.YearTo65__c = dateList[29];
+      sws.YearFrom70__c = dateList[30];
+      sws.YearTo70__c = dateList[31];
+      sws.YearFrom75__c = dateList[32];
+      sws.YearTo75__c = dateList[33];
+      sws.YearFrom80__c = dateList[34];
+      sws.YearTo80__c = dateList[35];
+      sws.YearFrom85__c = dateList[36];
+      sws.YearTo85__c = dateList[37];
+      sws.YearFrom90__c = dateList[38];
+      sws.YearTo90__c = dateList[39];
+      sws.YearFrom95__c = dateList[40];
+      sws.YearTo95__c = dateList[41];
+      sws.YearFrom100__c = dateList[42];
+      sws.YearTo100__c = dateList[43];
+      sws.YearFrom105__c = dateList[44];
+      sws.YearTo105__c = dateList[45];
+      sws.YearFrom110__c = dateList[46];
+      sws.YearTo110__c = dateList[47];
+      sws.YearFrom115__c = dateList[48];
+      sws.YearTo115__c = dateList[49];
+      sws.YearFrom120__c = dateList[50];
+      sws.YearTo120__c = dateList[51];
+      sws.YearFrom125__c = dateList[52];
+      sws.YearTo125__c = dateList[53];
+      sws.YearFrom130__c = dateList[54];
+      sws.YearTo130__c = dateList[55];
+      sws.YearFrom135__c = dateList[56];
+      sws.YearTo135__c = dateList[57];
+      sws.YearFrom140__c = dateList[58];
+      sws.YearTo140__c = dateList[59];
+      sws.YearFrom145__c = dateList[60];
+      sws.YearTo145__c = dateList[61];
+      sws.YearFrom150__c = dateList[62];
+      sws.YearTo150__c = dateList[63];
+      sws.YearFrom155__c = dateList[64];
+      sws.YearTo155__c = dateList[65];
+      sws.YearFrom160__c = dateList[66];
+      sws.YearTo160__c = dateList[67];
+      sws.YearFrom165__c = dateList[68];
+      sws.YearTo165__c = dateList[69];
+      sws.YearFrom170__c = dateList[70];
+      sws.YearTo170__c = dateList[71];
+      sws.YearFrom175__c = dateList[72];
+      sws.YearTo175__c = dateList[73];
+      sws.YearFrom180__c = dateList[74];
+      sws.YearTo180__c = dateList[75];
+      sws.YearFrom185__c = dateList[76];
+      sws.YearTo185__c = dateList[77];
+      sws.YearFrom190__c = dateList[78];
+      sws.YearTo190__c = dateList[79];
+      sws.YearFrom195__c = dateList[80];
+      sws.YearTo195__c = dateList[81];
+      sws.YearFrom200__c = dateList[82];
+      sws.YearTo200__c = dateList[83];
+
+      upsert sws;
+
     }
 }

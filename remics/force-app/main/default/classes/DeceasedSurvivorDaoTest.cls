@@ -54,22 +54,7 @@ public with sharing class DeceasedSurvivorDaoTest {
 
     @isTest
     static void getDeceasedSurvivorByDateOrderbyHouseholdTest() {
-
-        List<Date> dateList = new List<Date>();
-        dateList.add(Date.newInstance(2020, 1, 1));
-        dateList.add(Date.newInstance(2020, 12, 31));
-        dateList.add(Date.newInstance(2019, 1, 1));
-        dateList.add(Date.newInstance(2019, 12, 31));
-        dateList.add(Date.newInstance(2015, 1, 1));
-        dateList.add(Date.newInstance(2015, 12, 31));
-        dateList.add(Date.newInstance(2010, 1, 1));
-        dateList.add(Date.newInstance(2010, 12, 31));
-        dateList.add(Date.newInstance(2005, 1, 1));
-        dateList.add(Date.newInstance(2005, 12, 31));
-        dateList.add(Date.newInstance(2000, 1, 1));
-        dateList.add(Date.newInstance(2000, 12, 31));
-        dateList.add(Date.newInstance(1995, 1, 1));
-        dateList.add(Date.newInstance(1995, 12, 31));
+        List<Date> dateList = setDateList();
 
         List<DeceasedSurvivor__c> dList = DeceasedSurvivorDao.getDeceasedSurvivorByDateOrderbyHousehold(dateList);
 
@@ -80,22 +65,7 @@ public with sharing class DeceasedSurvivorDaoTest {
 
     @isTest
     static void getDeceasedSurvivorByDateOrderbyDeceasedDateTest() {
-
-        List<Date> dateList = new List<Date>();
-        dateList.add(Date.newInstance(2020, 1, 1));
-        dateList.add(Date.newInstance(2020, 12, 31));
-        dateList.add(Date.newInstance(2019, 1, 1));
-        dateList.add(Date.newInstance(2019, 12, 31));
-        dateList.add(Date.newInstance(2015, 1, 1));
-        dateList.add(Date.newInstance(2015, 12, 31));
-        dateList.add(Date.newInstance(2010, 1, 1));
-        dateList.add(Date.newInstance(2010, 12, 31));
-        dateList.add(Date.newInstance(2005, 1, 1));
-        dateList.add(Date.newInstance(2005, 12, 31));
-        dateList.add(Date.newInstance(2000, 1, 1));
-        dateList.add(Date.newInstance(2000, 12, 31));
-        dateList.add(Date.newInstance(1995, 1, 1));
-        dateList.add(Date.newInstance(1995, 12, 31));
+        List<Date> dateList = setDateList();
 
         List<DeceasedSurvivor__c> dList = DeceasedSurvivorDao.getDeceasedSurvivorByDateOrderbyDeceasedDate(dateList);
 
@@ -106,27 +76,32 @@ public with sharing class DeceasedSurvivorDaoTest {
 
     @isTest
     static void getDeceasedSurvivorByDateOrderbyPostalcodeTest() {
-
-        List<Date> dateList = new List<Date>();
-        dateList.add(Date.newInstance(2020, 1, 1));
-        dateList.add(Date.newInstance(2020, 12, 31));
-        dateList.add(Date.newInstance(2019, 1, 1));
-        dateList.add(Date.newInstance(2019, 12, 31));
-        dateList.add(Date.newInstance(2015, 1, 1));
-        dateList.add(Date.newInstance(2015, 12, 31));
-        dateList.add(Date.newInstance(2010, 1, 1));
-        dateList.add(Date.newInstance(2010, 12, 31));
-        dateList.add(Date.newInstance(2005, 1, 1));
-        dateList.add(Date.newInstance(2005, 12, 31));
-        dateList.add(Date.newInstance(2000, 1, 1));
-        dateList.add(Date.newInstance(2000, 12, 31));
-        dateList.add(Date.newInstance(1995, 1, 1));
-        dateList.add(Date.newInstance(1995, 12, 31));
+        List<Date> dateList = setDateList();
 
         List<DeceasedSurvivor__c> dList = DeceasedSurvivorDao.getDeceasedSurvivorByDateOrderbyPostalcode(dateList);
 
         Test.startTest();
         System.assertEquals(3, dList.size(), 'DeceasedSurvivorDao.getDeceasedSurvivorByDateOrderbyPostalcode Error');
         Test.stopTest();
+    }
+
+    public static List<Date> setDateList(){
+        List<Date> dateList = new List<Date>();
+
+        // 0, 1年目のDateは日付が特殊なので下記For文とは別に作成
+        dateList.add(Date.newInstance(2021, 11, 1));
+        dateList.add(Date.newInstance(2022, 10, 31));
+        dateList.add(Date.newInstance(2020, 11, 1));
+        dateList.add(Date.newInstance(2021, 10, 31));
+
+        // 5年目から200年目まで5年刻みでDateを作成する
+        // ex: 2017, 2012, 2007, ... , 1827, 1822]
+        for(Integer i = 5 ; i <= 200; i = i + 5) {
+            Integer year = 2022 - i;
+            dateList.add(Date.newInstance(year, 1, 1));
+            dateList.add(Date.newInstance(year, 12, 31));
+        }
+
+        return dateList;
     }
 }

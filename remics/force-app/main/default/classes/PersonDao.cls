@@ -129,7 +129,7 @@ public with sharing class PersonDao {
                 Spouse__r.Name,
                 WeeklyReportBoxNum__c,
                 ShelfNum__c,
-                (SELECT LedgerFamily__r.Name FROM LedgerRef__r WHERE LedgerFamilyDeceased__c = FALSE ORDER BY LedgerRelationshipFromLedger__c)
+                (SELECT LedgerFamily__r.Name FROM LedgerRef__r WHERE LedgerFamilyDeceased__c = FALSE AND isContainFamilyDonation__c <> FALSE ORDER BY LedgerRelationshipFromLedger__c)
             FROM Person__c 
             WHERE PersonNumCurrent__c = :personNumCurrent
             AND Deceased__c = FALSE
@@ -150,7 +150,7 @@ public with sharing class PersonDao {
                 Spouse__r.Name,
                 WeeklyReportBoxNum__c,
                 ShelfNum__c,
-                (SELECT LedgerFamily__r.Name FROM LedgerRef__r WHERE LedgerFamilyDeceased__c = FALSE ORDER BY LedgerRelationshipFromLedger__c)
+                (SELECT LedgerFamily__r.Name FROM LedgerRef__r WHERE LedgerFamilyDeceased__c = FALSE AND isContainFamilyDonation__c <> FALSE ORDER BY LedgerRelationshipFromLedger__c)
             FROM Person__c 
             WHERE id = :id
             LIMIT 1
