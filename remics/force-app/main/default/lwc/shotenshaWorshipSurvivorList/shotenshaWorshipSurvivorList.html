@@ -18,9 +18,9 @@
                     <li>「処理年度」欄に、召天者記念礼拝を実施する西暦年を半角数字4桁で入力してください。（初期状態では現在年がプリセットされています）</li>
                     <li>「処理年度」欄を変更するとその年に応じて、当年〜200年の日付が自動で計算され、下部に表示されます。（当年〜1年の日付は任意に変更することが可能です）</li>
                     <li>「検索」ボタンをクリックします。</li>
-                    <li>画面上部の「3. 検索結果のダウンロード」タブを開きます。</li>
-                    <li>入力した検索日付に基づいて３種類のリストが表示されます。</li>
-                    <li>「ダウンロード」ボタンをクリックすると、各リストの内容がCSVファイルでダウンロードできます。</li>
+                    <li>画面上部の「3-1. [遺族宛案内 送付先世帯 一覧]のダウンロード」〜「3-3. [遺族-召天者 一覧]のダウンロード」タブを開きます。</li>
+                    <li>入力した検索日付に基づいて各タブにリストが表示されます。</li>
+                    <li>各タブ内の「ダウンロード」ボタンをクリックすると、各リストの内容がCSVファイルでダウンロードできます。</li>
                 </ol>
 
                 <h3 class="slds-text-heading_small">[遺族宛案内 送付先世帯 一覧]の説明</h3>
@@ -362,7 +362,7 @@
             </lightning-card>
         </lightning-tab>
 
-        <lightning-tab label="3. 検索結果のダウンロード" value="three">
+        <lightning-tab label="3-1. [遺族宛案内 送付先世帯 一覧]のダウンロード" value="three-one">
             <!-- 遺族宛案内 送付先世帯 一覧 -->
             <lightning-card title="遺族宛案内 送付先世帯 一覧" class="slds-p-horizontal_small" if:true={atenaListTableData}>
                 <lightning-button label="ダウンロード" title="表のデータをCSVダウンロード" onclick={exportAtenaCsv} class="slds-m-left_x-small" ></lightning-button>
@@ -378,7 +378,9 @@
                     </lightning-datatable>
                 </div>
             </lightning-card>
-        
+        </lightning-tab>
+
+        <lightning-tab label="3-2. [召天者-遺族 一覧]のダウンロード" value="three-two">
             <!-- 召天者-遺族 一覧 -->
             <lightning-card title="召天者-遺族 一覧" class="slds-p-horizontal_small" if:true={deceasedListTableData}>
                 <lightning-button label="ダウンロード" title="表のデータをCSVダウンロード" onclick={exportDeceasedListCsv} class="slds-m-left_x-small" ></lightning-button>
@@ -394,7 +396,9 @@
                     </lightning-datatable>
                 </div>
             </lightning-card>
-        
+        </lightning-tab>
+
+        <lightning-tab label="3-3. [遺族-召天者 一覧]のダウンロード" value="three-three">
             <!-- 遺族-召天者 一覧 -->
             <lightning-card title="遺族-召天者 一覧" class="slds-p-horizontal_small" if:true={survivorListTableData}>
                 <lightning-button label="ダウンロード" title="表のデータをCSVダウンロード" onclick={exportSurvivorListCsv} class="slds-m-left_x-small" ></lightning-button>
